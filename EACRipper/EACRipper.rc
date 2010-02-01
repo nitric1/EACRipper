@@ -1,0 +1,451 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Korean resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_KOR)
+#ifdef _WIN32
+LANGUAGE LANG_KOREAN, SUBLANG_DEFAULT
+#pragma code_page(949)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_MAIN_DIALOG DIALOGEX 0, 0, 535, 344
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_ACCEPTFILES | WS_EX_APPWINDOW
+CAPTION "EACRipper"
+MENU IDR_MAIN_MENU
+FONT 9, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    GROUPBOX        "¾Ù¹ü Á¤º¸",IDC_STATIC,5,5,430,47
+    RTEXT           "¾Ù¹ü Á¦¸ñ: ",IDC_STATIC,10,19,50,8
+    EDITTEXT        IDC_ALBUM_TITLE,60,16,165,14,ES_AUTOHSCROLL
+    RTEXT           "¾Ù¹ü °¡¼ö: ",IDC_STATIC,225,19,50,8
+    EDITTEXT        IDC_ALBUM_ARTIST,275,16,155,14,ES_AUTOHSCROLL
+    RTEXT           "¿¬µµ: ",IDC_STATIC,10,37,25,8
+    EDITTEXT        IDC_YEAR,35,34,30,14,ES_AUTOHSCROLL
+    RTEXT           "ÆÄÀÏ Çü½Ä: ",IDC_STATIC,65,37,45,8
+    COMBOBOX        IDC_FORMAT,110,35,80,80,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "¡¦",IDC_FORMAT_SETTING,190,34,15,14
+    RTEXT           "Àå¸£: ",IDC_STATIC,205,37,30,8
+    EDITTEXT        IDC_GENRE,235,34,55,14,ES_AUTOHSCROLL
+    CONTROL         "¸ðµç Æ®·¢ÀÇ °¡¼ö°¡ ¾Ù¹ü °¡¼ö¿Í °°À½",IDC_SAME_ARTIST,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,300,36,130,10
+    GROUPBOX        "Æ®·¢ Á¤º¸",IDC_STATIC,5,56,275,47
+    RTEXT           "Æ®·¢ ¹øÈ£: ",IDC_STATIC,10,70,50,8
+    EDITTEXT        IDC_TRACK,60,67,25,14,ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY
+    RTEXT           "°¡¼ö: ",IDC_STATIC,85,70,45,8
+    EDITTEXT        IDC_ARTIST,130,67,145,14,ES_AUTOHSCROLL
+    RTEXT           "Á¦¸ñ: ",IDC_STATIC,10,88,50,8
+    EDITTEXT        IDC_TITLE,60,85,215,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Ä¿¹ö ¾ÆÆ® ÁöÁ¤(&S)...",IDC_SET_COVER_ART,360,67,75,14
+    PUSHBUTTON      "Ä¿¹ö ¾ÆÆ® Ãë¼Ò(&C)",IDC_CANCEL_COVER_ART,360,85,75,14
+    CONTROL         "",IDC_COVER_ART,"Static",SS_OWNERDRAW | SS_CENTERIMAGE | SS_SUNKEN,440,9,90,90
+    CONTROL         "",IDC_LIST,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,5,107,525,202
+    LTEXT           "EACRipper ¸®ÇÎ ´ë±âÁß.",IDC_PROGRESS_TEXT,5,313,525,8,SS_PATHELLIPSIS
+    CONTROL         "",IDC_PROGRESS,"msctls_progress32",WS_BORDER,5,325,460,14
+    PUSHBUTTON      "Ãë¼Ò",IDC_CANCEL,470,325,60,14,WS_DISABLED
+END
+
+IDD_OPTION DIALOGEX 0, 0, 350, 60
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "¼³Á¤"
+FONT 9, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    RTEXT           "´ë»ó °æ·Î: ",IDC_STATIC,5,8,50,8
+    EDITTEXT        IDC_PATH,55,5,260,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "¡¦",IDC_PATH_SELECT,315,5,30,14
+    RTEXT           "ÀÌ¸§ Çü½Ä: ",IDC_STATIC,5,26,50,8
+    EDITTEXT        IDC_NAME_FORMAT,55,23,290,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "È®ÀÎ",IDOK,240,41,50,14
+    PUSHBUTTON      "Ãë¼Ò",IDCANCEL,295,41,50,14
+END
+
+IDD_OPEN_DIALOG DIALOGEX 0, 0, 634, 14
+STYLE DS_SETFONT | DS_3DLOOK | DS_FIXEDSYS | DS_CONTROL | WS_CHILD | WS_CLIPSIBLINGS | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    COMBOBOX        IDC_ENCODING,50,0,220,30,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "ÆÄÀÏ ÀÎÄÚµù:",IDC_ENCODING_LABEL,0,2,46,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_MAIN_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 5
+        RIGHTMARGIN, 530
+        VERTGUIDE, 10
+        VERTGUIDE, 35
+        VERTGUIDE, 60
+        VERTGUIDE, 65
+        VERTGUIDE, 85
+        VERTGUIDE, 110
+        VERTGUIDE, 130
+        VERTGUIDE, 190
+        VERTGUIDE, 205
+        VERTGUIDE, 225
+        VERTGUIDE, 235
+        VERTGUIDE, 275
+        VERTGUIDE, 280
+        VERTGUIDE, 341
+        VERTGUIDE, 430
+        VERTGUIDE, 435
+        VERTGUIDE, 440
+        VERTGUIDE, 465
+        VERTGUIDE, 470
+        TOPMARGIN, 5
+        BOTTOMMARGIN, 339
+        HORZGUIDE, 41
+        HORZGUIDE, 52
+        HORZGUIDE, 56
+        HORZGUIDE, 74
+        HORZGUIDE, 81
+        HORZGUIDE, 85
+        HORZGUIDE, 92
+        HORZGUIDE, 99
+        HORZGUIDE, 103
+        HORZGUIDE, 107
+        HORZGUIDE, 309
+        HORZGUIDE, 313
+        HORZGUIDE, 321
+        HORZGUIDE, 325
+    END
+
+    IDD_OPTION, DIALOG
+    BEGIN
+        LEFTMARGIN, 5
+        RIGHTMARGIN, 345
+        VERTGUIDE, 55
+        VERTGUIDE, 290
+        VERTGUIDE, 295
+        VERTGUIDE, 315
+        TOPMARGIN, 5
+        BOTTOMMARGIN, 55
+        HORZGUIDE, 12
+        HORZGUIDE, 19
+        HORZGUIDE, 23
+        HORZGUIDE, 30
+        HORZGUIDE, 37
+        HORZGUIDE, 41
+    END
+
+    IDD_OPEN_DIALOG, DIALOG
+    BEGIN
+        RIGHTMARGIN, 255
+        VERTGUIDE, 45
+        VERTGUIDE, 50
+        BOTTOMMARGIN, 13
+        HORZGUIDE, 6
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAIN_MENU MENU 
+BEGIN
+    POPUP "ÆÄÀÏ(&F)"
+    BEGIN
+        MENUITEM "Cuesheet ¿­±â(&O)¡¦",            IDM_FILE_OPEN
+        MENUITEM "¾ÐÃà ¿­±â(&A)¡¦",                  IDM_ARCHIVE_OPEN
+    END
+    MENUITEM "¼³Á¤(&P)¡¦",                     IDM_OPTION
+    MENUITEM "¸®ÇÎ(&R)",                      IDM_RIP
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// RT_MANIFEST
+//
+
+1                       RT_MANIFEST             "EACRipper.manifest"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_MAIN_ICON           ICON                    "main.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 0,3,0,1
+ PRODUCTVERSION 0,3,0,1
+ FILEFLAGSMASK 0x37L
+#ifdef _DEBUG
+ FILEFLAGS 0x21L
+#else
+ FILEFLAGS 0x20L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "041204b0"
+        BEGIN
+            VALUE "FileDescription", "Audio CD Ripper only for EAC files."
+            VALUE "FileVersion", "0, 3, 0, 1"
+            VALUE "InternalName", "EACRipper"
+            VALUE "LegalCopyright", "Copyright 2009 HNO3, All rights reserved."
+            VALUE "OriginalFilename", "EACRipper.exe"
+            VALUE "ProductName", "EACRipper"
+            VALUE "ProductVersion", "0, 3, 0, 1"
+            VALUE "SpecialBuild", "beta"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x412, 1200
+    END
+END
+
+#endif    // Korean resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_OPTION DIALOGEX 0, 0, 350, 60
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Preferences"
+FONT 9, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    RTEXT           "Target Path: ",IDC_STATIC,5,8,50,8
+    EDITTEXT        IDC_PATH,55,5,260,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "…",IDC_PATH_SELECT,315,5,30,14
+    RTEXT           "Name Format: ",IDC_STATIC,5,26,50,8
+    EDITTEXT        IDC_NAME_FORMAT,55,23,290,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,240,41,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,295,41,50,14
+END
+
+IDD_MAIN_DIALOG DIALOGEX 0, 0, 535, 344
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_ACCEPTFILES | WS_EX_APPWINDOW
+CAPTION "EACRipper"
+MENU IDR_MAIN_MENU
+FONT 9, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    GROUPBOX        "Album Information",IDC_STATIC,5,5,430,47
+    RTEXT           "Album Title: ",IDC_STATIC,10,19,50,8
+    EDITTEXT        IDC_ALBUM_TITLE,60,16,165,14,ES_AUTOHSCROLL
+    RTEXT           "Album Artist: ",IDC_STATIC,225,19,50,8
+    EDITTEXT        IDC_ALBUM_ARTIST,275,16,155,14,ES_AUTOHSCROLL
+    RTEXT           "Year: ",IDC_STATIC,10,37,25,8
+    EDITTEXT        IDC_YEAR,35,34,30,14,ES_AUTOHSCROLL
+    RTEXT           "Out Format: ",IDC_STATIC,65,37,45,8
+    COMBOBOX        IDC_FORMAT,110,35,80,80,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "…",IDC_FORMAT_SETTING,190,34,15,14
+    RTEXT           "Genre: ",IDC_STATIC,205,37,30,8
+    EDITTEXT        IDC_GENRE,235,34,55,14,ES_AUTOHSCROLL
+    CONTROL         "Every track's artist is same as above",IDC_SAME_ARTIST,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,303,36,127,10
+    GROUPBOX        "Track Information",IDC_STATIC,5,56,275,47
+    RTEXT           "Track #: ",IDC_STATIC,10,70,50,8
+    EDITTEXT        IDC_TRACK,60,67,25,14,ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY
+    RTEXT           "Artist: ",IDC_STATIC,85,70,45,8
+    EDITTEXT        IDC_ARTIST,130,67,145,14,ES_AUTOHSCROLL
+    RTEXT           "Title: ",IDC_STATIC,10,88,50,8
+    EDITTEXT        IDC_TITLE,60,85,215,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "&Set Cover Art...",IDC_SET_COVER_ART,360,67,75,14
+    PUSHBUTTON      "&Cancel Cover Art",IDC_CANCEL_COVER_ART,360,85,75,14
+    CONTROL         "",IDC_COVER_ART,"Static",SS_OWNERDRAW | SS_CENTERIMAGE | SS_SUNKEN,440,9,90,90
+    CONTROL         "",IDC_LIST,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,5,107,525,202
+    LTEXT           "EACRipper is waiting for ripping.",IDC_PROGRESS_TEXT,5,313,525,8,SS_PATHELLIPSIS
+    CONTROL         "",IDC_PROGRESS,"msctls_progress32",WS_BORDER,5,325,460,14
+    PUSHBUTTON      "Cancel",IDC_CANCEL,470,325,60,14,WS_DISABLED
+END
+
+IDD_OPEN_DIALOG DIALOGEX 0, 0, 634, 14
+STYLE DS_SETFONT | DS_3DLOOK | DS_FIXEDSYS | DS_CONTROL | WS_CHILD | WS_CLIPSIBLINGS | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    COMBOBOX        IDC_ENCODING,50,0,220,30,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "File Encoding:",IDC_ENCODING_LABEL,0,2,45,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_OPTION, DIALOG
+    BEGIN
+        LEFTMARGIN, 5
+        RIGHTMARGIN, 345
+        VERTGUIDE, 55
+        VERTGUIDE, 290
+        VERTGUIDE, 295
+        VERTGUIDE, 315
+        TOPMARGIN, 5
+        BOTTOMMARGIN, 55
+        HORZGUIDE, 12
+        HORZGUIDE, 19
+        HORZGUIDE, 23
+        HORZGUIDE, 30
+        HORZGUIDE, 37
+        HORZGUIDE, 41
+    END
+
+    IDD_MAIN_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 5
+        RIGHTMARGIN, 530
+        VERTGUIDE, 10
+        VERTGUIDE, 35
+        VERTGUIDE, 60
+        VERTGUIDE, 65
+        VERTGUIDE, 85
+        VERTGUIDE, 110
+        VERTGUIDE, 130
+        VERTGUIDE, 190
+        VERTGUIDE, 205
+        VERTGUIDE, 225
+        VERTGUIDE, 235
+        VERTGUIDE, 275
+        VERTGUIDE, 280
+        VERTGUIDE, 341
+        VERTGUIDE, 430
+        VERTGUIDE, 435
+        VERTGUIDE, 440
+        VERTGUIDE, 465
+        VERTGUIDE, 470
+        TOPMARGIN, 5
+        BOTTOMMARGIN, 339
+        HORZGUIDE, 41
+        HORZGUIDE, 52
+        HORZGUIDE, 56
+        HORZGUIDE, 74
+        HORZGUIDE, 81
+        HORZGUIDE, 85
+        HORZGUIDE, 92
+        HORZGUIDE, 99
+        HORZGUIDE, 103
+        HORZGUIDE, 107
+        HORZGUIDE, 309
+        HORZGUIDE, 313
+        HORZGUIDE, 321
+        HORZGUIDE, 325
+    END
+
+    IDD_OPEN_DIALOG, DIALOG
+    BEGIN
+        RIGHTMARGIN, 255
+        VERTGUIDE, 45
+        VERTGUIDE, 50
+        BOTTOMMARGIN, 13
+        HORZGUIDE, 6
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAIN_MENU MENU 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&Open Cuesheet",              IDM_FILE_OPEN
+        MENUITEM "Open &Archive",               IDM_ARCHIVE_OPEN
+    END
+    MENUITEM "&Preferences",                IDM_OPTION
+    MENUITEM "&Rip",                        IDM_RIP
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

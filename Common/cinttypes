@@ -1,0 +1,18 @@
+// cinttypes standard header
+#pragma once
+#ifndef _CINTTYPES_
+#define _CINTTYPES_
+#include <yvals.h>
+
+ #include <inttypes.h>
+
+#ifndef RC_INVOKED
+ #if _GLOBAL_USING
+_STD_BEGIN
+using ::imaxdiv_t; using ::imaxdiv;
+
+_STD_END
+ #endif /* _GLOBAL_USING */
+#endif /* RC_INVOKED */
+
+#endif /* _CINTTYPES_ */

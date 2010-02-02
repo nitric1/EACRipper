@@ -42,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="../Common"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;WIN32_LEAN_AND_MEAN;NOMINMAX"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -177,7 +177,11 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\Main.cpp"
+				RelativePath=".\MainController.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MainWindow.cpp"
 				>
 			</File>
 		</Filter>
@@ -191,7 +195,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Main.h"
+				RelativePath=".\MainController.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MainWindow.h"
 				>
 			</File>
 			<File

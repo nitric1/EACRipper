@@ -1,12 +1,13 @@
 - 0.4.0モ
    * Added MP3 VBR mode.
 - 0.3.0モ
-   * Added output format(Bitrate, Compression rate, ...) support for each component.
-   * Added memorized support
+   * Added preference(Bitrate, Compression rate, ...) support for each component.
+   * Added memorization support of last selected format and preference.
+   * Added samples progress with percent progress in the status text.
 - 0.2.2メ
    * Added UTF-8 cuesheet support.
 - 0.2.1メ
    * Added BIN Component (Readonly).
-   * Widen format selection combobox a little.
+   * Modified width of the format selection combobox wider.
 - 0.2.0メ
    * First Release.

@@ -83,10 +83,26 @@ public:
 	}
 
 	/**
-	 * Read the opened file from the section [startMillisec, endMillisec).
+	 * Return required buffer array length of inCue string.
+	 * @param codePage Default code page for inCue encoding.
+	 * @return Required buffer array length.
+	 */
+	virtual size_t __stdcall getInCueLength(uint32_t codePage) = 0;
+
+	/**
+	 * Read inCue string in the opened file.
+	 * @param buffer Buffer in which inCue string is to be stored.
+	 * @param bufferSize The buffer's array length.
+	 * @param codePage Default code page for inCue encoding.
+	 * @return true if succeeded, false otherwise.
+	 */
+	virtual bool __stdcall readInCue(wchar_t *buffer, size_t bufferSize, uint32_t codePage) = 0;
+
+	/**
+	 * Read music data of the opened file from the section [startMillisec, endMillisec).
 	 * @param startMillisec Start of the section in millisecond.
 	 * @param endMillisec End of the section in millisecond.
-	 * @param buffer Buffer in which data is to be stored.
+	 * @param buffer Buffer in which music data is to be stored.
 	 * @param bufferSize The buffer's size in byte.
 	 * @return Size of read data in byte if succeeded, std::numeric_limits<unsigned>::max() in <limits> if failed.
 	 */
@@ -151,13 +167,13 @@ public:
 
 	/**
 	 * Return information of the component.
-	 * Should use ER_DECLARE_MUSIC_COMPONENT to override this function, instead of overriding directly.
+	 * Should use ER_DECLARE_MUSIC_COMPONENT_DEFINITION and ER_DECLARE_MUSIC_COMPONENT macros to override this function, instead of overriding directly.
 	 */
 	virtual const wchar_t *__stdcall getInformation() const = 0;
 
 	/**
 	 * Return format list.
-	 * Should use ER_DECLARE_MUSIC_COMPONENT_FORMAT_* to override this function, instead of overriding directly.
+	 * Should use ER_DECLARE_MUSIC_COMPONENT_FORMAT_* macros to override this function, instead of overriding directly.
 	 */
 	virtual const Format *__stdcall getFormats() const = 0;
 };
@@ -165,10 +181,10 @@ public:
 #define ER_MUSIC_COMPONENT_VERSION L"1.4.0"
 
 #define ER_DECLARE_MUSIC_COMPONENT_DEFINITION() \
-	public: virtual const wchar_t *getInformation() const; \
-		virtual const Format *getFormats() const;
+	public: virtual const wchar_t *__stdcall getInformation() const; \
+		virtual const Format *__stdcall getFormats() const;
 
-#define ER_DECLARE_MUSIC_COMPONENT(name, ext, cls) \
+#define ER_DECLARE_MUSIC_COMPONENT(name, ext, fnc, cls) \
 	extern "C" IERMusicComponent *newInstance(HWND window) { \
 		IERMusicComponent *p = new (cls)(); \
 		p->window = window; \
@@ -178,8 +194,14 @@ public:
 		delete p; \
 	} \
 	const wchar_t * ## cls ## ::getInformation() const { \
-		return name L"\0" ext L"\0" ER_MUSIC_COMPONENT_VERSION L"\0"; \
+		return name L"\0" ext L"\0" fnc L"\0" ER_MUSIC_COMPONENT_VERSION; \
 	}
+
+#define ER_FUNCTION_READONLY L"R"
+#define ER_FUNCTION_READONLY_INCUE L"RI"
+#define ER_FUNCTION_WRITEONLY L"W"
+#define ER_FUNCTION_READWRITE "RW"
+#define ER_FUNCTION_READWRITE_INCUE L"RWI"
 
 #define ER_DECLARE_MUSIC_COMPONENT_FORMAT_VOID(cls) \
 	const cls ## ::Format * ## cls ## ::getFormats() const { \

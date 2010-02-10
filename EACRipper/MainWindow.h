@@ -1,20 +1,35 @@
 #pragma once
 
+#include "Window.h"
 #include "Singleton.h"
+#include "ComponentManager.h"
 
 namespace EACRipper
 {
-	class MainWindow : public Singleton<MainWindow>
+	class MainController;
+
+	class MainWindow : public Window<MainController>, public Singleton<MainWindow>
 	{
-	protected:
+	private:
+		typedef ComponentManager CM;
+
 		enum { DIALOG_ID = IDD_MAIN_DIALOG };
 
-	protected:
+	private:
 		HWND window;
 
-	protected:
+	private:
 		MainWindow();
 		~MainWindow();
+
+	public:
+		HWND getWindow();
+
+	private:
+		static BOOL __stdcall procMessage(HWND, unsigned, WPARAM, LPARAM);
+
+	public:
+		bool show();
 
 		friend class Singleton<MainWindow>;
 	};

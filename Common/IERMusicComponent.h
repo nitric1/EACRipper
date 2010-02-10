@@ -27,7 +27,7 @@ public:
 		const wchar_t *name;
 	} Format;
 
-public:
+private:
 	/**
 	 * Main window's handle.
 	 * If the component requires window handle (like DirectSound), use this.
@@ -39,6 +39,24 @@ public:
 	 * Destructor for safe deriving.
 	 */
 	virtual __stdcall ~IERMusicComponent() = 0 {}
+
+	/**
+	 * Return this class' owner window.
+	 * @return Window handle of owner.
+	 */
+	virtual HWND __stdcall getWindow()
+	{
+		return window;
+	}
+
+	/**
+	 * Set this class' owner window.
+	 * @param windowArg Window handle of new owner.
+	 */
+	virtual void __stdcall setWindow(HWND windowArg)
+	{
+		window = windowArg;
+	}
 
 	/**
 	 * Open a file as read mode.
@@ -187,7 +205,7 @@ public:
 #define ER_DECLARE_MUSIC_COMPONENT(name, ext, fnc, cls) \
 	extern "C" IERMusicComponent *newInstance(HWND window) { \
 		IERMusicComponent *p = new (cls)(); \
-		p->window = window; \
+		p->setWindow(window); \
 		return p; \
 	} \
 	extern "C" void deleteInstance(IERMusicComponent *p) { \

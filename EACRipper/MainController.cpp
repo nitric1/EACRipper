@@ -7,20 +7,27 @@ namespace EACRipper
 {
 	MainController::MainController()
 	{
+		mainWin = &MainWindow::instance();
+		mainWin->setOwner(this);
 	}
 
 	MainController::~MainController()
 	{
 	}
 
-	int MainController::run(HINSTANCE instHandle)
+	HINSTANCE MainController::getInstance()
+	{
+		return inst;
+	}
+
+	bool MainController::run(HINSTANCE instHandle)
 	{
 		inst = instHandle;
-		return 0;
+		return mainWin->show();
 	}
 }
 
 int __stdcall wWinMain(HINSTANCE inst, HINSTANCE, LPWSTR, int)
 {
-	return EACRipper::MainController::instance().run(inst);
+	return ER::MainController::instance().run(inst) ? 0 : 1;
 }

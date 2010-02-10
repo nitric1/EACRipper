@@ -6,7 +6,6 @@ namespace EACRipper
 	class Singleton
 	{
 	protected:
-		Singleton() {}
 		~Singleton() {}
 
 	public:

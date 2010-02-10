@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Singleton.h"
+#include "MainWindow.h"
+#include "WindowEventArgs.h"
 
 namespace EACRipper
 {
@@ -8,13 +10,20 @@ namespace EACRipper
 	{
 	protected:
 		HINSTANCE inst;
+		MainWindow *mainWin;
 
 	protected:
 		MainController();
-		~MainController();
+		virtual ~MainController();
 
 	public:
-		int run(HINSTANCE);
+		HINSTANCE getInstance();
+
+	public:
+		bool run(HINSTANCE);
+
+	public:
+		;
 
 		friend class Singleton<MainController>;
 	};

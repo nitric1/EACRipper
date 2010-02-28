@@ -28,7 +28,7 @@ namespace EACRipper
 		HWND getWindow();
 
 	private:
-		static BOOL __stdcall procMessage(HWND, unsigned, WPARAM, LPARAM);
+		static intptr_t __stdcall procMessage(HWND, unsigned, WPARAM, LPARAM);
 
 	public:
 		bool show();

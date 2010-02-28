@@ -20,7 +20,7 @@ namespace EACRipper
 		return window;
 	}
 
-	BOOL __stdcall MainWindow::procMessage(HWND window, unsigned message, WPARAM wParam, LPARAM lParam)
+	intptr_t __stdcall MainWindow::procMessage(HWND window, unsigned message, WPARAM wParam, LPARAM lParam)
 	{
 		WindowEventArgs e = {window, message, wParam, lParam};
 
@@ -47,68 +47,68 @@ namespace EACRipper
 				if(!self->runEventListener(L"init", e))
 					break;
 			}
-			return TRUE;
+			return 1;
 
 		case WM_COMMAND:
 			switch(LOWORD(wParam))
 			{
 			case IDM_FILE_OPEN:
-				return TRUE;
+				return 1;
 
 			case IDM_ARCHIVE_OPEN:
-				return TRUE;
+				return 1;
 
 			case IDM_OPTION:
-				return TRUE;
+				return 1;
 
 			case IDM_RIP:
-				return TRUE;
+				return 1;
 
 			case IDC_FORMAT:
 				if(HIWORD(wParam) == CBN_SELCHANGE)
 				{
-					return TRUE;
+					return 1;
 				}
 				break;
 
 			case IDC_FORMAT_SETTING:
-				return TRUE;
+				return 1;
 
 			case IDC_ALBUM_ARTIST:
 				if(HIWORD(wParam) == EN_CHANGE)
 				{
-					return TRUE;
+					return 1;
 				}
 				break;
 
 			case IDC_ARTIST:
 				if(HIWORD(wParam) == EN_CHANGE)
 				{
-					return TRUE;
+					return 1;
 				}
 				break;
 
 			case IDC_TITLE:
 				if(HIWORD(wParam) == EN_CHANGE)
 				{
-					return TRUE;
+					return 1;
 				}
 				break;
 
 			case IDC_SET_COVER_ART:
 				{
 				}
-				return TRUE;
+				return 1;
 
 			case IDC_CANCEL_COVER_ART:
 				{
 				}
-				return TRUE;
+				return 1;
 
 			case IDC_CANCEL:
 				// TODO: Is ripping
 				{
-					return TRUE;
+					return 1;
 				}
 				break;
 			}
@@ -124,7 +124,7 @@ namespace EACRipper
 						switch(hdr->code)
 						{
 						case LVN_ITEMCHANGED:
-							return TRUE;
+							return 1;
 						}
 					}
 					break;
@@ -144,14 +144,16 @@ namespace EACRipper
 
 				self->window = NULL;
 			}
-			return TRUE;
+			return 1;
 		}
 
-		return FALSE;
+		return 0;
 	}
 
 	bool MainWindow::show()
 	{
-		return DialogBoxParamW(MainController::instance().getInstance(), MAKEINTRESOURCEW(DIALOG_ID), NULL, procMessage, NULL) == IDOK;
+		intptr_t res = DialogBoxParamW(MainController::instance().getInstance(), MAKEINTRESOURCEW(DIALOG_ID), NULL, procMessage, NULL);
+		unsigned err = GetLastError();
+		return res == IDOK;
 	}
 }

@@ -14,7 +14,24 @@ namespace ER = EACRipper;
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 
+#include <algorithm>
+
+using std::max; using std::min;
+
 #include <windows.h>
 #include <windowsx.h>
+
+#include <tchar.h>
+
+#include <commdlg.h>
+#include <commctrl.h>
+#include <dlgs.h>
+
+#include <shlwapi.h>
+#include <shlobj.h>
+
+#include <shellapi.h>
+
+#include <gdiplus.h>
 
 #include "resource.h"

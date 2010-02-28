@@ -16,7 +16,7 @@ namespace EACRipper
 
 	private:
 		Controller *controller;
-		std::map<std::string, std::vector<EventListener> > eventMap;
+		std::map<std::wstring, std::vector<EventListener> > eventMap;
 
 	protected:
 		Window() : controller(NULL) {}
@@ -34,7 +34,7 @@ namespace EACRipper
 		}
 
 	public:
-		virtual bool addEventListener(const std::string &name, EventListener listener)
+		virtual bool addEventListener(const std::wstring &name, EventListener listener)
 		{
 			if(controller == NULL)
 				return false;
@@ -43,7 +43,7 @@ namespace EACRipper
 		}
 
 	protected:
-		bool runEventListener(const std::string &name, WindowEventArgs e)
+		bool runEventListener(const std::wstring &name, WindowEventArgs e)
 		{
 			if(controller == NULL)
 				return false;

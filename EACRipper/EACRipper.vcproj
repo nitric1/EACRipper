@@ -192,6 +192,10 @@
 				RelativePath=".\MainWindow.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\RipManager.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -216,6 +220,10 @@
 			</File>
 			<File
 				RelativePath=".\MainWindow.h"
+				>
+			</File>
+			<File
+				RelativePath=".\RipManager.h"
 				>
 			</File>
 			<File

@@ -8,22 +8,28 @@ namespace EACRipper
 {
 	class MainController : public Singleton<MainController>
 	{
-	protected:
+	private:
 		HINSTANCE inst;
 		MainWindow *mainWin;
 
-	protected:
+		ULONG_PTR gpToken;
+
+	private:
 		MainController();
-		virtual ~MainController();
+		~MainController();
 
 	public:
 		HINSTANCE getInstance();
 
 	public:
+		void registerEvents();
+		void initializeApp();
+		void uninitializeApp();
 		bool run(HINSTANCE);
 
 	public:
-		;
+		bool onInit(WindowEventArgs);
+		bool onClose(WindowEventArgs);
 
 		friend class Singleton<MainController>;
 	};

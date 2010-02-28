@@ -18,6 +18,8 @@ namespace EACRipper
 	private:
 		HWND window;
 
+		HICON iconSmall, iconBig;
+
 	private:
 		MainWindow();
 		~MainWindow();

@@ -194,6 +194,12 @@ public:
 	 * Should use ER_DECLARE_MUSIC_COMPONENT_FORMAT_* macros to override this function, instead of overriding directly.
 	 */
 	virtual const Format *__stdcall getFormats() const = 0;
+
+	/**
+	 * Return whether the component is compiled as debug mode or not.
+	 * Should use ER_DECLARE_MUSIC_COMPONENT_DEFINITION and ER_DECLARE_MUSIC_COMPONENT macros to override this function, instead of overriding directly.
+	 */
+	virtual bool __stdcall isDebug() const = 0;
 };
 
 #define ER_MUSIC_COMPONENT_VERSION L"1.4.0"

@@ -14,5 +14,6 @@ namespace EACRipper
 			static T theInstance;
 			return theInstance;
 		}
+		static T &inst() { return instance(); }
 	};
 }

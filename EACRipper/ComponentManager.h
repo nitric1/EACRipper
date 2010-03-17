@@ -14,8 +14,8 @@ namespace EACRipper
 	class ComponentManager : public Singleton<ComponentManager>
 	{
 	public:
-		static const std::string COMPONENT_TYPE_MUSIC;
-		static const std::string COMPONENT_TYPE_ARCHIVE;
+		static const std::wstring COMPONENT_TYPE_MUSIC;
+		static const std::wstring COMPONENT_TYPE_ARCHIVE;
 
 	private:
 		std::map<std::wstring, std::tr1::shared_ptr<Component> > comp;

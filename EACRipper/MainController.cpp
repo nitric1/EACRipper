@@ -64,6 +64,26 @@ namespace EACRipper
 		uninitializeApp();
 		return true;
 	}
+
+	bool MainController::onOpenCuesheet(WindowEventArgs e)
+	{
+		return true;
+	}
+
+	bool MainController::onOpenArchive(WindowEventArgs e)
+	{
+		return true;
+	}
+
+	bool MainController::onOption(WindowEventArgs e)
+	{
+		return true;
+	}
+
+	bool MainController::onRip(WindowEventArgs e)
+	{
+		return true;
+	}
 }
 
 int __stdcall wWinMain(HINSTANCE inst, HINSTANCE, LPWSTR, int)

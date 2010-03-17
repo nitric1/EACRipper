@@ -7,8 +7,8 @@ using namespace std::tr1;
 
 namespace EACRipper
 {
-	const string ComponentManager::COMPONENT_TYPE_MUSIC = "music";
-	const string ComponentManager::COMPONENT_TYPE_ARCHIVE = "archive";
+	const wstring ComponentManager::COMPONENT_TYPE_MUSIC = L"music";
+	const wstring ComponentManager::COMPONENT_TYPE_ARCHIVE = L"archive";
 
 	ComponentManager::ComponentManager()
 	{

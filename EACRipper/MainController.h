@@ -30,6 +30,10 @@ namespace EACRipper
 	public:
 		bool onInit(WindowEventArgs);
 		bool onClose(WindowEventArgs);
+		bool onOpenCuesheet(WindowEventArgs);
+		bool onOpenArchive(WindowEventArgs);
+		bool onOption(WindowEventArgs);
+		bool onRip(WindowEventArgs);
 
 		friend class Singleton<MainController>;
 	};

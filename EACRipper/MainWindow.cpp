@@ -53,15 +53,23 @@ namespace EACRipper
 			switch(LOWORD(wParam))
 			{
 			case IDM_FILE_OPEN:
+				if(!self->runEventListener(L"openCuesheet", e))
+					break;
 				return 1;
 
 			case IDM_ARCHIVE_OPEN:
+				if(!self->runEventListener(L"openArchive", e))
+					break;
 				return 1;
 
 			case IDM_OPTION:
+				if(!self->runEventListener(L"option", e))
+					break;
 				return 1;
 
 			case IDM_RIP:
+				if(!self->runEventListener(L"rip", e))
+					break;
 				return 1;
 
 			case IDC_FORMAT:

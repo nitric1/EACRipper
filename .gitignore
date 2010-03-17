@@ -1,9 +1,16 @@
-EACRipper/EACRipper.vcproj.HNO3.Administrator.user
 EACRipper/EACRipper.aps
+EACRipper/EACRipper.vcproj.*.user
+EACRipper/EACRipper.vcxproj.user
+EACRipper/EACRipper.vcxproj.filters
 EACRipper/Debug
 EACRipper/Release
 EACRipper/x64
 Debug
 Release
 EACRipper.ncb
+EACRipper.opensdf
+EACRipper.sdf
 EACRipper.suo
+UpgradeLog.XML
+_UpgradeReport_Files
+ipch

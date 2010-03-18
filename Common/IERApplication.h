@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Common/ERUUID.h"
+#include "ERUUID.h"
 
 #ifndef _INC_WINDOWS
 #error Include <windows.h> before include this header!

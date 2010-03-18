@@ -1,5 +1,9 @@
 #define WIN32_LEAN_AND_MEAN
-#include "../Common/Component/ERComponent.h"
+#define NOMINMAX
+
+#include <windows.h>
+
+#include "Component/ERComponent.h"
 
 class InoutWaveEntrypoint : public IERComponentEntrypoint
 {

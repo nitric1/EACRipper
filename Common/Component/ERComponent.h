@@ -13,12 +13,12 @@ class ERComponentInfo;
 template<typename T>
 class ERServiceFactory;
 
-#include "../Common/IERApplication.h"
-#include "../Common/IERComponentEntrypoint.h"
-#include "../Common/IERComponentInfo.h"
-#include "../Common/IERStreamReader.h"
-#include "../Common/IERStreamWriter.h"
-#include "../Common/ERUUID.h"
+#include "IERApplication.h"
+#include "IERComponentEntrypoint.h"
+#include "IERComponentInfo.h"
+#include "IERStreamReader.h"
+#include "IERStreamWriter.h"
+#include "ERUUID.h"
 
 #if defined(_WINDOWS) && defined(_USRDLL)
 extern "C" __declspec(dllexport) void initComponent(IERApplication *);

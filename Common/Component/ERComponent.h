@@ -1,6 +1,11 @@
 #pragma once
 
-#define EACRIPPER_COMPONENT_SDK_VERSION "2.0.0"
+#define __STDC_FORMAT_MACROS
+#include <cinttypes>
+
+#include <windows.h>
+
+#define EACRIPPER_COMPONENT_SDK_VERSION L"2.0.0"
 
 class ERApplicationInfo;
 class ERComponentInfo;
@@ -15,7 +20,10 @@ class ERServiceFactory;
 #include "../Common/IERStreamWriter.h"
 #include "../Common/ERUUID.h"
 
-#include <cinttypes>
+#if defined(_WINDOWS) && defined(_USRDLL)
+extern "C" __declspec(dllexport) void initComponent(IERApplication *);
+extern "C" __declspec(dllexport) void uninitComponent();
+#endif
 
 class ERApplicationInfo
 {
@@ -29,8 +37,8 @@ private:
 	void setApp(IERApplication *app) { theApp = app; }
 
 public:
-	static ERApplicationInfo &instance() { ERApplicationInfo theInstance; return theInstance; }
-	IERApplication &getApp() { return theApp; }
+	static ERApplicationInfo &instance() { static ERApplicationInfo theInstance; return theInstance; }
+	IERApplication &getApp() { return *theApp; }
 
 	friend void initComponent(IERApplication *);
 };
@@ -51,7 +59,7 @@ namespace ComponentGlobal
 	extern const wchar_t *componentName;
 	extern const wchar_t *componentVersion;
 
-	extern const IERComponentEntrypoint *componentEntry;
+	extern IERComponentEntrypoint *componentEntry;
 }
 
 template<typename T>
@@ -75,18 +83,24 @@ public:
 	virtual const wchar_t *getSDKVersion() { return EACRIPPER_COMPONENT_SDK_VERSION; }
 	virtual const wchar_t *getComponentName() { return ComponentGlobal::componentName; }
 	virtual const wchar_t *getComponentVersion() { return ComponentGlobal::componentVersion; }
+	virtual bool isDebug()
+	{
+#if defined(DEBUG) || defined(_DEBUG)
+		return true;
+#else
+		return false;
+#endif
+	}
 };
 
 #define DECLARE_COMPONENT(name, version) \
 	namespace ComponentGlobal { \
 		const wchar_t *componentName = name; \
 		const wchar_t *componentVersion = version; \
-		const IERComponentEntrypoint *componentEntry = NULL; \
+		IERComponentEntrypoint *componentEntry = NULL; \
 	}
 
 #if defined(_WINDOWS) && defined(_USRDLL)
-#include <windows.h>
-
 extern "C" __declspec(dllexport) void initComponent(IERApplication *app)
 {
 	ERApplicationInfo::instance().setApp(app);

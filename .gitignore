@@ -5,6 +5,15 @@ EACRipper/EACRipper.vcxproj.filters
 EACRipper/Debug
 EACRipper/Release
 EACRipper/x64
+
+InoutWave/InoutWave.aps
+InoutWave/InoutWave.vcproj.*.user
+InoutWave/InoutWave.vcxproj.user
+InoutWave/InoutWave.vcxproj.filters
+InoutWave/Debug
+InoutWave/Release
+InoutWave/x64
+
 Debug
 Release
 EACRipper.ncb

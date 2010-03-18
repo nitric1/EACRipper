@@ -1,11 +1,9 @@
 #pragma once
 
-class IERComponent;
-
-class IERComponent
+class IERComponentEntrypoint
 {
 public:
-	virtual ~IERComponent() = 0;
+	virtual ~IERComponentEntrypoint() = 0 {}
 
 public:
 	virtual bool onInit() = 0;

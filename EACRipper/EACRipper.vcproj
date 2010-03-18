@@ -431,7 +431,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\Common\ERComponentProvider.h"
+				RelativePath="..\Common\ERServiceGUID.h"
 				>
 			</File>
 			<File
@@ -440,6 +440,10 @@
 			</File>
 			<File
 				RelativePath="..\Common\IERArchiveComponent.h"
+				>
+			</File>
+			<File
+				RelativePath="..\Common\IERComponentEntrypoint.h"
 				>
 			</File>
 			<File

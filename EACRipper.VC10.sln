@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EACRipper", "EACRipper\EACRipper.vcxproj", "{3034B93B-D9AF-40A6-93D8-B3353C5EAF3C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InoutWave", "InoutWave\InoutWave.vcxproj", "{C77CA020-7E61-4DFB-BA80-A614E603D2CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -19,6 +21,14 @@ Global
 		{3034B93B-D9AF-40A6-93D8-B3353C5EAF3C}.Release|Win32.Build.0 = Release|Win32
 		{3034B93B-D9AF-40A6-93D8-B3353C5EAF3C}.Release|x64.ActiveCfg = Release|x64
 		{3034B93B-D9AF-40A6-93D8-B3353C5EAF3C}.Release|x64.Build.0 = Release|x64
+		{C77CA020-7E61-4DFB-BA80-A614E603D2CB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C77CA020-7E61-4DFB-BA80-A614E603D2CB}.Debug|Win32.Build.0 = Debug|Win32
+		{C77CA020-7E61-4DFB-BA80-A614E603D2CB}.Debug|x64.ActiveCfg = Debug|x64
+		{C77CA020-7E61-4DFB-BA80-A614E603D2CB}.Debug|x64.Build.0 = Debug|x64
+		{C77CA020-7E61-4DFB-BA80-A614E603D2CB}.Release|Win32.ActiveCfg = Release|Win32
+		{C77CA020-7E61-4DFB-BA80-A614E603D2CB}.Release|Win32.Build.0 = Release|Win32
+		{C77CA020-7E61-4DFB-BA80-A614E603D2CB}.Release|x64.ActiveCfg = Release|x64
+		{C77CA020-7E61-4DFB-BA80-A614E603D2CB}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

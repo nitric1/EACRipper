@@ -5,8 +5,6 @@
 
 using namespace Gdiplus;
 
-#include "../Common/ERUUID.h"
-
 namespace EACRipper
 {
 	MainController::MainController()
@@ -48,18 +46,6 @@ namespace EACRipper
 
 	bool MainController::run(HINSTANCE instHandle)
 	{
-		char uuid[50];
-		wchar_t uuidw[50];
-
-		ERUUID uuid1, uuid2("550e8400-e29b-41d4-a716-446655440000");
-
-		uuid1 = ERUUID(0x037fc123u, 0x501d, 0x3033, 0xa8ca, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06);
-		ERUUID uuid3 = uuid1;
-		uuid1 = uuid2;
-
-		uuid3.toString(uuid);
-		uuid1.toString(uuidw);
-
 		inst = instHandle;
 
 		registerEvents();

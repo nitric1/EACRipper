@@ -17,10 +17,11 @@ private:
 public:
 	virtual HWND getWindow() const = 0;
 
-	virtual bool registerMusicDecoder(const wchar_t *formatName, const wchar_t *ext) = 0;
-	virtual bool registerMusicEncoder(const wchar_t *formatName, const wchar_t *ext) = 0;
+	virtual bool registMusicDecoder(const wchar_t *ext) = 0;
+	virtual bool registIncueMusicDecoder(const wchar_t *formatName, const wchar_t *ext) = 0;
+	virtual bool registMusicEncoder(const wchar_t *formatName, const wchar_t *ext) = 0;
 
-	virtual bool registerArchiveExtractor(const wchar_t *formatName, const wchar_t *ext) = 0;
+	virtual bool registArchiveExtractor(const wchar_t *formatName, const wchar_t *ext) = 0;
 
 	template<typename T>
 	T *getServicePointer() { return static_cast<T *>(getServicePointerImpl(ERServiceUUID<T>())); }

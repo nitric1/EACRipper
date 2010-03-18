@@ -5,11 +5,13 @@
 
 #include "Component/ERComponent.h"
 
-class InoutWaveEntrypoint : public IERComponentEntrypoint
+using namespace ERComponent;
+
+class InoutWaveEntrypoint
 {
 public:
-	virtual bool onInit();
-	virtual bool onUninit();
+	bool onInit();
+	bool onUninit();
 };
 
 bool InoutWaveEntrypoint::onInit()
@@ -22,6 +24,18 @@ bool InoutWaveEntrypoint::onUninit()
 	return true;
 }
 
-ERComponentEntrypointFactory<InoutWaveEntrypoint> entry;
+class InWave
+{
+};
+
+class OutWave
+{
+public:
+	ERComponentMusicFormat getFormats();
+};
+
+EntrypointRegister<InoutWaveEntrypoint> entryFac;
+MusicDecoderRegister<InWave> waveDecoderFac;
+MusicEncoderRegister<OutWave> waveEncoderFac;
 
 DECLARE_COMPONENT(L"InoutWave", L"1.0.0");

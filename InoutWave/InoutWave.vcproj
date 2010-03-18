@@ -357,66 +357,6 @@
 				>
 			</File>
 		</Filter>
-		<Filter
-			Name="Common Files"
-			>
-			<File
-				RelativePath="..\Common\cinttypes"
-				>
-			</File>
-			<File
-				RelativePath="..\Common\cstdint"
-				>
-			</File>
-			<File
-				RelativePath="..\Common\ERUUID.h"
-				>
-			</File>
-			<File
-				RelativePath="..\Common\IERApplication.h"
-				>
-			</File>
-			<File
-				RelativePath="..\Common\IERArchiveComponent.h"
-				>
-			</File>
-			<File
-				RelativePath="..\Common\IERComponentEntrypoint.h"
-				>
-			</File>
-			<File
-				RelativePath="..\Common\IERComponentInfo.h"
-				>
-			</File>
-			<File
-				RelativePath="..\Common\IERMusicComponent.h"
-				>
-			</File>
-			<File
-				RelativePath="..\Common\IERStreamReader.h"
-				>
-			</File>
-			<File
-				RelativePath="..\Common\IERStreamWriter.h"
-				>
-			</File>
-			<File
-				RelativePath="..\Common\inttypes.h"
-				>
-			</File>
-			<File
-				RelativePath="..\Common\stdint.h"
-				>
-			</File>
-			<Filter
-				Name="Component Files"
-				>
-				<File
-					RelativePath="..\Common\Component\ERComponent.h"
-					>
-				</File>
-			</Filter>
-		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

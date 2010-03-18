@@ -447,6 +447,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\Common\IERComponentMusic.h"
+				>
+			</File>
+			<File
 				RelativePath="..\Common\IERMusicComponent.h"
 				>
 			</File>
@@ -470,7 +474,23 @@
 				Name="Component Files"
 				>
 				<File
+					RelativePath="..\Common\Component\Archive.h"
+					>
+				</File>
+				<File
 					RelativePath="..\Common\Component\ERComponent.h"
+					>
+				</File>
+				<File
+					RelativePath="..\Common\Component\Factory.h"
+					>
+				</File>
+				<File
+					RelativePath="..\Common\Component\Info.h"
+					>
+				</File>
+				<File
+					RelativePath="..\Common\Component\Music.h"
 					>
 				</File>
 			</Filter>

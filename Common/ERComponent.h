@@ -13,7 +13,7 @@ class ERServiceFactory;
 #include "../Common/IERComponentInfo.h"
 #include "../Common/IERStreamReader.h"
 #include "../Common/IERStreamWriter.h"
-#include "../Common/ERServiceGUID.h"
+#include "../Common/ERUUID.h"
 
 #include <cinttypes>
 

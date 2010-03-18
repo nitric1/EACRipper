@@ -431,7 +431,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\Common\ERServiceGUID.h"
+				RelativePath="..\Common\ERUUID.h"
 				>
 			</File>
 			<File

@@ -10,12 +10,13 @@
 
 #define EACRIPPER_COMPONENT_SDK_VERSION L"2.0.0"
 
+#include "ERUUID.h"
 #include "IERApplication.h"
-#include "IERComponentEntrypoint.h"
+#include "IERComponentArchive.h"
+#include "IERComponentMusic.h"
 #include "IERComponentInfo.h"
 #include "IERStreamReader.h"
 #include "IERStreamWriter.h"
-#include "ERUUID.h"
 
 #if defined(_WINDOWS) && defined(_USRDLL)
 extern "C" __declspec(dllexport) void initComponent(IERApplication *);
@@ -24,6 +25,7 @@ extern "C" __declspec(dllexport) void uninitComponent();
 
 #include "Component/Info.h"
 #include "Component/Factory.h"
+#include "Component/Allocator.h"
 #include "Component/Archive.h"
 #include "Component/Music.h"
 

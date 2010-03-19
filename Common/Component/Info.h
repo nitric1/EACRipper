@@ -3,6 +3,8 @@
 #ifndef _INCLUDE_ERCOMPONENTINFO_
 #define _INCLUDE_ERCOMPONENTINFO_
 
+#include "IERComponentEntrypoint.h"
+
 namespace ERComponentGlobal
 {
 	extern const wchar_t *componentName;

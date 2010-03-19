@@ -12,8 +12,8 @@ namespace ERComponent
 	{
 	};
 
-	template<typename T, typename Impl = MusicDecoderImpl<T> >
-	class MusicDecoderRegister
+	template<typename T>
+	class IncueMusicDecoderImpl : public IERComponentIncueMusicDecoder
 	{
 	};
 
@@ -22,9 +22,34 @@ namespace ERComponent
 	{
 	};
 
-	template<typename T, typename Impl = MusicEncoderImpl<T> >
-	class MusicEncoderRegister
+	template<typename T, typename Impl = MusicDecoderImpl<T> >
+	class MusicDecoderFactory : public ServiceFactory<IERServiceMusicDecoderRegister>
 	{
+	public:
+		MusicDecoderFactory()
+		{
+			getPtr()->registerDecoder(&Allocator<Impl>::instance());
+		}
+	};
+
+	template<typename T, typename Impl = IncueMusicDecoderImpl<T> >
+	class IncueMusicDecoderFactory : public ServiceFactory<IERServiceIncueMusicDecoderRegister>
+	{
+	public:
+		IncueMusicDecoderFactory()
+		{
+			getPtr()->registerIncueDecoder(&Allocator<Impl>::instance());
+		}
+	};
+
+	template<typename T, typename Impl = MusicEncoderImpl<T> >
+	class MusicEncoderFactory : public ServiceFactory<IERServiceMusicEncoderRegister>
+	{
+	public:
+		MusicEncoderFactory()
+		{
+			getPtr()->registerEncoder(&Allocator<Impl>::instance());
+		}
 	};
 }
 

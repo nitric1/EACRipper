@@ -431,11 +431,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\Common\IERAllocator.h"
+				>
+			</File>
+			<File
 				RelativePath="..\Common\IERApplication.h"
 				>
 			</File>
 			<File
 				RelativePath="..\Common\IERArchiveComponent.h"
+				>
+			</File>
+			<File
+				RelativePath="..\Common\IERComponentArchive.h"
 				>
 			</File>
 			<File
@@ -473,6 +481,10 @@
 			<Filter
 				Name="Component Files"
 				>
+				<File
+					RelativePath="..\Common\Component\Allocator.h"
+					>
+				</File>
 				<File
 					RelativePath="..\Common\Component\Archive.h"
 					>

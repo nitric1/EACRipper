@@ -6,14 +6,22 @@
 namespace ERComponent
 {
 	template<typename T>
-	class ERServiceFactory
+	class ServiceFactory
 	{
 	private:
 		T *ptr;
 
 	public:
-		ERServiceFactory() { ptr = ERApplicationInfo::instance().getApp().getServicePointer<T>(); }
+		ServiceFactory() { ptr = ApplicationInfo::instance().getApp().getServicePointer<T>(); }
+		virtual ~ServiceFactory() {}
+
+	public:
+		T *getPtr() { return ptr; }
+		const T *getPtr() const { return ptr; }
+
+	public:
 		T *operator ->() { return ptr; }
+		const T *operator ->() const { return ptr; }
 	};
 }
 

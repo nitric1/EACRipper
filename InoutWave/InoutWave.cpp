@@ -7,6 +7,10 @@
 
 using namespace ERComponent;
 
+class InoutWaveEntrypoint;
+class InWave;
+class OutWave;
+
 class InoutWaveEntrypoint
 {
 public:
@@ -16,6 +20,9 @@ public:
 
 bool InoutWaveEntrypoint::onInit()
 {
+	MusicDecoderFactory<InWave> waveDecoderFac;
+	MusicEncoderFactory<OutWave> waveEncoderFac;
+
 	return true;
 }
 
@@ -26,16 +33,14 @@ bool InoutWaveEntrypoint::onUninit()
 
 class InWave
 {
+public:
 };
 
 class OutWave
 {
 public:
-	ERComponentMusicFormat getFormats();
 };
 
-EntrypointRegister<InoutWaveEntrypoint> entryFac;
-MusicDecoderRegister<InWave> waveDecoderFac;
-MusicEncoderRegister<OutWave> waveEncoderFac;
+EntrypointRegister<InoutWaveEntrypoint> entry;
 
 DECLARE_COMPONENT(L"InoutWave", L"1.0.0");

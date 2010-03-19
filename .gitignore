@@ -6,6 +6,14 @@ EACRipper/Debug
 EACRipper/Release
 EACRipper/x64
 
+UUIDGen/UUIDGen.aps
+UUIDGen/UUIDGen.vcproj.*.user
+UUIDGen/UUIDGen.vcxproj.user
+UUIDGen/UUIDGen.vcxproj.filters
+UUIDGen/Debug
+UUIDGen/Release
+UUIDGen/x64
+
 InoutWave/InoutWave.aps
 InoutWave/InoutWave.vcproj.*.user
 InoutWave/InoutWave.vcxproj.user

@@ -5,7 +5,8 @@
 #define _WIN32_WINNT 0x0600
 #define _WIN32_IE 0x0600
 
-#define EACRIPPER_VERSION L"0.4.0ет"
+#define EACRIPPER_TITLE L"EACRipper"
+#define EACRIPPER_VERSION L"0.4.0\x03B2"
 
 namespace EACRipper {}
 

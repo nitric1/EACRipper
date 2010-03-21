@@ -73,7 +73,7 @@ namespace EACRipper
 		vector<wchar_t> buffer(512);
 		size_t pathlen;
 
-		pathlen = GetModuleFileNameW(NULL, &*buffer.begin(), buffer.size());
+		pathlen = GetModuleFileNameW(NULL, &*buffer.begin(), static_cast<DWORD>(buffer.size()));
 
 		wstring path(buffer.begin(), buffer.begin() + pathlen);
 		size_t pos = path.rfind(L'\\');

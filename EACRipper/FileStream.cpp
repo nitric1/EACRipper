@@ -155,7 +155,7 @@ uint64_t FileStreamWriter::tell() const
 size_t FileStreamWriter::write(const void *data, size_t size)
 {
 	DWORD written;
-	if(!WriteFile(file, data, static_cast<size_t>(size), &written, NULL))
+	if(!WriteFile(file, data, static_cast<DWORD>(size), &written, NULL))
 		return numeric_limits<size_t>::max();
 	return written;
 }

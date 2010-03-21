@@ -42,6 +42,8 @@ namespace EACRipper
 
 				ListView_SetExtendedListViewStyle(list, LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES | LVS_EX_CHECKBOXES);
 
+				SetWindowTextW(window, EACRIPPER_TITLE L" " EACRIPPER_VERSION);
+
 				if(!self->runEventListener(L"init", e))
 					break;
 			}

@@ -11,6 +11,8 @@ namespace ERComponentGlobal
 	extern const wchar_t *componentVersion;
 
 	extern IERComponentEntrypoint *componentEntry;
+
+	extern IERComponentInfo *info;
 }
 
 namespace ERComponent

@@ -3,7 +3,6 @@
 #include <cstdio>
 #include <cstdlib>
 
-#define __STDC_FORMAT_MACROS
 #include <cinttypes>
 
 #include <string>
@@ -65,9 +64,6 @@ private:
 
 public:
 	static const size_t unpackedSize = 16;
-
-private:
-	static const char hexLookup[16];
 
 public:
 	ERUUID() : data() {}
@@ -233,17 +229,20 @@ private:
 	}
 
 public:
-	void toString(char *str) const
+	void toString(char *str, size_t buflen) const
 	{
-		sprintf(str, "%08" PRIX32 "-%04" PRIX16 "-%04" PRIX16 "-%04" PRIX16 "-%02" PRIX8 "%02" PRIX8 "%02" PRIX8 "%02" PRIX8 "%02" PRIX8 "%02" PRIX8,
+		sprintf_s(str, buflen, "%08" PRIX32 "-%04" PRIX16 "-%04" PRIX16 "-%04" PRIX16 "-%02" PRIX8 "%02" PRIX8 "%02" PRIX8 "%02" PRIX8 "%02" PRIX8 "%02" PRIX8,
 			data.val1, data.val2, data.val3, data.val4, data.val5_1, data.val5_2, data.val5_3, data.val5_4, data.val5_5, data.val5_6);
 	}
 
-	void toString(wchar_t *str) const
+	void toString(wchar_t *str, size_t buflen) const
 	{
 		char buf[37];
-		toString(buf);
-		mbstowcs(str, buf, 37);
+		size_t converted;
+
+		toString(buf, 37);
+
+		mbstowcs_s(&converted, str, buflen, buf, 37);
 	}
 
 	union ERUUIDData getData() const
@@ -265,8 +264,6 @@ public:
 	template<typename T, typename Traits>
 	friend std::basic_ostream<T, Traits> &operator <<(std::basic_ostream<T, Traits> &, const ERUUID &);
 };
-
-const char ERUUID::hexLookup[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
 template<typename T, typename Traits>
 std::basic_ostream<T, Traits> &operator <<(std::basic_ostream<T, Traits> &strm, const ERUUID &uuid)

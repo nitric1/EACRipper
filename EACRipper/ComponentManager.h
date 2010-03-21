@@ -13,19 +13,15 @@ namespace EACRipper
 {
 	class ComponentManager : public Singleton<ComponentManager>
 	{
-	public:
-		static const std::wstring COMPONENT_TYPE_MUSIC;
-		static const std::wstring COMPONENT_TYPE_ARCHIVE;
-
 	private:
-		std::map<std::wstring, std::tr1::shared_ptr<Component> > comp;
+		std::map<std::wstring, std::tr1::shared_ptr<Component> > compMap;
 
 	private:
 		ComponentManager();
 		~ComponentManager();
 
 	public:
-		const std::vector<std::wstring> components(const std::string &) const;
+		const std::vector<std::wstring> components() const;
 		std::tr1::shared_ptr<Component> getComponent(const std::wstring &);
 
 		friend class Singleton<ComponentManager>;

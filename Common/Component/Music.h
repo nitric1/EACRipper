@@ -3,6 +3,7 @@
 #ifndef _INCLUDE_ERCOMPONENTMUSIC_
 #define _INCLUDE_ERCOMPONENTMUSIC_
 
+#include "Component/Factory.h"
 #include "IERComponentMusic.h"
 
 namespace ERComponent
@@ -10,11 +11,34 @@ namespace ERComponent
 	template<typename T>
 	class MusicDecoderImpl : public IERComponentMusicDecoder
 	{
+	private:
+		T dec;
+
+	public:
+		virtual bool setStream(IERStreamReader *stream) { dec.setStream(stream); return true; }
+		virtual uint8_t getChannels() const { return dec.getChannels(); }
+		virtual uint8_t getBitsPerSample() const { return dec.getBitsPerSample(); }
+		virtual uint32_t getSamplingRate() const { return dec.getSamplingRate(); }
+		virtual uint32_t getLength() const { return dec.getLength(); }
+		virtual uint32_t getSize(uint32_t startMillisec, uint32_t endMillisec) const { return dec.getSize(startMillisec, endMillisec); }
 	};
 
 	template<typename T>
-	class IncueMusicDecoderImpl : public IERComponentIncueMusicDecoder
+	class InCueMusicDecoderImpl : public IERComponentInCueMusicDecoder
 	{
+	private:
+		T dec;
+
+	public:
+		virtual const DecoderInformation &getInfo() { return dec.getInfo(); }
+		virtual bool setStream(IERStreamReader *stream) { dec.setStream(stream); return true; }
+		virtual uint8_t getChannels() const { return dec.getChannels(); }
+		virtual uint8_t getBitsPerSample() const { return dec.getBitsPerSample(); }
+		virtual uint32_t getSamplingRate() const { return dec.getSamplingRate(); }
+		virtual uint32_t getLength() const { return dec.getLength(); }
+		virtual uint32_t getSize(uint32_t startMillisec, uint32_t endMillisec) const { return dec.getSize(startMillisec, endMillisec); }
+		virtual size_t getInCueLength(IERServiceStringConverter *converter) { return dec.getInCueLength(converter); }
+		virtual bool readInCue(wchar_t *buffer, size_t bufferSize, IERServiceStringConverter *converter) { return dec.readInCue(buffer, bufferSize, converter); }
 	};
 
 	template<typename T>
@@ -28,17 +52,17 @@ namespace ERComponent
 	public:
 		MusicDecoderFactory()
 		{
-			getPtr()->registerDecoder(&Allocator<Impl>::instance());
+			getPtr()->registDecoder(&Allocator<Impl>::instance());
 		}
 	};
 
-	template<typename T, typename Impl = IncueMusicDecoderImpl<T> >
-	class IncueMusicDecoderFactory : public ServiceFactory<IERServiceIncueMusicDecoderRegister>
+	template<typename T, typename Impl = InCueMusicDecoderImpl<T> >
+	class InCueMusicDecoderFactory : public ServiceFactory<IERServiceInCueMusicDecoderRegister>
 	{
 	public:
-		IncueMusicDecoderFactory()
+		InCueMusicDecoderFactory()
 		{
-			getPtr()->registerIncueDecoder(&Allocator<Impl>::instance());
+			getPtr()->registInCueDecoder(&Allocator<Impl>::instance());
 		}
 	};
 
@@ -48,7 +72,7 @@ namespace ERComponent
 	public:
 		MusicEncoderFactory()
 		{
-			getPtr()->registerEncoder(&Allocator<Impl>::instance());
+			getPtr()->registEncoder(&Allocator<Impl>::instance());
 		}
 	};
 }

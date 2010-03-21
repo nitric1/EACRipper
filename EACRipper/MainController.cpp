@@ -1,5 +1,6 @@
 #include "Defaults.h"
 
+#include "Configure.h"
 #include "MainController.h"
 #include "MainWindow.h"
 
@@ -29,6 +30,9 @@ namespace EACRipper
 		GdiplusStartup(&gpToken, &gsi, NULL);
 
 		OleInitialize(NULL);
+
+		comp = &ComponentManager::instance();
+		Configure::instance().set(L"Hello", L"World");
 	}
 
 	void MainController::uninitializeApp()

@@ -222,8 +222,8 @@ IDI_MAIN_ICON           ICON                    "main.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,3,0,1
- PRODUCTVERSION 0,3,0,1
+ FILEVERSION 0,4,0,0
+ PRODUCTVERSION 0,4,0,0
  FILEFLAGSMASK 0x37L
 #ifdef _DEBUG
  FILEFLAGS 0x21L
@@ -239,12 +239,12 @@ BEGIN
         BLOCK "041204b0"
         BEGIN
             VALUE "FileDescription", "Audio CD Ripper only for EAC files."
-            VALUE "FileVersion", "0, 3, 0, 1"
+            VALUE "FileVersion", "0, 4, 0, 0"
             VALUE "InternalName", "EACRipper"
             VALUE "LegalCopyright", "Copyright 2009 HNO3, All rights reserved."
             VALUE "OriginalFilename", "EACRipper.exe"
             VALUE "ProductName", "EACRipper"
-            VALUE "ProductVersion", "0, 3, 0, 1"
+            VALUE "ProductVersion", "0, 4, 0, 0"
             VALUE "SpecialBuild", "beta"
         END
     END

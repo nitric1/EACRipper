@@ -3,6 +3,7 @@
 #include "Singleton.h"
 #include "MainWindow.h"
 #include "WindowEventArgs.h"
+#include "ComponentManager.h"
 
 namespace EACRipper
 {
@@ -11,6 +12,7 @@ namespace EACRipper
 	private:
 		HINSTANCE inst;
 		MainWindow *mainWin;
+		ComponentManager *comp;
 
 		ULONG_PTR gpToken;
 

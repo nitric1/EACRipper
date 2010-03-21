@@ -2,15 +2,24 @@
 
 #include <string>
 
+#include "ComponentServiceImpl.h"
+
 namespace EACRipper
 {
 	class Component
 	{
 	private:
-		std::wstring name;
+		typedef void (*Initializer)(IERApplication *);
+		typedef void (*Uninitializer)();
+
+	private:
+		HMODULE library;
+		ERApplication app;
+		Initializer init;
+		Uninitializer uninit;
 
 	public:
 		explicit Component(const std::wstring &);
-		virtual ~Component() = 0;
+		virtual ~Component();
 	};
 }

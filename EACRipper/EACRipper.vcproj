@@ -45,7 +45,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="../Common"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_BIND_TO_CURRENT_VCLIBS_VERSION=1;__STDC_FORMAT_MACROS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -119,7 +119,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="../Common"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_BIND_TO_CURRENT_VCLIBS_VERSION=1;__STDC_FORMAT_MACROS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -197,7 +197,7 @@
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
 				AdditionalIncludeDirectories="../Common"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_BIND_TO_CURRENT_VCLIBS_VERSION=1;__STDC_FORMAT_MACROS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
@@ -277,7 +277,7 @@
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
 				AdditionalIncludeDirectories="../Common"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_BIND_TO_CURRENT_VCLIBS_VERSION=1;__STDC_FORMAT_MACROS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
@@ -343,6 +343,22 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ComponentServiceImpl.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Configure.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\CueParser.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FileStream.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MainController.cpp"
 				>
 			</File>
@@ -351,7 +367,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MusicCoderManager.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\RipManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Utility.cpp"
 				>
 			</File>
 		</Filter>
@@ -369,7 +393,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ComponentServiceImpl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Configure.h"
+				>
+			</File>
+			<File
+				RelativePath=".\CueParser.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Defaults.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FileStream.h"
 				>
 			</File>
 			<File
@@ -381,11 +421,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MusicCoderManager.h"
+				>
+			</File>
+			<File
 				RelativePath=".\RipManager.h"
 				>
 			</File>
 			<File
 				RelativePath=".\Singleton.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Utility.h"
 				>
 			</File>
 			<File
@@ -463,11 +511,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\Common\IERStreamReader.h"
+				RelativePath="..\Common\IERStream.h"
 				>
 			</File>
 			<File
-				RelativePath="..\Common\IERStreamWriter.h"
+				RelativePath="..\Common\IERString.h"
 				>
 			</File>
 			<File

@@ -30,8 +30,6 @@ namespace EACRipper
 		{
 		case WM_INITDIALOG:
 			{
-				HWND list;
-
 				self->window = window;
 
 				self->iconSmall = static_cast<HICON>(LoadImageW(MainController::instance().getInstance(), MAKEINTRESOURCEW(IDI_MAIN_ICON), IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR));
@@ -40,7 +38,7 @@ namespace EACRipper
 				SendMessageW(window, WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(self->iconSmall));
 				SendMessageW(window, WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(self->iconBig));
 
-				list = GetDlgItem(window, IDC_LIST);
+				HWND list = GetDlgItem(window, IDC_LIST);
 
 				ListView_SetExtendedListViewStyle(list, LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES | LVS_EX_CHECKBOXES);
 
@@ -161,7 +159,6 @@ namespace EACRipper
 	bool MainWindow::show()
 	{
 		intptr_t res = DialogBoxParamW(MainController::instance().getInstance(), MAKEINTRESOURCEW(DIALOG_ID), NULL, procMessage, NULL);
-		unsigned err = GetLastError();
 		return res == IDOK;
 	}
 }

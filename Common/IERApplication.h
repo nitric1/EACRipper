@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ERUUID.h"
+#include "IERComponentInfo.h"
 
 #ifndef _INC_WINDOWS
 #error Include <windows.h> before include this header!
@@ -16,12 +17,7 @@ private:
 
 public:
 	virtual HWND getWindow() const = 0;
-
-	virtual bool registMusicDecoder(const wchar_t *ext) = 0;
-	virtual bool registIncueMusicDecoder(const wchar_t *formatName, const wchar_t *ext) = 0;
-	virtual bool registMusicEncoder(const wchar_t *formatName, const wchar_t *ext) = 0;
-
-	virtual bool registArchiveExtractor(const wchar_t *formatName, const wchar_t *ext) = 0;
+	virtual void setInfo(IERComponentInfo *) = 0;
 
 	template<typename T>
 	T *getServicePointer() { return static_cast<T *>(getServicePointerImpl(ERServiceUUID<T>())); }

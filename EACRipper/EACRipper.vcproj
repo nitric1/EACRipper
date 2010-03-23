@@ -511,6 +511,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\Common\IEROption.h"
+				>
+			</File>
+			<File
 				RelativePath="..\Common\IERStream.h"
 				>
 			</File>

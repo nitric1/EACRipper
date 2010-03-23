@@ -24,7 +24,7 @@ public:
 	/**
 	 * Destructor for safe deriving.
 	 */
-	virtual ~IERComponentMusicDecoder() = 0 {}
+	virtual ~IERComponentMusicDecoder() = 0 { close(); }
 
 public:
 	/**
@@ -41,9 +41,10 @@ public:
 	virtual bool setStream(IERStreamReader *stream) = 0;
 
 	/**
-	 * Open a file as read mode.
-	 * @param name File name to be opened.
-	 * @return true if the file is opened correctly, false otherwise.
+	 */
+	virtual bool close() = 0;
+
+	/**
 	 */
 	virtual uint8_t getChannels() const = 0;
 
@@ -71,7 +72,7 @@ public:
 	 * @param endMillisec End of the section in millisecond.
 	 * @return Required buffer size in byte.
 	 */
-	virtual size_t getSize(uint32_t startMillisec, uint32_t endMillisec) const
+	virtual size_t getDataSize(uint32_t startMillisec, uint32_t endMillisec) const
 	{
 		return static_cast<size_t>(getChannels()) * static_cast<size_t>(getBitsPerSample() / 8) * static_cast<size_t>(static_cast<uint64_t>(endMillisec - startMillisec) * getSamplingRate() / 1000);
 	}
@@ -117,7 +118,7 @@ public:
 	/**
 	 * Destructor for safe deriving.
 	 */
-	virtual ~IERComponentMusicEncoder() = 0 {}
+	virtual ~IERComponentMusicEncoder() = 0 { close(); }
 
 public:
 	/**
@@ -132,6 +133,45 @@ public:
 	 * @return true if a reader is set correctly, false otherwise.
 	 */
 	virtual bool setStream(IERStreamWriter *stream) = 0;
+
+	/**
+	 */
+	virtual bool close() = 0;
+
+	/**
+	 */
+	virtual void setChannels(uint8_t channels) = 0;
+
+	/**
+	 */
+	virtual void setBitsPerSample(uint8_t bitsPerSample) = 0;
+
+	/**
+	 */
+	virtual void setSamplingRate(uint32_t samplingRate) = 0;
+
+	/**
+	 * Return required buffer size in the section [startMillisec, endMillisec).
+	 * @param startMillisec Start of the section in millisecond.
+	 * @param endMillisec End of the section in millisecond.
+	 * @return Required buffer size in byte.
+	 */
+	virtual size_t getDataSize(uint32_t startMillisec, uint32_t endMillisec) const
+	{
+		return static_cast<size_t>(getChannels()) * static_cast<size_t>(getBitsPerSample() / 8) * static_cast<size_t>(static_cast<uint64_t>(endMillisec - startMillisec) * getSamplingRate() / 1000);
+	}
+
+	/**
+	 */
+	virtual bool write(const void *data, size_t dataSize) = 0;
+
+	/**
+	 */
+	virtual bool setTag(const wchar_t *name, const wchar_t *value) = 0;
+
+	/**
+	 */
+	virtual bool setCoverArt(IERStreamReader *image, const wchar_t *imageMime) = 0;
 };
 
 class IERServiceMusicDecoderRegister

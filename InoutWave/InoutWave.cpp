@@ -94,6 +94,8 @@ public:
 	virtual uint8_t getBitsPerSample() const;
 	virtual uint32_t getSamplingRate() const;
 	virtual uint32_t getLength() const;
+	virtual size_t read(uint32_t, uint32_t, void *, size_t);
+	virtual bool readSplit(uint32_t, uint32_t, void *, size_t, size_t *, uint64_t *);
 };
 
 const int32_t InWave::waveChunkID = 0x46464952;
@@ -152,6 +154,23 @@ uint32_t InWave::getLength() const
 	return static_cast<uint32_t>(static_cast<uint64_t>(samples) * 1000 / getSamplingRate());
 }
 
+size_t InWave::read(uint32_t start, uint32_t end, void *buffer, size_t bufferSize)
+{
+	if(start >= end)
+		return 0;
+
+	return 0;
+}
+
+bool InWave::readSplit(uint32_t start, uint32_t end, void *buffer, size_t bufferSize, size_t *readSize, uint64_t *section)
+{
+	if(*section == 0) // first read
+	{
+	}
+
+	return false;
+}
+
 class OutWave : public IERComponentMusicEncoder
 {
 public:
@@ -159,6 +178,7 @@ public:
 
 public:
 	virtual const EncoderInformation &getInfo() const;
+	virtual bool setStream(IERStreamWriter *);
 };
 
 const EncoderInformation OutWave::info =
@@ -171,6 +191,11 @@ const EncoderInformation OutWave::info =
 const EncoderInformation &OutWave::getInfo() const
 {
 	return info;
+}
+
+bool OutWave::setStream(IERStreamWriter *stream)
+{
+	return false;
 }
 
 EntrypointRegister<InoutWaveEntrypoint> entry;

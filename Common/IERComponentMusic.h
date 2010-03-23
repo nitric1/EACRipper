@@ -71,10 +71,18 @@ public:
 	 * @param endMillisec End of the section in millisecond.
 	 * @return Required buffer size in byte.
 	 */
-	virtual uint32_t getSize(uint32_t startMillisec, uint32_t endMillisec) const
+	virtual size_t getSize(uint32_t startMillisec, uint32_t endMillisec) const
 	{
-		return static_cast<uint32_t>(getChannels()) * static_cast<uint32_t>(getBitsPerSample() / 8) * static_cast<uint32_t>(static_cast<uint64_t>(endMillisec - startMillisec) * getSamplingRate() / 1000);
+		return static_cast<size_t>(getChannels()) * static_cast<size_t>(getBitsPerSample() / 8) * static_cast<size_t>(static_cast<uint64_t>(endMillisec - startMillisec) * getSamplingRate() / 1000);
 	}
+
+	/**
+	 */
+	virtual size_t read(uint32_t startMillisec, uint32_t endMillisec, void *buffer, size_t bufferSize) = 0;
+
+	/**
+	 */
+	virtual bool readSplit(uint32_t startMillisec, uint32_t endMillisec, void *buffer, size_t bufferSize, size_t *readSize, uint64_t *section) = 0;
 };
 
 class IERComponentInCueMusicDecoder : public IERComponentMusicDecoder
@@ -117,6 +125,13 @@ public:
 	 * @return EncoderInformation which includes name, extension, some other information.
 	 */
 	virtual const EncoderInformation &getInfo() const = 0;
+
+	/**
+	 * Set a stream writer of music.
+	 * @param stream A pointer to a stream writer of music.
+	 * @return true if a reader is set correctly, false otherwise.
+	 */
+	virtual bool setStream(IERStreamWriter *stream) = 0;
 };
 
 class IERServiceMusicDecoderRegister

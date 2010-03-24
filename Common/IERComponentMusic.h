@@ -34,8 +34,8 @@ public:
 	virtual const DecoderInformation &getInfo() const = 0;
 
 	/**
-	 * Set a stream reader of music.
-	 * @param stream A pointer to a stream reader of music.
+	 * Set a stream reader of the music.
+	 * @param stream A pointer to a stream reader of the music.
 	 * @return true if a reader is set correctly, false otherwise.
 	 */
 	virtual bool setStream(IERStreamReader *stream) = 0;
@@ -45,6 +45,8 @@ public:
 	virtual bool close() = 0;
 
 	/**
+	 * Return channels of the opened file.
+	 * @return The number of channels.
 	 */
 	virtual uint8_t getChannels() const = 0;
 
@@ -128,27 +130,59 @@ public:
 	virtual const EncoderInformation &getInfo() const = 0;
 
 	/**
-	 * Set a stream writer of music.
-	 * @param stream A pointer to a stream writer of music.
+	 * Set a stream writer of the music.
+	 * @param stream A pointer to a stream writer of the music.
 	 * @return true if a reader is set correctly, false otherwise.
 	 */
 	virtual bool setStream(IERStreamWriter *stream) = 0;
 
 	/**
+	 * Close the music.
+	 * @return true if the music is closed correctly, false otherwise.
 	 */
 	virtual bool close() = 0;
 
 	/**
+	 * Return channels of the music.
+	 * @return The number of channels.
+	 */
+	virtual uint8_t getChannels() const = 0;
+
+	/**
+	 * Return bits per sample of the music.
+	 * @return The number of bits per sample.
+	 */
+	virtual uint8_t getBitsPerSample() const = 0;
+
+	/**
+	 * Return sampling rate of the music.
+	 * @return Sampling rate value in Hz.
+	 */
+	virtual uint32_t getSamplingRate() const = 0;
+
+	/**
+	 * Set channels of the music.
+	 * @param channels The number of channels to set.
 	 */
 	virtual void setChannels(uint8_t channels) = 0;
 
 	/**
+	 * Set bits per sample of the music.
+	 * @param bitsPerSample The number of bits per sample.
 	 */
 	virtual void setBitsPerSample(uint8_t bitsPerSample) = 0;
 
 	/**
+	 * Set sampling rate of the music.
+	 * @param samplingRate Sampling rate value in Hz to set.
 	 */
 	virtual void setSamplingRate(uint32_t samplingRate) = 0;
+
+	/**
+	 * Set length of the music.
+	 * @param length Length in millisecond to set.
+	 */
+	virtual void setLength(uint32_t length) = 0;
 
 	/**
 	 * Return required buffer size in the section [startMillisec, endMillisec).
@@ -162,14 +196,25 @@ public:
 	}
 
 	/**
+	 * Write data in the music.
+	 * @param data Data to be saved.
+	 * @param dataSize Size of data in byte.
+	 * @return true if data is saved correctly, false otherwise.
 	 */
 	virtual bool write(const void *data, size_t dataSize) = 0;
 
 	/**
+	 * Set a music tag in the music.
+	 * @param name Field name of the tag.
+	 * @param value Field value of the tag.
 	 */
-	virtual bool setTag(const wchar_t *name, const wchar_t *value) = 0;
+	virtual void setTag(const wchar_t *name, const wchar_t *value) = 0;
 
 	/**
+	 * Set cover art in the music.
+	 * @param image A pointer to a stream reader of the image.
+	 * @param imageMime Mime type of the image. e.g. "image/jpeg"
+	 * @return true if the cover art is correctly set, false otherwise.
 	 */
 	virtual bool setCoverArt(IERStreamReader *image, const wchar_t *imageMime) = 0;
 };

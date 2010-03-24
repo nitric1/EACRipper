@@ -24,7 +24,7 @@ namespace EACRipper
 		virtual ~ERApplication();
 
 	private:
-		virtual void *getServicePointerImpl(const ERUUID &uuid);
+		virtual void *getServicePointerImpl(const ERUUID &uuid, const void *param);
 
 	public:
 		virtual HWND getWindow() const;

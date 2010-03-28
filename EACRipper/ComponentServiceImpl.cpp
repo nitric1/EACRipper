@@ -11,7 +11,7 @@ namespace EACRipper
 	{
 	}
 
-	void *ERApplication::getServicePointerImpl(const ERUUID &uuid)
+	void *ERApplication::getServicePointerImpl(const ERUUID &uuid, const void *param)
 	{
 		if(uuid == ERServiceUUID<IERServiceMusicDecoderRegister>::uuid)
 			return &ERServiceMusicDecoderRegister::instance();

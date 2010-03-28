@@ -13,12 +13,14 @@ public:
 	virtual ~IERApplication() = 0 {}
 
 private:
-	virtual void *getServicePointerImpl(const ERUUID &uuid) = 0;
+	virtual void *getServicePointerImpl(const ERUUID &uuid, const void *param) = 0;
 
 public:
 	virtual HWND getWindow() const = 0;
 	virtual void setInfo(IERComponentInfo *) = 0;
 
 	template<typename T>
-	T *getServicePointer() { return static_cast<T *>(getServicePointerImpl(ERServiceUUID<T>())); }
+	T *getServicePointer() { return static_cast<T *>(getServicePointerImpl(ERServiceUUID<T>(), NULL)); }
+	template<typename T>
+	T *getServicePointer(const void *param) { return static_cast<T *>(getServicePointerImpl(ERServiceUUID<T>(), param)); }
 };

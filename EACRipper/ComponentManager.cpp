@@ -1,5 +1,6 @@
 #include "Defaults.h"
 
+#include "Utility.h"
 #include "ComponentManager.h"
 
 using namespace std;
@@ -9,20 +10,7 @@ namespace EACRipper
 {
 	ComponentManager::ComponentManager()
 	{
-		vector<wchar_t> buffer(512);
-		size_t pathlen;
-
-		pathlen = GetModuleFileNameW(NULL, &*buffer.begin(), static_cast<DWORD>(buffer.size()));
-
-		wstring path(buffer.begin(), buffer.begin() + pathlen);
-		size_t pos = path.rfind(L'\\');
-
-		if(pos == wstring::npos) // What's happened?
-			return;
-
-		path.erase(++ pos);
-		path += L"Components\\";
-
+		wstring path = getCurrentDirectoryPath() + L"Components\\";
 		wstring findPath = path;
 		findPath += L"*.dll";
 

@@ -11,6 +11,7 @@ namespace EACRipper
 	{
 	private:
 		std::map<std::wstring, std::wstring> confMap;
+		static const std::wstring confFileName;
 		bool changed;
 
 	private:

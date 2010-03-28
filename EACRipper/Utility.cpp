@@ -1,5 +1,7 @@
 #include "Defaults.h"
 
+#include <vector>
+
 #include "Utility.h"
 
 using namespace std;
@@ -28,5 +30,32 @@ namespace EACRipper
 		str.erase(rit.base(), str.end());
 
 		return str;
+	}
+
+	wstring &getDirectoryPath(wstring &path)
+	{
+		size_t pos = path.rfind(L'\\');
+		if(pos != wstring::npos)
+			path.erase(++ pos);
+		return path;
+	}
+
+	wstring &getFileName(wstring &path)
+	{
+		size_t pos = path.rfind(L'\\');
+		if(pos != wstring::npos)
+			path.erase(0, ++ pos);
+		return path;
+	}
+
+	wstring getCurrentDirectoryPath()
+	{
+		vector<wchar_t> buffer(512);
+		size_t pathlen;
+
+		pathlen = GetModuleFileNameW(NULL, &*buffer.begin(), static_cast<DWORD>(buffer.size()));
+
+		wstring path(buffer.begin(), buffer.begin() + pathlen);
+		return getDirectoryPath(path);
 	}
 }

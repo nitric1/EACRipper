@@ -11,6 +11,8 @@ using namespace std;
 
 namespace EACRipper
 {
+	const wstring Configure::confFileName = L"EACRipper.conf";
+
 	Configure::Configure()
 		: changed(false)
 	{
@@ -70,21 +72,7 @@ namespace EACRipper
 
 	wstring Configure::getConfigurePath()
 	{
-		vector<wchar_t> buffer(512);
-		size_t pathlen;
-
-		pathlen = GetModuleFileNameW(NULL, &*buffer.begin(), static_cast<DWORD>(buffer.size()));
-
-		wstring path(buffer.begin(), buffer.begin() + pathlen);
-		size_t pos = path.rfind(L'\\');
-
-		if(pos == wstring::npos) // What's happened?
-			throw(runtime_error("Cannot get configure path."));
-
-		path.erase(++ pos);
-		path += L"EACRipper.conf";
-
-		return path;
+		return getCurrentDirectoryPath() + confFileName;
 	}
 
 	map<wstring, wstring>::iterator Configure::find(const wstring &name)

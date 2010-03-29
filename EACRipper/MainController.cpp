@@ -32,7 +32,6 @@ namespace EACRipper
 		OleInitialize(NULL);
 
 		comp = &ComponentManager::instance();
-		Configure::instance().set(L"Hello", L"World");
 	}
 
 	void MainController::uninitializeApp()
@@ -46,6 +45,10 @@ namespace EACRipper
 	{
 		mainWin->addEventListener(L"init", &MainController::onInit);
 		mainWin->addEventListener(L"close", &MainController::onClose);
+		mainWin->addEventListener(L"openCuesheet", &MainController::onOpenCuesheet);
+		mainWin->addEventListener(L"openArchive", &MainController::onOpenArchive);
+		mainWin->addEventListener(L"option", &MainController::onOption);
+		mainWin->addEventListener(L"rip", &MainController::onRip);
 	}
 
 	bool MainController::run(HINSTANCE instHandle)

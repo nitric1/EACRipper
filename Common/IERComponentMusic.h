@@ -24,7 +24,7 @@ public:
 	/**
 	 * Destructor for safe deriving.
 	 */
-	virtual ~IERComponentMusicDecoder() = 0 { close(); }
+	virtual ~IERComponentMusicDecoder() = 0 {}
 
 public:
 	/**
@@ -120,7 +120,7 @@ public:
 	/**
 	 * Destructor for safe deriving.
 	 */
-	virtual ~IERComponentMusicEncoder() = 0 { close(); }
+	virtual ~IERComponentMusicEncoder() = 0 {}
 
 public:
 	/**
@@ -132,9 +132,13 @@ public:
 	/**
 	 * Set a stream writer of the music.
 	 * @param stream A pointer to a stream writer of the music.
-	 * @return true if a reader is set correctly, false otherwise.
+	 * @param channels The number of channels of the music.
+	 * @param bitsPerSample The number of bits per sample of the music.
+	 * @param samplingRate Sampling rate value in Hz of the music.
+	 * @param totalSize Total size in byte of the music. If the size is unsettled, this parameter will be zero.
+	 * @return true if a writer is set correctly, false otherwise.
 	 */
-	virtual bool setStream(IERStreamWriter *stream) = 0;
+	virtual bool setStream(IERStreamWriter *stream, uint8_t channels, uint8_t bitsPerSample, uint32_t samplingRate, uint32_t totalSize) = 0;
 
 	/**
 	 * Close the music.
@@ -159,30 +163,6 @@ public:
 	 * @return Sampling rate value in Hz.
 	 */
 	virtual uint32_t getSamplingRate() const = 0;
-
-	/**
-	 * Set channels of the music.
-	 * @param channels The number of channels to set.
-	 */
-	virtual void setChannels(uint8_t channels) = 0;
-
-	/**
-	 * Set bits per sample of the music.
-	 * @param bitsPerSample The number of bits per sample.
-	 */
-	virtual void setBitsPerSample(uint8_t bitsPerSample) = 0;
-
-	/**
-	 * Set sampling rate of the music.
-	 * @param samplingRate Sampling rate value in Hz to set.
-	 */
-	virtual void setSamplingRate(uint32_t samplingRate) = 0;
-
-	/**
-	 * Set length of the music.
-	 * @param length Length in millisecond to set.
-	 */
-	virtual void setLength(uint32_t length) = 0;
 
 	/**
 	 * Return required buffer size in the section [startMillisec, endMillisec).

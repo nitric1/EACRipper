@@ -73,13 +73,14 @@ typedef struct _WaveHeader
 } WaveHeader;
 #pragma pack(pop)
 
+static const int32_t waveChunkID = 0x46464952;
+static const int32_t waveFormatID = 0x45564157;
+static const int32_t waveSubchunkID = 0x20746d66;
+static const int32_t waveDataID = 0x61746164;
+
 class InWave : public IERComponentMusicDecoder
 {
 public:
-	static const int32_t waveChunkID;
-	static const int32_t waveFormatID;
-	static const int32_t waveSubchunkID;
-	static const int32_t waveDataID;
 	static const DecoderInformation info;
 
 private:
@@ -88,8 +89,12 @@ private:
 	unsigned samples;
 
 public:
+	virtual ~InWave();
+
+public:
 	virtual const DecoderInformation &getInfo() const;
 	virtual bool setStream(IERStreamReader *);
+	virtual bool close();
 	virtual uint8_t getChannels() const;
 	virtual uint8_t getBitsPerSample() const;
 	virtual uint32_t getSamplingRate() const;
@@ -98,16 +103,17 @@ public:
 	virtual bool readSplit(uint32_t, uint32_t, void *, size_t, size_t *, uint64_t *);
 };
 
-const int32_t InWave::waveChunkID = 0x46464952;
-const int32_t InWave::waveFormatID = 0x45564157;
-const int32_t InWave::waveSubchunkID = 0x20746d66;
-const int32_t InWave::waveDataID = 0x61746164;
 const DecoderInformation InWave::info =
 {
 	L"RIFF Audio (Wave)",
 	L"wav;wave",
 	L"audio/wav;audio/wave;audio/x-wav;audio/vnd.wave"
 };
+
+InWave::~InWave()
+{
+	close();
+}
 
 const DecoderInformation &InWave::getInfo() const
 {
@@ -118,19 +124,31 @@ bool InWave::setStream(IERStreamReader *stream)
 {
 	reader = stream;
 	if(!reader->usable())
+	{
+		close();
 		return false;
+	}
 
 	if(reader->read(&header, sizeof(header)) != sizeof(header))
+	{
+		close();
 		return false;
+	}
 
-	if(header.chunkID != waveChunkID || header.formatID != waveFormatID || header.subchunkID != waveSubchunkID || header.dataID != waveDataID)
+	if(header.chunkID != waveChunkID || header.formatID != waveFormatID || header.subchunkID != waveSubchunkID || header.dataID != waveDataID || header.audioFormat != WAVE_FORMAT_PCM)
+	{
+		close();
 		return false;
-
-	if(header.audioFormat != WAVE_FORMAT_PCM)
-		return false;
+	}
 
 	samples = header.dataSize / header.channels / (header.bitsPerSample / 8);
 
+	return true;
+}
+
+bool InWave::close()
+{
+	reader = NULL;
 	return true;
 }
 
@@ -176,9 +194,23 @@ class OutWave : public IERComponentMusicEncoder
 public:
 	static const EncoderInformation info;
 
+private:
+	IERStreamWriter *writer;
+	WaveHeader header;
+
+public:
+	virtual ~OutWave();
+
 public:
 	virtual const EncoderInformation &getInfo() const;
-	virtual bool setStream(IERStreamWriter *);
+	virtual bool setStream(IERStreamWriter *, uint8_t, uint8_t, uint32_t, uint32_t);
+	virtual bool close();
+	virtual uint8_t getChannels() const;
+	virtual uint8_t getBitsPerSample() const;
+	virtual uint32_t getSamplingRate() const;
+	virtual bool write(const void *, size_t);
+	virtual void setTag(const wchar_t *, const wchar_t *);
+	virtual bool setCoverArt(IERStreamReader *, const wchar_t *);
 };
 
 const EncoderInformation OutWave::info =
@@ -188,12 +220,78 @@ const EncoderInformation OutWave::info =
 	L"audio/wav"
 };
 
+OutWave::~OutWave()
+{
+	close();
+}
+
 const EncoderInformation &OutWave::getInfo() const
 {
 	return info;
 }
 
-bool OutWave::setStream(IERStreamWriter *stream)
+bool OutWave::setStream(IERStreamWriter *stream, uint8_t channels, uint8_t bitsPerSample, uint32_t samplingRate, uint32_t totalSize)
+{
+	writer = stream;
+	if(!writer->usable())
+		return false;
+
+	memset(&header, 0, sizeof(header));
+
+	header.chunkID = waveChunkID;
+	header.chunkSize = 36 + totalSize;
+	header.formatID = waveFormatID;
+	header.subchunkID = waveSubchunkID;
+	header.subchunkSize = 16;
+	header.audioFormat = WAVE_FORMAT_PCM;
+	header.channels = channels;
+	header.samplingRate = samplingRate;
+	header.byteRate = samplingRate * channels * bitsPerSample / 8;
+	header.blockAlign = channels * bitsPerSample / 8;
+	header.bitsPerSample = bitsPerSample;
+	header.dataID = waveDataID;
+	header.dataSize = totalSize;
+
+	if(writer->write(&header, sizeof(header)) != sizeof(header))
+	{
+		close();
+		return false;
+	}
+
+	return true;
+}
+
+bool OutWave::close()
+{
+	writer = NULL;
+	return true;
+}
+
+uint8_t OutWave::getChannels() const
+{
+	return static_cast<uint8_t>(header.channels);
+}
+
+uint8_t OutWave::getBitsPerSample() const
+{
+	return static_cast<uint8_t>(header.bitsPerSample);
+}
+
+uint32_t OutWave::getSamplingRate() const
+{
+	return header.samplingRate;
+}
+
+bool OutWave::write(const void *data, size_t dataSize)
+{
+	return writer->write(data, dataSize) != dataSize;
+}
+
+void OutWave::setTag(const wchar_t *name, const wchar_t *value)
+{
+}
+
+bool OutWave::setCoverArt(IERStreamReader *image, const wchar_t *imageMime)
 {
 	return false;
 }

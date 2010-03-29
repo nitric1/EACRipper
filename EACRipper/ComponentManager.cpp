@@ -24,7 +24,14 @@ namespace EACRipper
 
 		do
 		{
-			comp = new Component(path + wfd.cFileName);
+			try
+			{
+				comp = new Component(path + wfd.cFileName);
+			}
+			catch(exception &)
+			{
+				continue;
+			}
 			shared_ptr<Component> compPtr(comp);
 
 			compMap.insert(map<wstring, shared_ptr<Component> >::value_type(wstring(wfd.cFileName), compPtr));

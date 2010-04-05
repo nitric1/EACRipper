@@ -13,12 +13,16 @@ namespace EACRipper
 
 	void *ERApplication::getServicePointerImpl(const ERUUID &uuid, const void *param)
 	{
+		using namespace ServiceImpl;
+
 		if(uuid == ERServiceUUID<IERServiceMusicDecoderRegister>::uuid)
-			return &ERServiceMusicDecoderRegister::instance();
+			return &MusicDecoderRegister::instance();
 		else if(uuid == ERServiceUUID<IERServiceInCueMusicDecoderRegister>::uuid)
-			return &ERServiceInCueMusicDecoderRegister::instance();
+			return &InCueMusicDecoderRegister::instance();
 		else if(uuid == ERServiceUUID<IERServiceMusicEncoderRegister>::uuid)
-			return &ERServiceMusicEncoderRegister::instance();
+			return &MusicEncoderRegister::instance();
+		else if(uuid == ERServiceUUID<IERServiceStringCodepageConverter>::uuid)
+			return &StringCodepageConverter::instance();
 
 		return NULL;
 	}
@@ -38,39 +42,42 @@ namespace EACRipper
 		info = iinfo;
 	}
 
-	ERServiceMusicDecoderRegister::~ERServiceMusicDecoderRegister()
+	namespace ServiceImpl
 	{
-	}
+		MusicDecoderRegister::~MusicDecoderRegister()
+		{
+		}
 
-	bool ERServiceMusicDecoderRegister::registDecoder(IERAllocator *alloc)
-	{
-		IERComponentMusicDecoder *p = static_cast<IERComponentMusicDecoder *>(alloc->alloc());
-		bool res = MusicCoderManager::instance().addCoder(p->getInfo().name, MusicCoderManager::Decoder, alloc);
-		alloc->free(p);
-		return res;
-	}
+		bool MusicDecoderRegister::registDecoder(IERAllocator *alloc)
+		{
+			IERComponentMusicDecoder *p = static_cast<IERComponentMusicDecoder *>(alloc->alloc());
+			bool res = MusicCoderManager::instance().addCoder(p->getInfo().name, MusicCoderManager::Decoder, alloc);
+			alloc->free(p);
+			return res;
+		}
 
-	ERServiceInCueMusicDecoderRegister::~ERServiceInCueMusicDecoderRegister()
-	{
-	}
+		InCueMusicDecoderRegister::~InCueMusicDecoderRegister()
+		{
+		}
 
-	bool ERServiceInCueMusicDecoderRegister::registInCueDecoder(IERAllocator *alloc)
-	{
-		IERComponentInCueMusicDecoder *p = static_cast<IERComponentInCueMusicDecoder *>(alloc->alloc());
-		bool res = MusicCoderManager::instance().addCoder(p->getInfo().name, MusicCoderManager::InCueDecoder, alloc);
-		alloc->free(p);
-		return res;
-	}
+		bool InCueMusicDecoderRegister::registInCueDecoder(IERAllocator *alloc)
+		{
+			IERComponentInCueMusicDecoder *p = static_cast<IERComponentInCueMusicDecoder *>(alloc->alloc());
+			bool res = MusicCoderManager::instance().addCoder(p->getInfo().name, MusicCoderManager::InCueDecoder, alloc);
+			alloc->free(p);
+			return res;
+		}
 
-	ERServiceMusicEncoderRegister::~ERServiceMusicEncoderRegister()
-	{
-	}
+		MusicEncoderRegister::~MusicEncoderRegister()
+		{
+		}
 
-	bool ERServiceMusicEncoderRegister::registEncoder(IERAllocator *alloc)
-	{
-		IERComponentMusicEncoder *p = static_cast<IERComponentMusicEncoder *>(alloc->alloc());
-		bool res = MusicCoderManager::instance().addCoder(p->getInfo().name, MusicCoderManager::Encoder, alloc);
-		alloc->free(p);
-		return res;
+		bool MusicEncoderRegister::registEncoder(IERAllocator *alloc)
+		{
+			IERComponentMusicEncoder *p = static_cast<IERComponentMusicEncoder *>(alloc->alloc());
+			bool res = MusicCoderManager::instance().addCoder(p->getInfo().name, MusicCoderManager::Encoder, alloc);
+			alloc->free(p);
+			return res;
+		}
 	}
 }

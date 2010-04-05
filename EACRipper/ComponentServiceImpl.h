@@ -31,33 +31,62 @@ namespace EACRipper
 		virtual const IERComponentInfo *getInfo() const;
 		virtual void setInfo(IERComponentInfo *);
 
-		friend class Singleton<ERApplication>;
+		// friend class Singleton<ERApplication>;
 	};
 
-	class ERServiceMusicDecoderRegister : public IERServiceMusicDecoderRegister, public Singleton<ERServiceMusicDecoderRegister>
+	namespace ServiceImpl
 	{
-	public:
-		virtual ~ERServiceMusicDecoderRegister();
+		class MusicDecoderRegister : public IERServiceMusicDecoderRegister, public Singleton<MusicDecoderRegister>
+		{
+		private:
+			virtual ~MusicDecoderRegister();
 
-	public:
-		virtual bool registDecoder(IERAllocator *);
-	};
+		public:
+			virtual bool registDecoder(IERAllocator *);
 
-	class ERServiceInCueMusicDecoderRegister : public IERServiceInCueMusicDecoderRegister, public Singleton<ERServiceInCueMusicDecoderRegister>
-	{
-	public:
-		virtual ~ERServiceInCueMusicDecoderRegister();
+			friend class Singleton<MusicDecoderRegister>;
+		};
 
-	public:
-		virtual bool registInCueDecoder(IERAllocator *);
-	};
+		class InCueMusicDecoderRegister : public IERServiceInCueMusicDecoderRegister, public Singleton<InCueMusicDecoderRegister>
+		{
+		private:
+			virtual ~InCueMusicDecoderRegister();
 
-	class ERServiceMusicEncoderRegister : public IERServiceMusicEncoderRegister, public Singleton<ERServiceMusicEncoderRegister>
-	{
-	public:
-		virtual ~ERServiceMusicEncoderRegister();
+		public:
+			virtual bool registInCueDecoder(IERAllocator *);
 
-	public:
-		virtual bool registEncoder(IERAllocator *);
-	};
+			friend class Singleton<InCueMusicDecoderRegister>;
+		};
+
+		class MusicEncoderRegister : public IERServiceMusicEncoderRegister, public Singleton<MusicEncoderRegister>
+		{
+		private:
+			virtual ~MusicEncoderRegister();
+
+		public:
+			virtual bool registEncoder(IERAllocator *);
+
+			friend class Singleton<MusicEncoderRegister>;
+		};
+
+		class StringCodepageConverter : public IERServiceStringCodepageConverter, public Singleton<StringCodepageConverter>
+		{
+		private:
+			uint32_t codepage;
+
+		private:
+			virtual ~StringCodepageConverter();
+
+		public:
+			virtual uint32_t getCodepage() const;
+			virtual bool setCodepage(uint32_t);
+
+			virtual size_t getConvertedLengthToUTF16(const char *, size_t = std::numeric_limits<size_t>::max());
+			virtual size_t getConvertedLengthFromUTF16(const wchar_t *, size_t = std::numeric_limits<size_t>::max());
+			virtual size_t convertToUTF16(wchar_t *, size_t, const char *, size_t = std::numeric_limits<size_t>::max());
+			virtual size_t convertFromUTF16(char *, size_t, const wchar_t *, size_t = std::numeric_limits<size_t>::max());
+
+			friend class Singleton<StringCodepageConverter>;
+		};
+	}
 }

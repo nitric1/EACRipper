@@ -35,11 +35,11 @@ int wmain()
 
 	union ERUUIDData data = uuid.getData();
 
-	printf("// %s\n", gen);
 	printf("ERUUID(0x%08X, 0x%04X, 0x%04X, 0x%04X, 0x%02X, 0x%02X, 0x%02X, 0x%02X, 0x%02X, 0x%02X)\n",
 		data.val1, data.val2, data.val3, data.val4,
 		data.val5_1, data.val5_2, data.val5_3, data.val5_4, data.val5_5, data.val5_6
 		);
+	printf("// %s\n", gen);
 
 	return 0;
 }

@@ -1,9 +1,5 @@
 #pragma once
 
-#include <map>
-#include <vector>
-#include <string>
-
 #include "WindowEventArgs.h"
 
 namespace EACRipper

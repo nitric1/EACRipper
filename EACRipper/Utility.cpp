@@ -1,7 +1,5 @@
 #include "Defaults.h"
 
-#include <vector>
-
 #include "Utility.h"
 
 using namespace std;

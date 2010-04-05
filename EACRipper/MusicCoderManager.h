@@ -27,7 +27,7 @@ namespace EACRipper
 		~MusicCoderManager();
 
 	public:
-		const std::vector<std::wstring> coders() const;
+		const std::vector<std::pair<std::wstring, CoderType> > coders() const;
 		bool addCoder(const std::wstring &, CoderType, IERAllocator *);
 		IERAllocator *getCoder(const std::wstring &);
 

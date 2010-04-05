@@ -6,18 +6,13 @@
 namespace EACRipper
 {
 	MainWindow::MainWindow()
-		: Window()
-		, window(NULL)
+		: Window(NULL)
 	{
+		shortcut = &ShortcutKey::instance();
 	}
 
 	MainWindow::~MainWindow()
 	{
-	}
-
-	HWND MainWindow::getWindow()
-	{
-		return window;
 	}
 
 	intptr_t __stdcall MainWindow::procMessage(HWND window, unsigned message, WPARAM wParam, LPARAM lParam)
@@ -48,6 +43,13 @@ namespace EACRipper
 					break;
 			}
 			return 1;
+
+		case WM_KEYDOWN:
+			if(self->shortcut->processKeydownMessage(self, wParam, lParam))
+			{
+				return 1;
+			}
+			break;
 
 		case WM_COMMAND:
 			switch(LOWORD(wParam))

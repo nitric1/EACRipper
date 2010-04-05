@@ -4,12 +4,13 @@
 #include <vector>
 #include <string>
 
+#include "WindowBase.h"
 #include "WindowEventArgs.h"
 
 namespace EACRipper
 {
 	template<typename Controller>
-	class Window
+	class Window : public WindowBase
 	{
 	public:
 		typedef bool (Controller::*EventListener)(WindowEventArgs);
@@ -19,7 +20,7 @@ namespace EACRipper
 		std::map<std::wstring, std::vector<EventListener> > eventMap;
 
 	protected:
-		Window() : controller(NULL) {}
+		explicit Window(HWND iwindow = NULL) : WindowBase(iwindow), controller(NULL) {}
 		virtual ~Window() = 0 {}
 
 	public:

@@ -30,16 +30,17 @@
 #define IDC_ENCODING                    1021
 #define IDC_ENCODING_LABEL              1022
 #define IDM_FILE_OPEN                   40001
-#define IDM_ARCHIVE_OPEN                40002
-#define IDM_OPTION                      40003
-#define IDM_RIP                         40004
+#define IDM_INCUE_OPEN                  40002
+#define IDM_ARCHIVE_OPEN                40003
+#define IDM_OPTION                      40004
+#define IDM_RIP                         40005
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        106
-#define _APS_NEXT_COMMAND_VALUE         40005
+#define _APS_NEXT_COMMAND_VALUE         40006
 #define _APS_NEXT_CONTROL_VALUE         1023
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

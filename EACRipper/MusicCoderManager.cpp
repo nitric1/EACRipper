@@ -10,12 +10,12 @@ namespace EACRipper
 	{
 	}
 
-	const vector<wstring> MusicCoderManager::coders() const
+	const vector<pair<wstring, MusicCoderManager::CoderType> > MusicCoderManager::coders() const
 	{
-		vector<wstring> v;
+		vector<pair<wstring, CoderType> > v;
 		for(map<wstring, pair<CoderType, IERAllocator *> >::const_iterator it = coderMap.begin(); it != coderMap.end(); ++ it)
 		{
-			v.push_back(it->first);
+			v.push_back(make_pair(it->first, it->second.first));
 		}
 
 		return v;

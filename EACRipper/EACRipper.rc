@@ -199,8 +199,9 @@ IDR_MAIN_MENU MENU
 BEGIN
     POPUP "∆ƒ¿œ(&F)"
     BEGIN
-        MENUITEM "Cuesheet ø≠±‚(&O)°¶",            IDM_FILE_OPEN
-        MENUITEM "æ–√‡ ø≠±‚(&A)°¶",                  IDM_ARCHIVE_OPEN
+        MENUITEM "Cuesheet ø≠±‚(&O)°¶\tCtrl+O",    IDM_FILE_OPEN
+        MENUITEM "&inCue ¿Ωæ« ø≠±‚...\tCtrl+I",     IDM_INCUE_OPEN
+        MENUITEM "æ–√‡ ø≠±‚(&A)°¶\tCtrl+P",          IDM_ARCHIVE_OPEN
     END
     MENUITEM "º≥¡§(&P)°¶",                     IDM_OPTION
     MENUITEM "∏Æ«Œ(&R)",                      IDM_RIP
@@ -254,6 +255,17 @@ BEGIN
     END
 END
 
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_ACCELERATOR1 ACCELERATORS 
+BEGIN
+    VK_RETURN,      ID_ACCELERATOR40009,    VIRTKEY, NOINVERT
+END
+
 #endif    // Korean resources
 /////////////////////////////////////////////////////////////////////////////
 
@@ -279,7 +291,7 @@ FONT 9, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
     RTEXT           "Target Path: ",IDC_STATIC,5,8,50,8
     EDITTEXT        IDC_PATH,55,5,260,14,ES_AUTOHSCROLL
-    PUSHBUTTON      "Ö",IDC_PATH_SELECT,315,5,30,14
+    PUSHBUTTON      "...",IDC_PATH_SELECT,315,5,30,14
     RTEXT           "Name Format: ",IDC_STATIC,5,26,50,8
     EDITTEXT        IDC_NAME_FORMAT,55,23,290,14,ES_AUTOHSCROLL
     DEFPUSHBUTTON   "OK",IDOK,240,41,50,14
@@ -302,7 +314,7 @@ BEGIN
     EDITTEXT        IDC_YEAR,35,34,30,14,ES_AUTOHSCROLL
     RTEXT           "Out Format: ",IDC_STATIC,65,37,45,8
     COMBOBOX        IDC_FORMAT,110,35,80,80,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    PUSHBUTTON      "Ö",IDC_FORMAT_SETTING,190,34,15,14
+    PUSHBUTTON      "...",IDC_FORMAT_SETTING,190,34,15,14
     RTEXT           "Genre: ",IDC_STATIC,205,37,30,8
     EDITTEXT        IDC_GENRE,235,34,55,14,ES_AUTOHSCROLL
     CONTROL         "Every track's artist is same as above",IDC_SAME_ARTIST,
@@ -420,10 +432,11 @@ IDR_MAIN_MENU MENU
 BEGIN
     POPUP "&File"
     BEGIN
-        MENUITEM "&Open Cuesheet",              IDM_FILE_OPEN
-        MENUITEM "Open &Archive",               IDM_ARCHIVE_OPEN
+        MENUITEM "&Open Cuesheet...\tCtrl+O",   IDM_FILE_OPEN
+        MENUITEM "Open &inCue Music...\tCtrl+I", IDM_INCUE_OPEN
+        MENUITEM "Open &Archive...\tCtrl+P",    IDM_ARCHIVE_OPEN
     END
-    MENUITEM "&Preferences",                IDM_OPTION
+    MENUITEM "&Preferences...",             IDM_OPTION
     MENUITEM "&Rip",                        IDM_RIP
 END
 

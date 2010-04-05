@@ -2,6 +2,7 @@
 
 #include "Window.h"
 #include "Singleton.h"
+#include "ShortcutKey.h"
 #include "ComponentManager.h"
 
 namespace EACRipper
@@ -16,16 +17,12 @@ namespace EACRipper
 		enum { DIALOG_ID = IDD_MAIN_DIALOG };
 
 	private:
-		HWND window;
-
 		HICON iconSmall, iconBig;
+		ShortcutKey *shortcut;
 
 	private:
 		MainWindow();
 		~MainWindow();
-
-	public:
-		HWND getWindow();
 
 	private:
 		static intptr_t __stdcall procMessage(HWND, unsigned, WPARAM, LPARAM);

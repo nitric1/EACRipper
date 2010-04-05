@@ -12,7 +12,7 @@ namespace EACRipper
 		virtual ~WindowBase() = 0 {}
 
 	public:
-		virtual HWND getWindow()
+		virtual HWND getWindow() const
 		{
 			return window;
 		}

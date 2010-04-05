@@ -79,5 +79,45 @@ namespace EACRipper
 			alloc->free(p);
 			return res;
 		}
+
+		StringCodepageConverter::StringCodepageConverter()
+			: codepage(CP_ACP)
+		{
+		}
+
+		StringCodepageConverter::~StringCodepageConverter()
+		{
+		}
+
+		uint32_t StringCodepageConverter::getCodepage() const
+		{
+			return codepage;
+		}
+
+		bool StringCodepageConverter::setCodepage(uint32_t icodepage)
+		{
+			codepage = icodepage;
+			return true;
+		}
+
+		size_t StringCodepageConverter::getConvertedLengthToUTF16(const char *str, size_t length)
+		{
+			return MultiByteToWideChar(codepage, 0, str, static_cast<int>(length), NULL, 0);
+		}
+
+		size_t StringCodepageConverter::getConvertedLengthFromUTF16(const wchar_t *str, size_t length)
+		{
+			return WideCharToMultiByte(codepage, 0, str, static_cast<int>(length), NULL, 0, NULL, NULL);
+		}
+
+		size_t StringCodepageConverter::convertToUTF16(wchar_t *toString, size_t toBufferLength, const char *fromString, size_t fromLength)
+		{
+			return MultiByteToWideChar(codepage, 0, fromString, static_cast<int>(fromLength), toString, static_cast<int>(toBufferLength));
+		}
+
+		size_t StringCodepageConverter::convertFromUTF16(char *toString, size_t toBufferLength, const wchar_t *fromString, size_t fromLength)
+		{
+			return WideCharToMultiByte(codepage, 0, fromString, static_cast<int>(fromLength), toString, static_cast<int>(toBufferLength), NULL, NULL);
+		}
 	}
 }

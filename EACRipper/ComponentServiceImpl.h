@@ -75,6 +75,7 @@ namespace EACRipper
 			uint32_t codepage;
 
 		private:
+			StringCodepageConverter();
 			virtual ~StringCodepageConverter();
 
 		public:

@@ -86,5 +86,7 @@ namespace EACRipper
 		uint32_t id = processShortcut(window, key, ((lParam & 0x01000000) == 0x01000000), ((lParam & 0x0000FFFF) > 0));
 		if(id == 0)
 			return false;
+
+		return PostMessageW(window->getWindow(), WM_COMMAND, id, 0) != FALSE;
 	}
 }

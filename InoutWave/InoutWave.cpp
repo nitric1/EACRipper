@@ -101,6 +101,9 @@ public:
 	virtual uint32_t getLength() const;
 	virtual size_t read(uint32_t, uint32_t, void *, size_t);
 	virtual bool readSplit(uint32_t, uint32_t, void *, size_t, size_t *, uint64_t *);
+
+private:
+	bool seek(uint32_t);
 };
 
 const DecoderInformation InWave::info =
@@ -177,16 +180,35 @@ size_t InWave::read(uint32_t start, uint32_t end, void *buffer, size_t bufferSiz
 	if(start >= end)
 		return 0;
 
-	return 0;
+	size_t dataSize = getDataSize(start, end);
+	if(bufferSize > dataSize)
+		bufferSize = dataSize;
+
+	return seek(start) && reader->read(buffer, bufferSize);
 }
 
 bool InWave::readSplit(uint32_t start, uint32_t end, void *buffer, size_t bufferSize, size_t *readSize, uint64_t *section)
 {
-	if(*section == 0) // first read
+	if(*section == 0 && !seek(start)) // first read
+		return false;
+
+	size_t leftSize = getDataSize(start, end) - static_cast<size_t>(*section);
+	bool bufferEnd = false;
+	if(bufferSize >= leftSize)
 	{
+		bufferSize = leftSize;
+		bufferEnd = true;
 	}
 
-	return false;
+	*readSize = reader->read(buffer, bufferSize);
+	*section += *readSize;
+
+	return !bufferEnd;
+}
+
+bool InWave::seek(uint32_t sec)
+{
+	return reader->seek(getDataSize(0, sec) + sizeof(header), BEGIN);
 }
 
 class OutWave : public IERComponentMusicEncoder

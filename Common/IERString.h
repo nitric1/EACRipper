@@ -14,13 +14,13 @@ public:
 	virtual ~IERServiceStringConverter() = 0 {}
 
 public:
-	virtual size_t getConvertedLength(const char *, size_t = std::numeric_limits<size_t>::max()) = 0;
+	virtual size_t getConvertedLengthToUTF16(const char *fromString, size_t length = std::numeric_limits<size_t>::max()) = 0;
 
-	virtual size_t getConvertedLength(const wchar_t *, size_t = std::numeric_limits<size_t>::max()) = 0;
+	virtual size_t getConvertedLengthFromUTF16(const wchar_t *fromString, size_t length = std::numeric_limits<size_t>::max()) = 0;
 
-	virtual size_t convert(wchar_t *, size_t, const char *, size_t = std::numeric_limits<size_t>::max()) = 0;
+	virtual size_t convertToUTF16(wchar_t *toString, size_t toBufferLength, const char *fromString, size_t fromLength = std::numeric_limits<size_t>::max()) = 0;
 
-	virtual size_t convert(char *, size_t, const wchar_t *, size_t = std::numeric_limits<size_t>::max()) = 0;
+	virtual size_t convertFromUTF16(char *toString, size_t toBufferLength, const wchar_t *fromString, size_t fromLength = std::numeric_limits<size_t>::max()) = 0;
 };
 
 class IERServiceStringCodepageConverter : public IERServiceStringConverter
@@ -34,7 +34,7 @@ public:
 public:
 	virtual uint32_t getCodepage() const = 0;
 
-	virtual bool setCodepage(uint32_t codepage);
+	virtual bool setCodepage(uint32_t codepage) = 0;
 };
 
 class IERServiceStringCharsetConverter : public IERServiceStringConverter
@@ -48,7 +48,7 @@ public:
 public:
 	virtual const char *getCharset() const = 0;
 
-	virtual bool setCodepage(const char *charset) = 0;
+	virtual bool setCharset(const char *charset) = 0;
 };
 
 template<>

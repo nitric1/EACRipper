@@ -367,7 +367,6 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"
-						PrecompiledHeaderThrough="Defaults.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -376,7 +375,6 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"
-						PrecompiledHeaderThrough="Defaults.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -385,7 +383,6 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"
-						PrecompiledHeaderThrough="Defaults.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -394,7 +391,6 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"
-						PrecompiledHeaderThrough="Defaults.h"
 					/>
 				</FileConfiguration>
 			</File>

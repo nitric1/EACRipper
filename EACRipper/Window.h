@@ -1,9 +1,5 @@
 #pragma once
 
-#include <map>
-#include <vector>
-#include <string>
-
 #include "WindowBase.h"
 #include "WindowEventArgs.h"
 

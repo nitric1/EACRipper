@@ -1,11 +1,5 @@
 #pragma once
 
-#include <map>
-#include <vector>
-#include <string>
-#include <memory>
-#include <stdexcept>
-
 #include "Singleton.h"
 #include "Component.h"
 

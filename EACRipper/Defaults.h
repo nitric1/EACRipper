@@ -15,10 +15,26 @@ namespace ER = EACRipper;
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 
-#include <algorithm>
-#include <limits>
+#include <cstdio>
+#include <cstdlib>
+
+#include <cinttypes>
+
 #include <exception>
 #include <stdexcept>
+
+#include <algorithm>
+#include <memory>
+
+#include <limits>
+
+#include <map>
+#include <vector>
+#include <string>
+
+#include <iostream>
+#include <sstream>
+#include <iomanip>
 
 using std::max; using std::min;
 

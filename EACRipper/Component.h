@@ -1,7 +1,5 @@
 #pragma once
 
-#include <string>
-
 #include "ComponentServiceImpl.h"
 
 namespace EACRipper

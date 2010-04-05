@@ -147,6 +147,11 @@ public:
 		return unpackedData();
 	}
 
+	operator union ERUUIDData() const
+	{
+		return getData();
+	}
+
 private:
 	static uint8_t hexDigit(char ch)
 	{

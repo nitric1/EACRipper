@@ -3,6 +3,8 @@
 #include "MainController.h"
 #include "MainWindow.h"
 
+using namespace std;
+
 namespace EACRipper
 {
 	MainWindow::MainWindow()
@@ -164,5 +166,21 @@ namespace EACRipper
 	{
 		intptr_t res = DialogBoxParamW(MainController::instance().getInstance(), MAKEINTRESOURCEW(DIALOG_ID), NULL, procMessage, NULL);
 		return res == IDOK;
+	}
+
+	void MainWindow::addFormat(const wstring &name)
+	{
+		HWND formatList = GetDlgItem(getWindow(), IDC_FORMAT);
+
+		ComboBox_AddString(formatList, name.c_str());
+	}
+
+	void MainWindow::selectFormat(const wstring &name)
+	{
+		HWND formatList = GetDlgItem(getWindow(), IDC_FORMAT);
+		int idx = ComboBox_FindStringExact(formatList, -1, name.c_str());
+		if(idx == CB_ERR)
+			return;
+		ComboBox_SetCurSel(formatList, idx);
 	}
 }

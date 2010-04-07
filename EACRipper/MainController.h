@@ -4,6 +4,7 @@
 #include "MainWindow.h"
 #include "WindowEventArgs.h"
 #include "ComponentManager.h"
+#include "MusicCoderManager.h"
 
 namespace EACRipper
 {

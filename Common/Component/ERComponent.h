@@ -14,6 +14,7 @@
 #include "IERStream.h"
 #include "IERApplication.h"
 #include "IERComponentArchive.h"
+#include "IERComponentEntrypoint.h"
 #include "IERComponentMusic.h"
 #include "IERComponentInfo.h"
 

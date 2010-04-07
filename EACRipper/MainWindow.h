@@ -29,6 +29,8 @@ namespace EACRipper
 
 	public:
 		bool show();
+		void addFormat(const std::wstring &);
+		void selectFormat(const std::wstring &);
 
 		friend class Singleton<MainWindow>;
 	};

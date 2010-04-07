@@ -17,7 +17,7 @@ namespace EACRipper
 		} CoderType;
 
 	public:
-		std::map<std::wstring, std::pair<CoderType, IERAllocator *> > coderMap;
+		std::map<std::pair<std::wstring, CoderType>, IERAllocator *> coderMap;
 
 	private:
 		~MusicCoderManager();
@@ -25,7 +25,7 @@ namespace EACRipper
 	public:
 		const std::vector<std::pair<std::wstring, CoderType> > coders() const;
 		bool addCoder(const std::wstring &, CoderType, IERAllocator *);
-		IERAllocator *getCoder(const std::wstring &);
+		IERAllocator *getCoder(const std::wstring &, CoderType);
 
 		friend class Singleton<MusicCoderManager>;
 	};

@@ -5,6 +5,7 @@
 #include "MainWindow.h"
 
 using namespace Gdiplus;
+using namespace std;
 
 namespace EACRipper
 {
@@ -32,6 +33,17 @@ namespace EACRipper
 		OleInitialize(NULL);
 
 		comp = &ComponentManager::instance();
+
+		MusicCoderManager *cd = &MusicCoderManager::instance();
+		vector<pair<wstring, MusicCoderManager::CoderType> > v = cd->coders();
+		for(vector<pair<wstring, MusicCoderManager::CoderType> >::iterator it = v.begin();
+			it != v.end(); ++ it)
+		{
+			if(it->second == MusicCoderManager::Encoder)
+				mainWin->addFormat(it->first);
+		}
+
+		mainWin->selectFormat(v[0].first);
 	}
 
 	void MainController::uninitializeApp()
@@ -93,7 +105,7 @@ namespace EACRipper
 	}
 }
 
-int __stdcall wWinMain(HINSTANCE inst, HINSTANCE, LPWSTR, int)
+int __stdcall wWinMain(HINSTANCE inst, HINSTANCE, wchar_t *, int)
 {
 	return ER::MainController::instance().run(inst) ? 0 : 1;
 }

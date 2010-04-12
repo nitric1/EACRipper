@@ -34,6 +34,17 @@ namespace EACRipper
 			}
 		} Key;
 
+		private:
+		typedef struct _ConfigureData
+		{
+			typedef struct _ConfigureField
+			{
+			} ConfigureField;
+
+			uint32_t size;
+			ConfigureField f[1];
+		} ConfigureData;
+
 	private:
 		typedef struct _Command
 		{
@@ -46,6 +57,7 @@ namespace EACRipper
 		std::map<std::pair<Key, const WindowBase *>, Command> keyMap;
 
 	private:
+		ShortcutKey();
 		~ShortcutKey();
 
 	public:

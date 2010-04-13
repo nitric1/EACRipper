@@ -496,10 +496,6 @@
 				RelativePath=".\WindowBase.h"
 				>
 			</File>
-			<File
-				RelativePath=".\WindowEventArgs.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"

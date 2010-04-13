@@ -1,11 +1,21 @@
 #include "Defaults.h"
 
+#include "Configure.h"
 #include "ShortcutKey.h"
 
 using namespace std;
 
 namespace EACRipper
 {
+	ShortcutKey::ShortcutKey()
+	{
+		Configure &c = Configure::instance();
+		vector<uint8_t> ve = c.getBinary(L"Shortcut");
+		if(ve.empty())
+			return;
+		ConfigureData *data = reinterpret_cast<ConfigureData *>(&*ve.begin());
+	}
+
 	ShortcutKey::~ShortcutKey()
 	{
 	}

@@ -30,6 +30,9 @@ bool InoutWaveEntrypoint::onInit()
 	MusicDecoderFactory<InWave, InWave> waveDecoderFac;
 	MusicEncoderFactory<OutWave, OutWave> waveEncoderFac;
 
+	// ServiceFactory<IERServiceStringCodepageConverter> conv;
+	// conv->setCodepage(65001);
+
 	return true;
 }
 
@@ -193,17 +196,16 @@ bool InWave::readSplit(uint32_t start, uint32_t end, void *buffer, size_t buffer
 		return false;
 
 	size_t leftSize = getDataSize(start, end) - static_cast<size_t>(*section);
-	bool bufferEnd = false;
 	if(bufferSize >= leftSize)
-	{
 		bufferSize = leftSize;
-		bufferEnd = true;
-	}
 
 	*readSize = reader->read(buffer, bufferSize);
+	if(*readSize == numeric_limits<size_t>::max() || *readSize >= leftSize)
+		return false;
+
 	*section += *readSize;
 
-	return !bufferEnd;
+	return true;
 }
 
 bool InWave::seek(uint32_t sec)

@@ -519,14 +519,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\Common\cinttypes"
-				>
-			</File>
-			<File
-				RelativePath="..\Common\cstdint"
-				>
-			</File>
-			<File
 				RelativePath="..\Common\ERUUID.h"
 				>
 			</File>
@@ -609,6 +601,30 @@
 					RelativePath="..\Common\Component\Music.h"
 					>
 				</File>
+			</Filter>
+			<Filter
+				Name="Standard Header Files"
+				>
+				<File
+					RelativePath="..\Common\cinttypes"
+					>
+				</File>
+				<File
+					RelativePath="..\Common\cstdint"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Library Files"
+				>
+				<Filter
+					Name="Boost"
+					>
+					<File
+						RelativePath="..\Common\boost\detail\endian.hpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<File

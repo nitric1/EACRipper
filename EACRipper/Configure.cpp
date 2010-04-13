@@ -72,6 +72,23 @@ namespace EACRipper
 		return getCurrentDirectoryPath() + confFileName;
 	}
 
+	uint8_t Configure::hexDigit(wchar_t ch)
+	{
+		if(ch >= L'0' && ch <= L'9')
+			return static_cast<uint8_t>(ch - L'0');
+		else if(ch >= L'A' && ch <= L'F')
+			return static_cast<uint8_t>(ch - L'A' + 10);
+		else if(ch >= L'a' && ch <= L'f')
+			return static_cast<uint8_t>(ch - L'a' + 10);
+		return 0xFF;
+	}
+
+	wchar_t Configure::digitHex(uint8_t low)
+	{
+		static wchar_t digits[16] = {L'0', L'1', L'2', L'3', L'4', L'5', L'6', L'7', L'8', L'9', L'A', L'B', L'C', L'D', L'E', L'F'};
+		return digits[low];
+	}
+
 	map<wstring, wstring>::iterator Configure::find(const wstring &name)
 	{
 		return confMap.find(name);
@@ -87,12 +104,40 @@ namespace EACRipper
 		return find(name) != confMap.end();
 	}
 
-	const wstring &Configure::get(const wstring &name, const wstring &def) const
+	wstring Configure::get(const wstring &name, const wstring &def) const
 	{
 		map<wstring, wstring>::const_iterator it = find(name);
 		if(it == confMap.end())
 			return def;
 		return it->second;
+	}
+
+	vector<uint8_t> Configure::getBinary(const wstring &name) const
+	{
+		wstring str = get(name);
+		vector<uint8_t> ve;
+		uint8_t v = 0;
+		bool next = false;
+
+		ve.reserve(str.size() / 2);
+
+		for(wstring::iterator it = str.begin(); it != str.end(); ++ it)
+		{
+			if(next)
+			{
+				v <<= 4;
+				v |= hexDigit(*it);
+				ve.push_back(v);
+				next = false;
+			}
+			else
+			{
+				v = hexDigit(*it);
+				next = true;
+			}
+		}
+
+		return ve;
 	}
 
 	void Configure::set(const wstring &name, const wstring &value)

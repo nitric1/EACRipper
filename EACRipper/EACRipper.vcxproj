@@ -213,7 +213,6 @@
     <ClInclude Include="Utility.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="WindowBase.h" />
-    <ClInclude Include="WindowEventArgs.h" />
     <ClInclude Include="..\Common\ERUUID.h" />
     <ClInclude Include="..\Common\IERAllocator.h" />
     <ClInclude Include="..\Common\IERApplication.h" />

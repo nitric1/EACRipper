@@ -1,11 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EACRipper", "EACRipper\EACRipper.vcproj", "{3034B93B-D9AF-40A6-93D8-B3353C5EAF3C}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EACRipper", "EACRipper\EACRipper.vcxproj", "{3034B93B-D9AF-40A6-93D8-B3353C5EAF3C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InoutWave", "InoutWave\InoutWave.vcproj", "{C77CA020-7E61-4DFB-BA80-A614E603D2CB}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InoutWave", "InoutWave\InoutWave.vcxproj", "{C77CA020-7E61-4DFB-BA80-A614E603D2CB}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UUIDGen", "UUIDGen\UUIDGen.vcproj", "{2B6EF8ED-691E-447E-B6A9-AC5DA01383AB}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UUIDGen", "UUIDGen\UUIDGen.vcxproj", "{2B6EF8ED-691E-447E-B6A9-AC5DA01383AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

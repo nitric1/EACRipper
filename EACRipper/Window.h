@@ -1,10 +1,17 @@
 #pragma once
 
 #include "WindowBase.h"
-#include "WindowEventArgs.h"
 
 namespace EACRipper
 {
+	struct WindowEventArgs
+	{
+		HWND window;
+		unsigned message;
+		WPARAM wParam;
+		LPARAM lParam;
+	};
+
 	template<typename Controller>
 	class Window : public WindowBase
 	{

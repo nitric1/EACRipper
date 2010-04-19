@@ -52,7 +52,7 @@ namespace EACRipper
 			return;
 
 		wstring str(L"\xFEFF");
-		for(map<wstring, wstring>::iterator it = confMap.begin(); it != confMap.end(); ++ it)
+		for(auto it = confMap.begin(); it != confMap.end(); ++ it)
 		{
 			str += it->first;
 			str += L"=";
@@ -106,7 +106,7 @@ namespace EACRipper
 
 	wstring Configure::get(const wstring &name, const wstring &def) const
 	{
-		map<wstring, wstring>::const_iterator it = find(name);
+		auto it = find(name);
 		if(it == confMap.end())
 			return def;
 		return it->second;
@@ -121,7 +121,7 @@ namespace EACRipper
 
 		ve.reserve(str.size() / 2);
 
-		for(wstring::iterator it = str.begin(); it != str.end(); ++ it)
+		for(auto it = str.begin(); it != str.end(); ++ it)
 		{
 			if(next)
 			{
@@ -148,7 +148,7 @@ namespace EACRipper
 
 	void Configure::remove(const wstring &name)
 	{
-		map<wstring, wstring>::iterator it = find(name);
+		auto it = find(name);
 		if(it != confMap.end())
 		{
 			confMap.erase(it);

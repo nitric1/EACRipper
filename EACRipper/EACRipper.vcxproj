@@ -187,6 +187,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="FileDialog.cpp" />
     <ClCompile Include="FileStream.cpp" />
     <ClCompile Include="MainController.cpp" />
     <ClCompile Include="MainWindow.cpp" />
@@ -202,6 +203,7 @@
     <ClInclude Include="Configure.h" />
     <ClInclude Include="CueParser.h" />
     <ClInclude Include="Defaults.h" />
+    <ClInclude Include="FileDialog.h" />
     <ClInclude Include="FileStream.h" />
     <ClInclude Include="MainController.h" />
     <ClInclude Include="MainWindow.h" />

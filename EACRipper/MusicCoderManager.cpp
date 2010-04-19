@@ -13,7 +13,7 @@ namespace EACRipper
 	const vector<pair<wstring, MusicCoderManager::CoderType> > MusicCoderManager::coders() const
 	{
 		vector<pair<wstring, CoderType> > v;
-		for(map<pair<wstring, CoderType>, IERAllocator *>::const_iterator it = coderMap.begin(); it != coderMap.end(); ++ it)
+		for(auto it = coderMap.begin(); it != coderMap.end(); ++ it)
 		{
 			v.push_back(it->first);
 		}
@@ -28,7 +28,7 @@ namespace EACRipper
 
 	IERAllocator *MusicCoderManager::getCoder(const wstring &name, CoderType type)
 	{
-		map<pair<wstring, CoderType>, IERAllocator *>::iterator it = coderMap.find(make_pair(name, type));
+		auto it = coderMap.find(make_pair(name, type));
 		if(it == coderMap.end())
 			throw(runtime_error("The coder does not exist."));
 		return it->second;

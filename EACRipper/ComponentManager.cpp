@@ -46,7 +46,7 @@ namespace EACRipper
 	const vector<wstring> ComponentManager::components() const
 	{
 		vector<wstring> v;
-		for(map<wstring, shared_ptr<Component> >::const_iterator it = compMap.begin(); it != compMap.end(); ++ it)
+		for(auto it = compMap.begin(); it != compMap.end(); ++ it)
 		{
 			v.push_back(it->first);
 		}
@@ -56,7 +56,7 @@ namespace EACRipper
 
 	shared_ptr<Component> ComponentManager::getComponent(const wstring &name)
 	{
-		map<wstring, shared_ptr<Component> >::iterator it = compMap.find(name);
+		auto it = compMap.find(name);
 		if(it == compMap.end())
 			throw(runtime_error("The component does not exist."));
 		return it->second;

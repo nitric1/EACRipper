@@ -3,6 +3,7 @@
 #include "Configure.h"
 #include "MainController.h"
 #include "MainWindow.h"
+#include "FileDialog.h"
 
 using namespace Gdiplus;
 using namespace std;
@@ -35,9 +36,8 @@ namespace EACRipper
 		comp = &ComponentManager::instance();
 
 		MusicCoderManager *cd = &MusicCoderManager::instance();
-		vector<pair<wstring, MusicCoderManager::CoderType> > v = cd->coders();
-		for(vector<pair<wstring, MusicCoderManager::CoderType> >::iterator it = v.begin();
-			it != v.end(); ++ it)
+		auto v = cd->coders();
+		for(auto it = v.begin(); it != v.end(); ++ it)
 		{
 			if(it->second == MusicCoderManager::Encoder)
 				mainWin->addFormat(it->first);
@@ -86,6 +86,12 @@ namespace EACRipper
 
 	bool MainController::onOpenCuesheet(WindowEventArgs e)
 	{
+		FileDialog fd(true, mainWin, L"Open Cuesheet", L"~~", L"cue");
+		if(fd.show())
+		{
+			// some process
+		}
+
 		return true;
 	}
 

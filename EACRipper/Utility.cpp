@@ -1,6 +1,7 @@
 #include "Defaults.h"
 
 #include "Utility.h"
+#include "Singleton.h"
 
 using namespace std;
 
@@ -55,5 +56,42 @@ namespace EACRipper
 
 		wstring path(buffer.begin(), buffer.begin() + pathlen);
 		return getDirectoryPath(path);
+	}
+
+	class OSVersion : public Singleton<OSVersion>
+	{
+	private:
+		OSVERSIONINFOW osi;
+
+	private:
+		OSVersion() { osi.dwOSVersionInfoSize = sizeof(osi); GetVersionExW(&osi); }
+		~OSVersion() {}
+
+	public:
+		const OSVERSIONINFOW &getOSI() { return osi; }
+
+	public:
+		friend class Singleton<OSVersion>;
+	};
+
+	bool overOSVersion(OSVERSION ver)
+	{
+		const OSVERSIONINFOW &osi = OSVersion::instance().getOSI();
+		static const uint32_t versions[][3] = {
+			{0, 0, 0},
+			{VER_PLATFORM_WIN32_NT, 5, 0}, // NT2000 [1]
+			{VER_PLATFORM_WIN32_NT, 5, 1}, // XP
+			{VER_PLATFORM_WIN32_NT, 5, 2}, // SERVER2003
+			{VER_PLATFORM_WIN32_NT, 6, 0}, // VISTA
+			{VER_PLATFORM_WIN32_NT, 6, 0}, // SERVER2008
+			{VER_PLATFORM_WIN32_NT, 6, 1}, // SEVEN [6]
+			{VER_PLATFORM_WIN32_NT, 6, 1}, // SERVER2008R2
+		};
+
+		return osi.dwPlatformId == versions[ver][0] &&
+			(osi.dwMajorVersion > versions[ver][1]
+			|| (osi.dwMajorVersion == versions[ver][1] && osi.dwMinorVersion == versions[ver][2]));
+
+		return true;
 	}
 }

@@ -4,6 +4,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <OutDir>$(SolutionDir)$(Configuration)\Components\</OutDir>
+    <IntDir>$(Configuration)\Components\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <Link>

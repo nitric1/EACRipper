@@ -64,10 +64,10 @@ namespace ERComponent
 	class Info : public IERComponentInfo
 	{
 	public:
-		virtual const wchar_t *getSDKVersion() { return EACRIPPER_COMPONENT_SDK_VERSION; }
-		virtual const wchar_t *getComponentName() { return ERComponentGlobal::componentName; }
-		virtual const wchar_t *getComponentVersion() { return ERComponentGlobal::componentVersion; }
-		virtual bool isDebug()
+		virtual const wchar_t *getSDKVersion() const { return EACRIPPER_COMPONENT_SDK_VERSION; }
+		virtual const wchar_t *getComponentName() const { return ERComponentGlobal::componentName; }
+		virtual const wchar_t *getComponentVersion() const { return ERComponentGlobal::componentVersion; }
+		virtual bool isDebug() const
 		{
 #if defined(DEBUG) || defined(_DEBUG)
 			return true;

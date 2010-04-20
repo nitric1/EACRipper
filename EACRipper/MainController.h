@@ -33,6 +33,7 @@ namespace EACRipper
 		bool onInit(WindowEventArgs);
 		bool onClose(WindowEventArgs);
 		bool onOpenCuesheet(WindowEventArgs);
+		bool onOpenInCue(WindowEventArgs);
 		bool onOpenArchive(WindowEventArgs);
 		bool onOption(WindowEventArgs);
 		bool onRip(WindowEventArgs);

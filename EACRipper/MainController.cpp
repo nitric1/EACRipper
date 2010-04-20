@@ -43,7 +43,8 @@ namespace EACRipper
 				mainWin->addFormat(it->first);
 		}
 
-		mainWin->selectFormat(v[0].first);
+		if(!v.empty())
+			mainWin->selectFormat(v[0].first);
 	}
 
 	void MainController::uninitializeApp()
@@ -58,6 +59,7 @@ namespace EACRipper
 		mainWin->addEventListener(L"init", &MainController::onInit);
 		mainWin->addEventListener(L"close", &MainController::onClose);
 		mainWin->addEventListener(L"openCuesheet", &MainController::onOpenCuesheet);
+		mainWin->addEventListener(L"openInCue", &MainController::onOpenInCue);
 		mainWin->addEventListener(L"openArchive", &MainController::onOpenArchive);
 		mainWin->addEventListener(L"option", &MainController::onOption);
 		mainWin->addEventListener(L"rip", &MainController::onRip);
@@ -92,6 +94,11 @@ namespace EACRipper
 			// some process
 		}
 
+		return true;
+	}
+
+	bool MainController::onOpenInCue(WindowEventArgs e)
+	{
 		return true;
 	}
 

@@ -1,11 +1,15 @@
 #include "Defaults.h"
 
 #include "Component.h"
+#include "Version.h"
 
 using namespace std;
 
 namespace EACRipper
 {
+	const wstring Component::currentSDKVersion = EACRIPPER_COMPONENT_SDK_VERSION;
+	const wstring Component::minimumSDKVersion = L"2.0.0";
+
 	Component::Component(const std::wstring &path)
 	{
 		library = LoadLibraryW(path.c_str());
@@ -22,6 +26,9 @@ namespace EACRipper
 		}
 
 		init(&app);
+
+		if(Version(app.getInfo()->getSDKVersion()) < minimumSDKVersion)
+			throw(runtime_error("The component's version is lower than supported."));
 	}
 
 	Component::~Component()

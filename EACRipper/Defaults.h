@@ -1,9 +1,9 @@
 #pragma once
 
-#define WINVER 0x0600
+#define WINVER 0x0700
 #define _WIN32_WINDOWS 0x0410
 #define _WIN32_WINNT 0x0600
-#define _WIN32_IE 0x0600
+#define _WIN32_IE 0x0700
 
 #define EACRIPPER_TITLE L"EACRipper"
 #define EACRIPPER_VERSION L"0.4.0\x03B2"

@@ -11,6 +11,10 @@ namespace EACRipper
 		typedef void (*Uninitializer)();
 
 	private:
+		static const std::wstring currentSDKVersion;
+		static const std::wstring minimumSDKVersion;
+
+	private:
 		HMODULE library;
 		ERApplication app;
 		Initializer init;

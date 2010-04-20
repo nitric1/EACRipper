@@ -195,8 +195,10 @@
     <ClCompile Include="RipManager.cpp" />
     <ClCompile Include="ShortcutKey.cpp" />
     <ClCompile Include="Utility.cpp" />
+    <ClCompile Include="Version.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Common\Component\Definition.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentManager.h" />
     <ClInclude Include="ComponentServiceImpl.h" />
@@ -213,6 +215,7 @@
     <ClInclude Include="ShortcutKey.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Utility.h" />
+    <ClInclude Include="Version.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="WindowBase.h" />
     <ClInclude Include="..\Common\ERUUID.h" />

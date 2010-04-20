@@ -7,8 +7,6 @@
 
 #include <windows.h>
 
-#define EACRIPPER_COMPONENT_SDK_VERSION L"2.0.0"
-
 #include "ERUUID.h"
 #include "IERString.h"
 #include "IERStream.h"
@@ -23,6 +21,7 @@ extern "C" __declspec(dllexport) void initComponent(IERApplication *);
 extern "C" __declspec(dllexport) void uninitComponent();
 #endif
 
+#include "Component/Definition.h"
 #include "Component/Info.h"
 #include "Component/Factory.h"
 #include "Component/Allocator.h"

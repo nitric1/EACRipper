@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Component/Definition.h"
+
 #include "IERAllocator.h"
 #include "IERStream.h"
 #include "IERString.h"

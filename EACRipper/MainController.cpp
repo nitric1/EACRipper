@@ -91,7 +91,7 @@ namespace EACRipper
 		FileDialog fd(true, mainWin, L"Open Cuesheet", L"~~", L"cue");
 		if(fd.show())
 		{
-			// some process
+			// TODO: Open Cuesheet Implementation
 		}
 
 		return true;

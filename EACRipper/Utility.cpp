@@ -90,8 +90,6 @@ namespace EACRipper
 
 		return osi.dwPlatformId == versions[ver][0] &&
 			(osi.dwMajorVersion > versions[ver][1]
-			|| (osi.dwMajorVersion == versions[ver][1] && osi.dwMinorVersion == versions[ver][2]));
-
-		return true;
+			|| (osi.dwMajorVersion == versions[ver][1] && osi.dwMinorVersion >= versions[ver][2]));
 	}
 }

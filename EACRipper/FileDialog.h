@@ -9,7 +9,7 @@ namespace EACRipper
 	private:
 		bool isOpen;
 		WindowBase *owner;
-		std::wstring filePath;
+		std::wstring title, defExt, filter, filePath;
 		IFileDialog *dlg;
 		OPENFILENAMEW ofn;
 

@@ -28,7 +28,7 @@ namespace EACRipper
 		static intptr_t __stdcall procMessage(HWND, unsigned, WPARAM, LPARAM);
 
 	public:
-		bool show();
+		virtual bool show();
 		void addFormat(const std::wstring &);
 		void selectFormat(const std::wstring &);
 

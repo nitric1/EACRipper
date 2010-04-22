@@ -21,7 +21,7 @@ namespace EACRipper
 		~MainController();
 
 	public:
-		HINSTANCE getInstance();
+		HINSTANCE getInstance() const;
 
 	public:
 		void registerEvents();

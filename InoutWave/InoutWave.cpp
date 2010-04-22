@@ -154,7 +154,7 @@ bool InWave::setStream(IERStreamReader *stream)
 
 bool InWave::close()
 {
-	reader = NULL;
+	reader = nullptr;
 	return true;
 }
 
@@ -287,7 +287,7 @@ bool OutWave::setStream(IERStreamWriter *stream, uint8_t channels, uint8_t bitsP
 
 bool OutWave::close()
 {
-	writer = NULL;
+	writer = nullptr;
 	return true;
 }
 

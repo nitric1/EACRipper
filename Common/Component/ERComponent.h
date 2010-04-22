@@ -32,8 +32,8 @@ extern "C" __declspec(dllexport) void uninitComponent();
 	namespace ERComponentGlobal { \
 		const wchar_t *componentName = name; \
 		const wchar_t *componentVersion = version; \
-		IERComponentEntrypoint *componentEntry = NULL; \
-		IERComponentInfo *info = NULL; \
+		IERComponentEntrypoint *componentEntry = nullptr; \
+		IERComponentInfo *info = nullptr; \
 	}
 
 #if defined(_WINDOWS) && defined(_USRDLL)
@@ -42,13 +42,13 @@ extern "C" __declspec(dllexport) void initComponent(IERApplication *app)
 	ERComponent::ApplicationInfo::instance().setApp(app);
 	ERComponentGlobal::info = new ERComponent::Info();
 	app->setInfo(ERComponentGlobal::info);
-	if(ERComponentGlobal::componentEntry != NULL)
+	if(ERComponentGlobal::componentEntry != nullptr)
 		ERComponentGlobal::componentEntry->onInit();
 }
 
 extern "C" __declspec(dllexport) void uninitComponent()
 {
-	if(ERComponentGlobal::componentEntry != NULL)
+	if(ERComponentGlobal::componentEntry != nullptr)
 		ERComponentGlobal::componentEntry->onUninit();
 	delete ERComponentGlobal::info;
 }

@@ -192,6 +192,7 @@
     <ClCompile Include="MainController.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="MusicCoderManager.cpp" />
+    <ClCompile Include="PreferenceWindow.cpp" />
     <ClCompile Include="RipManager.cpp" />
     <ClCompile Include="ShortcutKey.cpp" />
     <ClCompile Include="Utility.cpp" />
@@ -210,6 +211,7 @@
     <ClInclude Include="MainController.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="MusicCoderManager.h" />
+    <ClInclude Include="PreferenceWindow.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="RipManager.h" />
     <ClInclude Include="ShortcutKey.h" />

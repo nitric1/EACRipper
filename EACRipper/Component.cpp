@@ -13,13 +13,13 @@ namespace EACRipper
 	Component::Component(const std::wstring &path)
 	{
 		library = LoadLibraryW(path.c_str());
-		if(library == NULL)
+		if(library == nullptr)
 			throw(runtime_error("Cannot load component library."));
 
 		init = reinterpret_cast<Initializer>(GetProcAddress(library, "initComponent"));
 		uninit = reinterpret_cast<Uninitializer>(GetProcAddress(library, "uninitComponent"));
 
-		if(init == NULL || uninit == NULL)
+		if(init == nullptr || uninit == nullptr)
 		{
 			FreeLibrary(library);
 			throw(runtime_error("Cannot load initComponent or uninitComponent function."));

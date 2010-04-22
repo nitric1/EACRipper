@@ -91,7 +91,7 @@ namespace EACRipper
 				else if(command == L"TRACK") // New Track
 				{
 					prevTrack = track;
-					track = wcstoul(value.c_str(), NULL, 10);
+					track = wcstoul(value.c_str(), nullptr, 10);
 					trackBegin = true;
 				}
 			}
@@ -111,7 +111,7 @@ namespace EACRipper
 					albumFields[L"Date"] = value;
 				else if(command == L"TRACK")
 				{
-					track = wcstoul(value.c_str(), NULL, 10);
+					track = wcstoul(value.c_str(), nullptr, 10);
 					inTrack = true;
 					trackBegin = true;
 				}

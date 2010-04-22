@@ -24,7 +24,7 @@ namespace EACRipper
 		else if(uuid == ERServiceUUID<IERServiceStringCodepageConverter>::uuid)
 			return &StringCodepageConverter::instance();
 
-		return NULL;
+		return nullptr;
 	}
 
 	HWND ERApplication::getWindow() const
@@ -102,12 +102,12 @@ namespace EACRipper
 
 		size_t StringCodepageConverter::getConvertedLengthToUTF16(const char *str, size_t length)
 		{
-			return MultiByteToWideChar(codepage, 0, str, static_cast<int>(length), NULL, 0);
+			return MultiByteToWideChar(codepage, 0, str, static_cast<int>(length), nullptr, 0);
 		}
 
 		size_t StringCodepageConverter::getConvertedLengthFromUTF16(const wchar_t *str, size_t length)
 		{
-			return WideCharToMultiByte(codepage, 0, str, static_cast<int>(length), NULL, 0, NULL, NULL);
+			return WideCharToMultiByte(codepage, 0, str, static_cast<int>(length), nullptr, 0, nullptr, nullptr);
 		}
 
 		size_t StringCodepageConverter::convertToUTF16(wchar_t *toString, size_t toBufferLength, const char *fromString, size_t fromLength)
@@ -117,7 +117,7 @@ namespace EACRipper
 
 		size_t StringCodepageConverter::convertFromUTF16(char *toString, size_t toBufferLength, const wchar_t *fromString, size_t fromLength)
 		{
-			return WideCharToMultiByte(codepage, 0, fromString, static_cast<int>(fromLength), toString, static_cast<int>(toBufferLength), NULL, NULL);
+			return WideCharToMultiByte(codepage, 0, fromString, static_cast<int>(fromLength), toString, static_cast<int>(toBufferLength), nullptr, nullptr);
 		}
 	}
 }

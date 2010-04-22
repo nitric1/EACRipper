@@ -4,6 +4,24 @@
 
 namespace EACRipper
 {
+	class FileDialog;
+
+	class FileDialogFilter
+	{
+	private:
+		std::vector<std::pair<std::wstring, std::wstring> > list;
+
+	public:
+		FileDialogFilter();
+		virtual ~FileDialogFilter();
+
+	public:
+		virtual bool add(const std::wstring &, const std::wstring &);
+		virtual bool add(const std::vector<std::pair<std::wstring, std::wstring> > &);
+
+		friend class FileDialog;
+	};
+
 	class FileDialog
 	{
 	private:
@@ -18,7 +36,7 @@ namespace EACRipper
 		virtual ~FileDialog();
 
 	public:
-		bool show();
-		const std::wstring &getPath();
+		virtual bool show();
+		virtual const std::wstring &getPath() const;
 	};
 }

@@ -20,7 +20,7 @@ namespace EACRipper
 	{
 	}
 
-	HINSTANCE MainController::getInstance()
+	HINSTANCE MainController::getInstance() const
 	{
 		return inst;
 	}
@@ -29,9 +29,9 @@ namespace EACRipper
 	{
 		GdiplusStartupInput gsi;
 
-		GdiplusStartup(&gpToken, &gsi, NULL);
+		GdiplusStartup(&gpToken, &gsi, nullptr);
 
-		OleInitialize(NULL);
+		OleInitialize(nullptr);
 
 		comp = &ComponentManager::instance();
 

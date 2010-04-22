@@ -8,9 +8,8 @@ using namespace std;
 namespace EACRipper
 {
 	MainWindow::MainWindow()
-		: Window(NULL)
+		: Window(nullptr), shortcut(&ShortcutKey::instance())
 	{
-		shortcut = &ShortcutKey::instance();
 	}
 
 	MainWindow::~MainWindow()
@@ -154,7 +153,7 @@ namespace EACRipper
 				DestroyIcon(self->iconSmall);
 				DestroyIcon(self->iconBig);
 
-				self->window = NULL;
+				self->window = nullptr;
 			}
 			return 1;
 		}
@@ -164,7 +163,7 @@ namespace EACRipper
 
 	bool MainWindow::show()
 	{
-		intptr_t res = DialogBoxParamW(MainController::instance().getInstance(), MAKEINTRESOURCEW(DIALOG_ID), NULL, procMessage, NULL);
+		intptr_t res = DialogBoxParamW(MainController::instance().getInstance(), MAKEINTRESOURCEW(DIALOG_ID), nullptr, procMessage, 0);
 		return res == IDOK;
 	}
 

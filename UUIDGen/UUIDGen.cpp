@@ -19,7 +19,7 @@ int wmain()
 {
 	char gen[50] = {'\0', };
 
-	init_genrand(static_cast<unsigned long>(time(NULL)));
+	init_genrand(static_cast<unsigned long>(time(nullptr)));
 
 	sprintf(gen, "%08X-%04hX-4%03hX-%hX%03hX-%08X%04hX",
 		genrand_int32(),

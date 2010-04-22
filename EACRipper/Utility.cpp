@@ -52,7 +52,7 @@ namespace EACRipper
 		vector<wchar_t> buffer(512);
 		size_t pathlen;
 
-		pathlen = GetModuleFileNameW(NULL, &*buffer.begin(), static_cast<DWORD>(buffer.size()));
+		pathlen = GetModuleFileNameW(nullptr, &*buffer.begin(), static_cast<DWORD>(buffer.size()));
 
 		wstring path(buffer.begin(), buffer.begin() + pathlen);
 		return getDirectoryPath(path);

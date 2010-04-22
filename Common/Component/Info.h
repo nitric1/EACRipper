@@ -23,7 +23,7 @@ namespace ERComponent
 		IERApplication *theApp;
 
 	private:
-		ApplicationInfo() : theApp(NULL) {}
+		ApplicationInfo() : theApp(nullptr) {}
 
 	private:
 		void setApp(IERApplication *app) { theApp = app; }

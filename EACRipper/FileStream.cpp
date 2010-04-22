@@ -25,7 +25,7 @@ bool FileStreamReader::open(const wchar_t *name)
 	if(!close())
 		return false;
 
-	file = CreateFileW(name, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
+	file = CreateFileW(name, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, 0, nullptr);
 	if(file == INVALID_HANDLE_VALUE)
 		return false;
 
@@ -77,7 +77,7 @@ uint64_t FileStreamReader::tell() const
 size_t FileStreamReader::read(void *buffer, size_t size)
 {
 	DWORD read;
-	if(!ReadFile(file, buffer, static_cast<DWORD>(size), &read, NULL))
+	if(!ReadFile(file, buffer, static_cast<DWORD>(size), &read, nullptr))
 		return numeric_limits<size_t>::max();
 	return read;
 }
@@ -103,7 +103,7 @@ bool FileStreamWriter::open(const wchar_t *name)
 	if(!close())
 		return false;
 
-	file = CreateFileW(name, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, 0, NULL);
+	file = CreateFileW(name, GENERIC_WRITE, FILE_SHARE_READ, nullptr, CREATE_ALWAYS, 0, nullptr);
 	if(file == INVALID_HANDLE_VALUE)
 		return false;
 
@@ -155,7 +155,7 @@ uint64_t FileStreamWriter::tell() const
 size_t FileStreamWriter::write(const void *data, size_t size)
 {
 	DWORD written;
-	if(!WriteFile(file, data, static_cast<DWORD>(size), &written, NULL))
+	if(!WriteFile(file, data, static_cast<DWORD>(size), &written, nullptr))
 		return numeric_limits<size_t>::max();
 	return written;
 }

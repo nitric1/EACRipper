@@ -20,7 +20,7 @@ public:
 	virtual void setInfo(IERComponentInfo *) = 0;
 
 	template<typename T>
-	T *getServicePointer() { return static_cast<T *>(getServicePointerImpl(ERServiceUUID<T>(), NULL)); }
+	T *getServicePointer() { return static_cast<T *>(getServicePointerImpl(ERServiceUUID<T>(), nullptr)); }
 	template<typename T>
 	T *getServicePointer(const void *param) { return static_cast<T *>(getServicePointerImpl(ERServiceUUID<T>(), param)); }
 };

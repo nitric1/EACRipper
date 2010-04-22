@@ -7,13 +7,33 @@ using namespace std;
 
 namespace EACRipper
 {
+	FileDialogFilter::FileDialogFilter()
+	{
+	}
+
+	FileDialogFilter::~FileDialogFilter()
+	{
+	}
+
+	bool FileDialogFilter::add(const wstring &name, const wstring &ext)
+	{
+		list.push_back(make_pair(name, name));
+		return true;
+	}
+
+	bool FileDialogFilter::add(const vector<pair<wstring, wstring> > &ve)
+	{
+		list.insert(list.end(), ve.begin(), ve.end());
+		return true;
+	}
+
 	FileDialog::FileDialog(bool iisOpen, WindowBase *iowner, const std::wstring &ititle, const std::wstring &ifilter, const std::wstring &idefExt)
 		: isOpen(iisOpen), owner(iowner), title(ititle), filter(ifilter), defExt(idefExt), dlg(nullptr), ofn()
 	{
 		// TODO: 2000/XP Implementation
 		if(overOSVersion(VISTA))
 		{
-			HRESULT hr = CoCreateInstance(isOpen ? CLSID_FileOpenDialog : CLSID_FileSaveDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&dlg));
+			HRESULT hr = CoCreateInstance(isOpen ? CLSID_FileOpenDialog : CLSID_FileSaveDialog, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&dlg));
 			unsigned long options;
 			if(FAILED(hr))
 				throw(runtime_error("Failed to create a file dialog."));
@@ -92,7 +112,7 @@ namespace EACRipper
 		return true;
 	}
 
-	const wstring &FileDialog::getPath()
+	const wstring &FileDialog::getPath() const
 	{
 		return filePath;
 	}

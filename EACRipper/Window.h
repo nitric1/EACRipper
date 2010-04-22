@@ -23,7 +23,7 @@ namespace EACRipper
 		std::map<std::wstring, std::vector<EventListener> > eventMap;
 
 	protected:
-		explicit Window(HWND iwindow = NULL) : WindowBase(iwindow), controller(NULL) {}
+		explicit Window(HWND iwindow = nullptr) : WindowBase(iwindow), controller(nullptr) {}
 		virtual ~Window() = 0 {}
 
 	public:
@@ -37,10 +37,12 @@ namespace EACRipper
 			controller = cont;
 		}
 
+		virtual bool show() = 0;
+
 	public:
 		virtual bool addEventListener(const std::wstring &name, EventListener listener)
 		{
-			if(controller == NULL)
+			if(controller == nullptr)
 				return false;
 			eventMap[name].push_back(listener);
 			return true;
@@ -49,7 +51,7 @@ namespace EACRipper
 	protected:
 		bool runEventListener(const std::wstring &name, WindowEventArgs e)
 		{
-			if(controller == NULL)
+			if(controller == nullptr)
 				return false;
 			else if(eventMap.find(name) == eventMap.end())
 				return true;

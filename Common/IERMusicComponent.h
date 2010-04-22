@@ -230,7 +230,7 @@ public:
 #define ER_DECLARE_MUSIC_COMPONENT_FORMAT_VOID(cls) \
 	const cls ## ::Format * ## cls ## ::getFormats() const { \
 		static const Format l[] = { \
-			{ 0xFFFFFFFFu, NULL } \
+			{ 0xFFFFFFFFu, nullptr } \
 		}; \
 		return l; \
 	}
@@ -238,13 +238,13 @@ public:
 #define ER_DECLARE_MUSIC_COMPONENT_FORMAT_BEGIN(cls, defaultNumber) \
 	const cls ## ::Format * ## cls ## ::getFormats() const { \
 		static const Format l[] = { \
-			{ defaultNumber, NULL }, \
+			{ defaultNumber, nullptr }, \
 
 #define ER_DECLARE_MUSIC_COMPONENT_FORMAT_ITEM(number, name) \
 			{ number, name },
 
 #define ER_DECLARE_MUSIC_COMPONENT_FORMAT_END(cls) \
-			{ 0xFFFFFFFFu, NULL } \
+			{ 0xFFFFFFFFu, nullptr } \
 		}; \
 		return l; \
 	}

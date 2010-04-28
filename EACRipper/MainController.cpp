@@ -3,6 +3,7 @@
 #include "Configure.h"
 #include "MainController.h"
 #include "MainWindow.h"
+#include "PreferenceWindow.h"
 #include "FileDialog.h"
 
 using namespace Gdiplus;
@@ -109,6 +110,10 @@ namespace EACRipper
 
 	bool MainController::onOption(WindowEventArgs e)
 	{
+		PreferenceWindow &win = PreferenceWindow::instance();
+
+		win.show();
+
 		return true;
 	}
 

@@ -6,7 +6,7 @@
 
 namespace EACRipper
 {
-	class PreferenceWindow : public Window<MainController>
+	class PreferenceWindow : public Window<MainController>, public Singleton<PreferenceWindow>
 	{
 	private:
 		enum { DIALOG_ID = IDD_OPTION };
@@ -23,5 +23,7 @@ namespace EACRipper
 
 	public:
 		virtual bool show();
+
+		friend class Singleton<PreferenceWindow>;
 	};
 }

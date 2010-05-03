@@ -36,7 +36,11 @@ namespace EACRipper
 		bool onOpenInCue(WindowEventArgs);
 		bool onOpenArchive(WindowEventArgs);
 		bool onOption(WindowEventArgs);
+		bool onSetCoverArt(WindowEventArgs);
+		bool onCancelCoverArt(WindowEventArgs);
 		bool onRip(WindowEventArgs);
+
+		bool onPrefInit(WindowEventArgs);
 
 		friend class Singleton<MainController>;
 	};

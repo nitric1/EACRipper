@@ -44,7 +44,7 @@
 
 // 7.8 Format conversion of integer types
 
-typedef struct {
+typedef struct _imaxdiv_t {
    intmax_t quot;
    intmax_t rem;
 } imaxdiv_t;

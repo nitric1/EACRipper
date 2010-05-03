@@ -27,17 +27,19 @@ namespace EACRipper
 		return true;
 	}
 
-	FileDialog::FileDialog(bool iisOpen, WindowBase *iowner, const std::wstring &ititle, const std::wstring &ifilter, const std::wstring &idefExt)
+	wstring FileDialogFilter::getOFNFilter() const
+	{
+		return wstring();
+	}
+
+	FileDialog::FileDialog(bool iisOpen, Window *iowner, const std::wstring &ititle, const FileDialogFilter &ifilter, const std::wstring &idefExt)
 		: isOpen(iisOpen), owner(iowner), title(ititle), filter(ifilter), defExt(idefExt), dlg(nullptr), ofn()
 	{
-		// TODO: 2000/XP Implementation
-		if(overOSVersion(VISTA))
-		{
-			HRESULT hr = CoCreateInstance(isOpen ? CLSID_FileOpenDialog : CLSID_FileSaveDialog, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&dlg));
-			unsigned long options;
-			if(FAILED(hr))
-				throw(runtime_error("Failed to create a file dialog."));
+		HRESULT hr = CoCreateInstance(isOpen ? CLSID_FileOpenDialog : CLSID_FileSaveDialog, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&dlg));
 
+		if(SUCCEEDED(hr) && dlg != nullptr)
+		{
+			unsigned long options;
 			hr = dlg->GetOptions(&options);
 			if(FAILED(hr))
 				throw(runtime_error("Failed to get options from the file dialog."));
@@ -56,11 +58,15 @@ namespace EACRipper
 		}
 		else
 		{
+			ofnFilter = filter.getOFNFilter();
+
 			ofn.hwndOwner = owner->getWindow();
 			ofn.lpstrTitle = title.c_str();
 			ofn.lpstrDefExt = defExt.c_str();
 			ofn.Flags = OFN_DONTADDTORECENT | OFN_ENABLESIZING | OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_PATHMUSTEXIST;
 			ofn.lStructSize = sizeof(ofn);
+
+			// TODO: Filter
 		}
 	}
 

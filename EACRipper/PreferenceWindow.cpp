@@ -9,7 +9,7 @@ using namespace std;
 namespace EACRipper
 {
 	PreferenceWindow::PreferenceWindow()
-		: Window(nullptr), conf(&Configure::instance())
+		: ChildWindow(nullptr), conf(&Configure::instance())
 	{
 	}
 
@@ -19,18 +19,18 @@ namespace EACRipper
 
 	intptr_t __stdcall PreferenceWindow::procMessage(HWND window, unsigned message, WPARAM wParam, LPARAM lParam)
 	{
-		WindowEventArgs e = {window, message, wParam, lParam};
-
 		PreferenceWindow &self = instance();
+
+		WindowEventArgs e = {&self, window, message, wParam, lParam};
 
 		switch(message)
 		{
 		case WM_INITDIALOG:
 			{
-				self.window = window;
+				self.setWindow(window);
 
-				// TODO: Preference Initialization (e.g. Fill path value, etc...)
-				break;
+				if(!self.runEventListener(L"prefInit", e))
+					break;
 			}
 			return 1;
 
@@ -41,14 +41,14 @@ namespace EACRipper
 				{
 					// TODO: Process Saving Preference
 					EndDialog(window, IDOK);
-					self.window = nullptr;
+					self.setWindow(nullptr);
 				}
 				return 1;
 
 			case IDCANCEL:
 				{
 					EndDialog(window, IDCANCEL);
-					self.window = nullptr;
+					self.setWindow(nullptr);
 				}
 				return 1;
 			}
@@ -57,7 +57,7 @@ namespace EACRipper
 		case WM_CLOSE:
 			{
 				EndDialog(window, IDCANCEL);
-				self.window = nullptr;
+				self.setWindow(nullptr);
 			}
 			return 1;
 		}
@@ -65,9 +65,31 @@ namespace EACRipper
 		return 0;
 	}
 
+	wstring PreferenceWindow::getValue(const wstring &item)
+	{
+		HWND itemWin;
+		if(item == L"BasePath")
+			itemWin = GetDlgItem(getWindow(), IDC_PATH);
+		else
+			return wstring();
+
+		int len = static_cast<size_t>(GetWindowTextLengthW(itemWin));
+		vector<wchar_t> buf(static_cast<size_t>(len));
+		GetWindowTextW(itemWin, &*buf.begin(), len);
+
+		return wstring(buf.begin(), buf.end());
+	}
+
+	bool PreferenceWindow::setValue(const wstring &item, const wstring &value)
+	{
+		if(item == L"BasePath")
+			return SetDlgItemTextW(getWindow(), IDC_PATH, value.c_str()) != FALSE;
+		return false;
+	}
+
 	bool PreferenceWindow::show()
 	{
-		intptr_t res = DialogBoxParamW(MainController::instance().getInstance(), MAKEINTRESOURCEW(DIALOG_ID), nullptr, procMessage, 0);
+		intptr_t res = DialogBoxParamW(MainController::instance().getInstance(), MAKEINTRESOURCEW(DIALOG_ID), getParent()->getWindow(), procMessage, 0);
 		return res == IDOK;
 	}
 }

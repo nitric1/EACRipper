@@ -18,15 +18,15 @@ namespace EACRipper
 
 	intptr_t __stdcall MainWindow::procMessage(HWND window, unsigned message, WPARAM wParam, LPARAM lParam)
 	{
-		WindowEventArgs e = {window, message, wParam, lParam};
-
 		MainWindow &self = instance();
+
+		WindowEventArgs e = {&self, window, message, wParam, lParam};
 
 		switch(message)
 		{
 		case WM_INITDIALOG:
 			{
-				self.window = window;
+				self.setWindow(window);
 
 				self.iconSmall = static_cast<HICON>(LoadImageW(MainController::instance().getInstance(), MAKEINTRESOURCEW(IDI_MAIN_ICON), IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR));
 				self.iconBig = static_cast<HICON>(LoadImageW(MainController::instance().getInstance(), MAKEINTRESOURCEW(IDI_MAIN_ICON), IMAGE_ICON, 32, 32, LR_DEFAULTCOLOR));
@@ -107,13 +107,13 @@ namespace EACRipper
 				break;
 
 			case IDC_SET_COVER_ART:
-				{
-				}
+				if(!self.runEventListener(L"setCoverArt", e))
+					break;
 				return 1;
 
 			case IDC_CANCEL_COVER_ART:
-				{
-				}
+				if(!self.runEventListener(L"cancelCoverArt", e))
+					break;
 				return 1;
 
 			case IDC_CANCEL:
@@ -153,7 +153,7 @@ namespace EACRipper
 				DestroyIcon(self.iconSmall);
 				DestroyIcon(self.iconBig);
 
-				self.window = nullptr;
+				self.setWindow(nullptr);
 			}
 			return 1;
 		}

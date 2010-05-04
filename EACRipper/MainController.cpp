@@ -88,7 +88,11 @@ namespace EACRipper
 
 	bool MainController::onOpenCuesheet(WindowEventArgs e)
 	{
-		FileDialog fd(true, mainWin, L"Open Cuesheet", L"~~", L"cue");
+		FileDialogFilter f;
+		f.add(L"File A", L"*.wav");
+		f.add(L"File B", L"*.tta");
+		f.add(L"All Files", L"*.*");
+		FileDialog fd(true, mainWin, L"Open Cuesheet", f, L"cue");
 		if(fd.show())
 		{
 			// TODO: Open Cuesheet Implementation

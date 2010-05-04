@@ -60,6 +60,11 @@ namespace EACRipper
 					break;
 				return 1;
 
+			case IDM_INCUE_OPEN:
+				if(!self->runEventListener(L"openInCue", e))
+					break;
+				return 1;
+
 			case IDM_ARCHIVE_OPEN:
 				if(!self->runEventListener(L"openArchive", e))
 					break;

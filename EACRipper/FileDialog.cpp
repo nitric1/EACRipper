@@ -11,6 +11,16 @@ namespace EACRipper
 	{
 	}
 
+	FileDialogFilter::FileDialogFilter(const vector<pair<wstring, wstring> > &ve)
+		: list(ve)
+	{
+	}
+
+	FileDialogFilter::FileDialogFilter(const FileDialogFilter &f)
+		: list(f.list)
+	{
+	}
+
 	FileDialogFilter::~FileDialogFilter()
 	{
 	}
@@ -27,7 +37,12 @@ namespace EACRipper
 		return true;
 	}
 
-	FileDialog::FileDialog(bool iisOpen, WindowBase *iowner, const std::wstring &ititle, const std::wstring &ifilter, const std::wstring &idefExt)
+	const wstring &FileDialogFilter::getOFNFilter() const
+	{
+		return ofnFilter;
+	}
+
+	FileDialog::FileDialog(bool iisOpen, WindowBase *iowner, const std::wstring &ititle, const FileDialogFilter &ifilter, const std::wstring &idefExt)
 		: isOpen(iisOpen), owner(iowner), title(ititle), filter(ifilter), defExt(idefExt), dlg(nullptr), ofn()
 	{
 		// TODO: 2000/XP Implementation

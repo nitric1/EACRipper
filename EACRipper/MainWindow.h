@@ -9,7 +9,7 @@ namespace EACRipper
 {
 	class MainController;
 
-	class MainWindow : public Window<MainController>, public Singleton<MainWindow>
+	class MainWindow : public Window, public Singleton<MainWindow>
 	{
 	private:
 		typedef ComponentManager CM;

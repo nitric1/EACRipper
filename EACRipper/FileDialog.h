@@ -1,6 +1,6 @@
 #pragma once
 
-#include "WindowBase.h"
+#include "Window.h"
 
 namespace EACRipper
 {
@@ -22,7 +22,7 @@ namespace EACRipper
 		virtual bool add(const std::wstring &, const std::wstring &);
 		virtual bool add(const std::vector<std::pair<std::wstring, std::wstring> > &);
 
-		virtual const std::wstring &getOFNFilter() const;
+		virtual std::wstring getOFNFilter() const;
 
 		friend class FileDialog;
 	};
@@ -31,14 +31,15 @@ namespace EACRipper
 	{
 	private:
 		bool isOpen;
-		WindowBase *owner;
+		Window *owner;
 		std::wstring title, defExt, filePath;
 		FileDialogFilter filter;
+		std::wstring ofnFilter;
 		IFileDialog *dlg;
 		OPENFILENAMEW ofn;
 
 	public:
-		FileDialog(bool, WindowBase *, const std::wstring &, const FileDialogFilter &, const std::wstring &);
+		FileDialog(bool, Window *, const std::wstring &, const FileDialogFilter &, const std::wstring & = std::wstring());
 		virtual ~FileDialog();
 
 	public:

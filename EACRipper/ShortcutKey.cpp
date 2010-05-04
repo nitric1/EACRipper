@@ -37,7 +37,7 @@ namespace EACRipper
 		return None;
 	}
 
-	bool ShortcutKey::addShortcut(const WindowBase *window, uint32_t id, Key key, bool canExtended, bool canRepeated)
+	bool ShortcutKey::addShortcut(const Window *window, uint32_t id, Key key, bool canExtended, bool canRepeated)
 	{
 		Command cmd;
 		cmd.canExtended = canExtended;
@@ -47,16 +47,16 @@ namespace EACRipper
 		return keyMap.insert(make_pair(make_pair(key, window), cmd)).second;
 	}
 
-	bool ShortcutKey::modifyShortcut(const WindowBase *window, uint32_t id, Key key, bool canExtended, bool canRepeated)
+	bool ShortcutKey::modifyShortcut(const Window *window, uint32_t id, Key key, bool canExtended, bool canRepeated)
 	{
 		if(!removeShortcut(window, id))
 			return false;
 		return addShortcut(window, id, key, canExtended, canRepeated);
 	}
 
-	bool ShortcutKey::removeShortcut(const WindowBase *window, uint32_t id)
+	bool ShortcutKey::removeShortcut(const Window *window, uint32_t id)
 	{
-		for(map<pair<Key, const WindowBase *>, Command>::iterator it = keyMap.begin();
+		for(map<pair<Key, const Window *>, Command>::iterator it = keyMap.begin();
 			it != keyMap.end();
 			++ it)
 		{
@@ -70,9 +70,9 @@ namespace EACRipper
 		return false;
 	}
 
-	uint32_t ShortcutKey::processShortcut(const WindowBase *window, Key key, bool extended, bool repeated) const
+	uint32_t ShortcutKey::processShortcut(const Window *window, Key key, bool extended, bool repeated) const
 	{
-		map<pair<Key, const WindowBase *>, Command>::const_iterator it = keyMap.find(make_pair(key, window));
+		map<pair<Key, const Window *>, Command>::const_iterator it = keyMap.find(make_pair(key, window));
 		if(it == keyMap.end())
 			return 0;
 
@@ -82,7 +82,7 @@ namespace EACRipper
 		return it->second.id;
 	}
 
-	bool ShortcutKey::processKeydownMessage(const WindowBase *window, WPARAM wParam, LPARAM lParam) const
+	bool ShortcutKey::processKeydownMessage(const Window *window, WPARAM wParam, LPARAM lParam) const
 	{
 		bool ctrl, alt, shift;
 		ctrl = (GetKeyState(VK_CONTROL) < 0);

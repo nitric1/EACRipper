@@ -200,6 +200,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Common\Component\Definition.h" />
+    <ClInclude Include="ChildWindow.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentManager.h" />
     <ClInclude Include="ComponentServiceImpl.h" />
@@ -219,7 +220,6 @@
     <ClInclude Include="Utility.h" />
     <ClInclude Include="Version.h" />
     <ClInclude Include="Window.h" />
-    <ClInclude Include="WindowBase.h" />
     <ClInclude Include="..\Common\ERUUID.h" />
     <ClInclude Include="..\Common\IERAllocator.h" />
     <ClInclude Include="..\Common\IERApplication.h" />

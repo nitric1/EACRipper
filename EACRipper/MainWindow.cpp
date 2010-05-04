@@ -18,21 +18,21 @@ namespace EACRipper
 
 	intptr_t __stdcall MainWindow::procMessage(HWND window, unsigned message, WPARAM wParam, LPARAM lParam)
 	{
-		WindowEventArgs e = {window, message, wParam, lParam};
+		MainWindow &self = instance();
 
-		MainWindow *self = &instance();
+		WindowEventArgs e = {&self, window, message, wParam, lParam};
 
 		switch(message)
 		{
 		case WM_INITDIALOG:
 			{
-				self->window = window;
+				self.setWindow(window);
 
-				self->iconSmall = static_cast<HICON>(LoadImageW(MainController::instance().getInstance(), MAKEINTRESOURCEW(IDI_MAIN_ICON), IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR));
-				self->iconBig = static_cast<HICON>(LoadImageW(MainController::instance().getInstance(), MAKEINTRESOURCEW(IDI_MAIN_ICON), IMAGE_ICON, 32, 32, LR_DEFAULTCOLOR));
+				self.iconSmall = static_cast<HICON>(LoadImageW(MainController::instance().getInstance(), MAKEINTRESOURCEW(IDI_MAIN_ICON), IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR));
+				self.iconBig = static_cast<HICON>(LoadImageW(MainController::instance().getInstance(), MAKEINTRESOURCEW(IDI_MAIN_ICON), IMAGE_ICON, 32, 32, LR_DEFAULTCOLOR));
 
-				SendMessageW(window, WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(self->iconSmall));
-				SendMessageW(window, WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(self->iconBig));
+				SendMessageW(window, WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(self.iconSmall));
+				SendMessageW(window, WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(self.iconBig));
 
 				HWND list = GetDlgItem(window, IDC_LIST);
 
@@ -40,13 +40,13 @@ namespace EACRipper
 
 				SetWindowTextW(window, EACRIPPER_TITLE L" " EACRIPPER_VERSION);
 
-				if(!self->runEventListener(L"init", e))
+				if(!self.runEventListener(L"init", e))
 					break;
 			}
 			return 1;
 
 		case WM_KEYDOWN:
-			if(self->shortcut->processKeydownMessage(self, wParam, lParam))
+			if(self.shortcut->processKeydownMessage(&self, wParam, lParam))
 			{
 				return 1;
 			}
@@ -56,7 +56,7 @@ namespace EACRipper
 			switch(LOWORD(wParam))
 			{
 			case IDM_FILE_OPEN:
-				if(!self->runEventListener(L"openCuesheet", e))
+				if(!self.runEventListener(L"openCuesheet", e))
 					break;
 				return 1;
 
@@ -66,17 +66,17 @@ namespace EACRipper
 				return 1;
 
 			case IDM_ARCHIVE_OPEN:
-				if(!self->runEventListener(L"openArchive", e))
+				if(!self.runEventListener(L"openArchive", e))
 					break;
 				return 1;
 
 			case IDM_OPTION:
-				if(!self->runEventListener(L"option", e))
+				if(!self.runEventListener(L"option", e))
 					break;
 				return 1;
 
 			case IDM_RIP:
-				if(!self->runEventListener(L"rip", e))
+				if(!self.runEventListener(L"rip", e))
 					break;
 				return 1;
 
@@ -112,13 +112,13 @@ namespace EACRipper
 				break;
 
 			case IDC_SET_COVER_ART:
-				{
-				}
+				if(!self.runEventListener(L"setCoverArt", e))
+					break;
 				return 1;
 
 			case IDC_CANCEL_COVER_ART:
-				{
-				}
+				if(!self.runEventListener(L"cancelCoverArt", e))
+					break;
 				return 1;
 
 			case IDC_CANCEL:
@@ -150,15 +150,15 @@ namespace EACRipper
 
 		case WM_CLOSE:
 			{
-				if(!self->runEventListener(L"close", e))
+				if(!self.runEventListener(L"close", e))
 					break;
 
 				EndDialog(window, 0);
 
-				DestroyIcon(self->iconSmall);
-				DestroyIcon(self->iconBig);
+				DestroyIcon(self.iconSmall);
+				DestroyIcon(self.iconBig);
 
-				self->window = nullptr;
+				self.setWindow(nullptr);
 			}
 			return 1;
 		}

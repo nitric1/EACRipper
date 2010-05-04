@@ -5,7 +5,7 @@
 #include <map>
 
 #include "Singleton.h"
-#include "WindowBase.h"
+#include "Window.h"
 
 namespace EACRipper
 {
@@ -54,7 +54,7 @@ namespace EACRipper
 		} Command;
 
 	private:
-		std::map<std::pair<Key, const WindowBase *>, Command> keyMap;
+		std::map<std::pair<Key, const Window *>, Command> keyMap;
 
 	private:
 		ShortcutKey();
@@ -62,11 +62,11 @@ namespace EACRipper
 
 	public:
 		Modifier getModifier(bool, bool, bool) const;
-		bool addShortcut(const WindowBase *, uint32_t, Key, bool, bool);
-		bool modifyShortcut(const WindowBase *, uint32_t, Key, bool, bool);
-		bool removeShortcut(const WindowBase *, uint32_t);
-		uint32_t processShortcut(const WindowBase *, Key, bool, bool) const;
-		bool processKeydownMessage(const WindowBase *, WPARAM, LPARAM) const;
+		bool addShortcut(const Window *, uint32_t, Key, bool, bool);
+		bool modifyShortcut(const Window *, uint32_t, Key, bool, bool);
+		bool removeShortcut(const Window *, uint32_t);
+		uint32_t processShortcut(const Window *, Key, bool, bool) const;
+		bool processKeydownMessage(const Window *, WPARAM, LPARAM) const;
 
 		friend class Singleton<ShortcutKey>;
 	};

@@ -70,7 +70,6 @@ namespace EACRipper
 	public:
 		const OSVERSIONINFOW &getOSI() { return osi; }
 
-	public:
 		friend class Singleton<OSVersion>;
 	};
 

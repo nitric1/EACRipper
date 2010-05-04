@@ -128,9 +128,6 @@
     <ClInclude Include="Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WindowBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Common\ERUUID.h">
       <Filter>Common Files</Filter>
     </ClInclude>
@@ -204,6 +201,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PreferenceWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChildWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,6 +3,7 @@
 #include "Configure.h"
 #include "MainController.h"
 #include "MainWindow.h"
+#include "PreferenceWindow.h"
 #include "FileDialog.h"
 
 using namespace Gdiplus;
@@ -13,7 +14,7 @@ namespace EACRipper
 	MainController::MainController()
 	{
 		mainWin = &MainWindow::instance();
-		mainWin->setOwner(this);
+		/*mainWin->setOwner(this);*/
 	}
 
 	MainController::~MainController()
@@ -56,13 +57,17 @@ namespace EACRipper
 
 	void MainController::registerEvents()
 	{
-		mainWin->addEventListener(L"init", &MainController::onInit);
-		mainWin->addEventListener(L"close", &MainController::onClose);
-		mainWin->addEventListener(L"openCuesheet", &MainController::onOpenCuesheet);
-		mainWin->addEventListener(L"openInCue", &MainController::onOpenInCue);
-		mainWin->addEventListener(L"openArchive", &MainController::onOpenArchive);
-		mainWin->addEventListener(L"option", &MainController::onOption);
-		mainWin->addEventListener(L"rip", &MainController::onRip);
+		mainWin->addEventListener(L"init", delegateEvent(this, &MainController::onInit));
+		mainWin->addEventListener(L"close", delegateEvent(this, &MainController::onClose));
+		mainWin->addEventListener(L"openCuesheet", delegateEvent(this, &MainController::onOpenCuesheet));
+		mainWin->addEventListener(L"openInCue", delegateEvent(this, &MainController::onOpenInCue));
+		mainWin->addEventListener(L"openArchive", delegateEvent(this, &MainController::onOpenArchive));
+		mainWin->addEventListener(L"option", delegateEvent(this, &MainController::onOption));
+		mainWin->addEventListener(L"setCoverArt", delegateEvent(this, &MainController::onSetCoverArt));
+		mainWin->addEventListener(L"cancelCoverArt", delegateEvent(this, &MainController::onCancelCoverArt));
+		mainWin->addEventListener(L"rip", delegateEvent(this, &MainController::onRip));
+
+		mainWin->addEventListener(L"prefInit", delegateEvent(this, &MainController::onPrefInit));
 	}
 
 	bool MainController::run(HINSTANCE instHandle)
@@ -88,11 +93,11 @@ namespace EACRipper
 
 	bool MainController::onOpenCuesheet(WindowEventArgs e)
 	{
-		FileDialogFilter f;
+		FileDialogFilter fi;
 		f.add(L"File A", L"*.wav");
 		f.add(L"File B", L"*.tta");
 		f.add(L"All Files", L"*.*");
-		FileDialog fd(true, mainWin, L"Open Cuesheet", f, L"cue");
+		FileDialog fd(true, mainWin, L"Open Cuesheet", fi, L"cue");
 		if(fd.show())
 		{
 			// TODO: Open Cuesheet Implementation
@@ -103,21 +108,67 @@ namespace EACRipper
 
 	bool MainController::onOpenInCue(WindowEventArgs e)
 	{
+		FileDialogFilter fi;
+		// TODO: Filter
+		FileDialog fd(true, mainWin, L"Open InCue File", fi);
+		if(fd.show())
+		{
+			// TODO: Set Cover Art
+		}
+
 		return true;
 	}
 
 	bool MainController::onOpenArchive(WindowEventArgs e)
 	{
+		FileDialogFilter fi;
+		// TODO: Filter
+		FileDialog fd(true, mainWin, L"Open Archive File", fi);
+		if(fd.show())
+		{
+			// TODO: Set Cover Art
+		}
+
 		return true;
 	}
 
 	bool MainController::onOption(WindowEventArgs e)
+	{
+		PreferenceWindow &win = PreferenceWindow::instance();
+
+		win.showWithParent(mainWin);
+
+		return true;
+	}
+
+	bool MainController::onSetCoverArt(WindowEventArgs e)
+	{
+		FileDialogFilter fi;
+		fi.add(L"Image File", L"*.jpg;*.jpeg;*.gif;*.png");
+		FileDialog fd(true, mainWin, L"Open Cover Art", fi, L"jpg");
+		if(fd.show())
+		{
+			// TODO: Set Cover Art
+		}
+
+		return true;
+	}
+
+	bool MainController::onCancelCoverArt(WindowEventArgs e)
 	{
 		return true;
 	}
 
 	bool MainController::onRip(WindowEventArgs e)
 	{
+		return true;
+	}
+
+	bool MainController::onPrefInit(WindowEventArgs e)
+	{
+		Configure &c = Configure::instance();
+		static_cast<PreferenceWindow *>(e.window)->setValue(L"BasePath", c.get(L"BasePath"));
+
 		return true;
 	}
 }

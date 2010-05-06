@@ -27,7 +27,7 @@ namespace EACRipper
 
 	bool FileDialogFilter::add(const wstring &name, const wstring &ext)
 	{
-		list.push_back(make_pair(name, name));
+		list.push_back(make_pair(name, ext));
 		return true;
 	}
 
@@ -37,9 +37,39 @@ namespace EACRipper
 		return true;
 	}
 
-	wstring FileDialogFilter::getOFNFilter() const
+	const vector<COMDLG_FILTERSPEC> &FileDialogFilter::getCDFilter() const
 	{
-		return wstring();
+		COMDLG_FILTERSPEC cdf;
+		cdFilter.clear();
+
+		for(auto it = list.begin(); it != list.end(); ++ it)
+		{
+			cdf.pszName = it->first.c_str();
+			cdf.pszSpec = it->second.c_str();
+			cdFilter.push_back(cdf);
+		}
+
+		return cdFilter;
+	}
+
+	const wstring &FileDialogFilter::getOFNFilter() const
+	{
+		ofnFilter.clear();
+
+		for(auto it = list.begin(); it != list.end(); ++ it)
+		{
+			ofnFilter += it->first;
+			ofnFilter += L" (";
+			ofnFilter += it->second;
+			ofnFilter += L")";
+			ofnFilter += L'\0';
+			ofnFilter += it->second;
+			ofnFilter += L'\0';
+		}
+
+		ofnFilter.append(3, L'\0');
+
+		return ofnFilter;
 	}
 
 	FileDialog::FileDialog(bool iisOpen, Window *iowner, const std::wstring &ititle, const FileDialogFilter &ifilter, const std::wstring &idefExt)
@@ -58,13 +88,20 @@ namespace EACRipper
 			if(FAILED(hr))
 				throw(runtime_error("Failed to set options of the file dialog."));
 
-			hr = dlg->SetTitle(title.c_str());
-			// if(FAILED(hr)); // Set title is not much matter.
+			dlg->SetTitle(title.c_str());
+			dlg->SetDefaultExtension(defExt.c_str());
 
-			hr = dlg->SetDefaultExtension(defExt.c_str());
-			// if(FAILED(hr)); // Set default extension is not much matter also.
+			const vector<COMDLG_FILTERSPEC> &vcf = filter.getCDFilter();
 
-			// TODO: Default path
+			hr = dlg->SetFileTypes(static_cast<unsigned>(vcf.size()), &*vcf.begin());
+			if(FAILED(hr))
+				throw(runtime_error("Failed to set file filters."));
+
+			/*hr = dlg->QueryInterface(IID_PPV_ARGS(&cust));
+
+			cust->StartVisualGroup(0, L"&Encoding");
+
+			cust->EndVisualGroup();*/
 		}
 		else
 		{
@@ -73,15 +110,16 @@ namespace EACRipper
 			ofn.hwndOwner = owner->getWindow();
 			ofn.lpstrTitle = title.c_str();
 			ofn.lpstrDefExt = defExt.c_str();
+			ofn.lpstrFilter = ofnFilter.c_str();
 			ofn.Flags = OFN_DONTADDTORECENT | OFN_ENABLESIZING | OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_PATHMUSTEXIST;
 			ofn.lStructSize = sizeof(ofn);
-
-			// TODO: Filter
 		}
 	}
 
 	FileDialog::~FileDialog()
 	{
+		/*if(cust != nullptr)
+			cust->Release();*/
 		if(dlg != nullptr)
 			dlg->Release();
 	}

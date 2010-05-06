@@ -61,7 +61,7 @@ namespace EACRipper
 				return 1;
 
 			case IDM_INCUE_OPEN:
-				if(!self->runEventListener(L"openInCue", e))
+				if(!self.runEventListener(L"openInCue", e))
 					break;
 				return 1;
 

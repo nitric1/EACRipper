@@ -164,12 +164,6 @@
     <ClInclude Include="..\Common\IERString.h">
       <Filter>Common Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Common\inttypes.h">
-      <Filter>Common Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\stdint.h">
-      <Filter>Common Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Common\Component\Allocator.h">
       <Filter>Common Files\Component Files</Filter>
     </ClInclude>
@@ -205,6 +199,12 @@
     </ClInclude>
     <ClInclude Include="ChildWindow.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\inttypes.h">
+      <Filter>Common Files\Standard Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\stdint.h">
+      <Filter>Common Files\Standard Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

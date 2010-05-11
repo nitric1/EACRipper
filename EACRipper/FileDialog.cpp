@@ -129,7 +129,7 @@ namespace EACRipper
 		if(dlg != nullptr)
 		{
 			IShellItem *res;
-			wchar_t *name;
+			wchar_t *name = nullptr;
 			HRESULT hr = dlg->Show(owner->getWindow());
 			if(FAILED(hr))
 				return false;

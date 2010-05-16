@@ -6,6 +6,7 @@
 #include <cinttypes>
 
 #include <string>
+#include <sstream>
 #include <iosfwd>
 #include <iomanip>
 #include <algorithm>
@@ -236,18 +237,34 @@ private:
 public:
 	void toString(char *str, size_t buflen) const
 	{
-		sprintf_s(str, buflen, "%08" PRIX32 "-%04" PRIX16 "-%04" PRIX16 "-%04" PRIX16 "-%02" PRIX8 "%02" PRIX8 "%02" PRIX8 "%02" PRIX8 "%02" PRIX8 "%02" PRIX8,
-			data.val1, data.val2, data.val3, data.val4, data.val5_1, data.val5_2, data.val5_3, data.val5_4, data.val5_5, data.val5_6);
+		std::string s;
+		toString(s);
+		strcpy_s(str, buflen, s.c_str());
 	}
 
 	void toString(wchar_t *str, size_t buflen) const
 	{
-		char buf[37];
-		size_t converted;
+		std::wstring s;
+		toString(s);
+		wcscpy_s(str, buflen, s.c_str());
+	}
 
-		toString(buf, 37);
-
-		mbstowcs_s(&converted, str, buflen, buf, 37);
+	template<typename T, typename Traits, typename Alloc>
+	void toString(std::basic_string<T, Traits, Alloc> &str) const
+	{
+		std::basic_ostringstream<T, Traits, Alloc> s;
+		s << std::hex << std::uppercase << std::setfill(T('0'))
+		  << std::setw(8) << data.val1
+		  << T('-') << std::setw(4) << data.val2
+		  << T('-') << std::setw(4) << data.val3
+		  << T('-') << std::setw(4) << data.val4
+		  << T('-') << std::setw(2) << static_cast<uint16_t>(data.val5_1)
+		  << std::setw(2) << static_cast<uint16_t>(data.val5_2)
+		  << std::setw(2) << static_cast<uint16_t>(data.val5_3)
+		  << std::setw(2) << static_cast<uint16_t>(data.val5_4)
+		  << std::setw(2) << static_cast<uint16_t>(data.val5_5)
+		  << std::setw(2) << static_cast<uint16_t>(data.val5_6);
+		str = s.str();
 	}
 
 	union ERUUIDData getData() const
@@ -273,17 +290,9 @@ public:
 template<typename T, typename Traits>
 std::basic_ostream<T, Traits> &operator <<(std::basic_ostream<T, Traits> &strm, const ERUUID &uuid)
 {
-	strm << std::hex << std::setw(8) << std::setfill(T('0')) << std::uppercase << uuid.data.val1
-		<< T('-') << std::setw(4) << uuid.data.val2
-		<< T('-') << std::setw(4) << uuid.data.val3
-		<< T('-') << std::setw(4) << uuid.data.val4
-		<< T('-') << std::setw(2) << static_cast<uint16_t>(uuid.data.val5_1)
-		<< std::setw(2) << static_cast<uint16_t>(uuid.data.val5_2)
-		<< std::setw(2) << static_cast<uint16_t>(uuid.data.val5_3)
-		<< std::setw(2) << static_cast<uint16_t>(uuid.data.val5_4)
-		<< std::setw(2) << static_cast<uint16_t>(uuid.data.val5_5)
-		<< std::setw(2) << static_cast<uint16_t>(uuid.data.val5_6);
-
+	std::basic_string<T, Traits> str;
+	uuid.toString(str);
+	strm << str;
 	return strm;
 }
 

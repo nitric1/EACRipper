@@ -1,19 +1,13 @@
-EACRipper/EACRipper.aps
-EACRipper/EACRipper.vcproj.*.user
 EACRipper/EACRipper.vcxproj.user
 EACRipper/Debug
 EACRipper/Release
 EACRipper/x64
 
-UUIDGen/UUIDGen.aps
-UUIDGen/UUIDGen.vcproj.*.user
 UUIDGen/UUIDGen.vcxproj.user
 UUIDGen/Debug
 UUIDGen/Release
 UUIDGen/x64
 
-InoutWave/InoutWave.aps
-InoutWave/InoutWave.vcproj.*.user
 InoutWave/InoutWave.vcxproj.user
 InoutWave/Debug
 InoutWave/Release
@@ -21,12 +15,9 @@ InoutWave/x64
 
 Debug
 Release
-EACRipper.ncb
+x64
+ipch
+
 EACRipper.opensdf
 EACRipper.sdf
 EACRipper.suo
-EACRipper.VC10.sdf
-EACRipper.VC10.suo
-UpgradeLog.XML
-_UpgradeReport_Files
-ipch

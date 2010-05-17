@@ -21,17 +21,16 @@ int wmain()
 
 	init_genrand(static_cast<unsigned long>(time(nullptr)));
 
-	sprintf(gen, "%08X-%04hX-4%03hX-%hX%03hX-%08X%04hX",
-		genrand_int32(),
+	ERUUID uuid(genrand_int32(),
 		static_cast<unsigned short>(genrand_real2() * 0x10000),
-		static_cast<unsigned short>(genrand_real2() * 0x1000),
-		static_cast<unsigned short>(genrand_real2() * 4) + 8,
-		static_cast<unsigned short>(genrand_real2() * 0x1000),
-		genrand_int32(),
-		static_cast<unsigned short>(genrand_real2() * 0x10000)
-		);
-
-	ERUUID uuid = gen;
+		0x4000 | static_cast<unsigned short>(genrand_real2() * 0x1000),
+		((static_cast<unsigned short>(genrand_real2() * 4) + 8) << 12) | static_cast<unsigned short>(genrand_real2() * 0x1000),
+		static_cast<unsigned char>(genrand_real2() * 0x100),
+		static_cast<unsigned char>(genrand_real2() * 0x100),
+		static_cast<unsigned char>(genrand_real2() * 0x100),
+		static_cast<unsigned char>(genrand_real2() * 0x100),
+		static_cast<unsigned char>(genrand_real2() * 0x100),
+		static_cast<unsigned char>(genrand_real2() * 0x100));
 
 	union ERUUIDData data = uuid.getData();
 
@@ -39,7 +38,7 @@ int wmain()
 		data.val1, data.val2, data.val3, data.val4,
 		data.val5_1, data.val5_2, data.val5_3, data.val5_4, data.val5_5, data.val5_6
 		);
-	printf("// %s\n", gen);
+	printf("// %s\n", uuid.toString().c_str());
 
 	return 0;
 }

@@ -267,6 +267,13 @@ public:
 		str = s.str();
 	}
 
+	std::string toString() const
+	{
+		std::string str;
+		toString(str);
+		return str;
+	}
+
 	union ERUUIDData getData() const
 	{
 		return data;

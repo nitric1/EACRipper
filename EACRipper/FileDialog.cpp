@@ -93,9 +93,12 @@ namespace EACRipper
 
 			const vector<COMDLG_FILTERSPEC> &vcf = filter.getCDFilter();
 
-			hr = dlg->SetFileTypes(static_cast<unsigned>(vcf.size()), &*vcf.begin());
-			if(FAILED(hr))
-				throw(runtime_error("Failed to set file filters."));
+			if(!vcf.empty())
+			{
+				hr = dlg->SetFileTypes(static_cast<unsigned>(vcf.size()), &*vcf.begin());
+				if(FAILED(hr))
+					throw(runtime_error("Failed to set file filters."));
+			}
 
 			/*hr = dlg->QueryInterface(IID_PPV_ARGS(&cust));
 

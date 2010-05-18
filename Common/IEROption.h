@@ -70,7 +70,7 @@ public:
 class IEROptionItemSelect : public IEROptionItem
 {
 public:
-	virtual ~IEROptionItemSelect() = 0 {]
+	virtual ~IEROptionItemSelect() = 0 {}
 
 public:
 	virtual const wchar_t *getType() { return L"Select"; }

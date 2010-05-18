@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ERUUID.h"
+
 #include <cinttypes>
 
 typedef enum _ERStreamSeekMode
@@ -94,3 +96,39 @@ public:
 	 */
 	virtual size_t write(const void *buffer, size_t bufferSize) = 0;
 };
+
+class IERFileReader : public IERStreamReader
+{
+public:
+	/**
+	 * Destructor for save deriving.
+	 */
+	virtual ~IERFileReader() = 0 {}
+
+public:
+	virtual bool open(const wchar_t *path, bool make = false) = 0;
+	virtual bool close() = 0;
+};
+
+class IERFileWriter : public IERStreamWriter
+{
+public:
+	/**
+	 * Destructor for save deriving.
+	 */
+	virtual ~IERFileWriter() = 0 {}
+
+public:
+	virtual bool open(const wchar_t *path, bool clear = true) = 0;
+	virtual bool close() = 0;
+};
+
+template<>
+const ERUUID ERServiceUUID<IERFileReader>::uuid
+	= ERUUID(0x14CFC829, 0x7B48, 0x4786, 0xAFB2, 0x01, 0xA2, 0x4E, 0x39, 0xB7, 0x16);
+// 14CFC829-7B48-4786-AFB2-01A24E39B716
+
+template<>
+const ERUUID ERServiceUUID<IERFileWriter>::uuid
+	= ERUUID(0x7609A084, 0xABE8, 0x462B, 0x96AB, 0x5F, 0x61, 0x73, 0x03, 0xA6, 0x93);
+// 7609A084-ABE8-462B-96AB-5F617303A693

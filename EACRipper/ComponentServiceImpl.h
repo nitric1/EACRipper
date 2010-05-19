@@ -17,16 +17,55 @@
 
 namespace EACRipper
 {
+	class ERApplication;
+
+	class ERServicePointer
+	{
+	public:
+		virtual ~ERServicePointer();
+
+	public:
+		virtual void *get() = 0;
+	};
+
+	template<typename T>
+	class ERServicePointerImpl : public ERServicePointer
+	{
+	private:
+		std::tr1::shared_ptr<T> ptr;
+
+	public:
+		ERServicePointerImpl(T *iptr) : ptr(iptr) {}
+		template<typename Other>
+		ERServicePointerImpl(const std::tr1::shared_ptr<Other> &iptr) : ptr(iptr) {}
+		virtual ~ERServicePointerImpl() {}
+
+	public:
+		virtual void *get() { return ptr.get(); }
+	};
+
 	class ERApplication : public IERApplication
 	{
 	private:
 		IERComponentInfo *info;
+		std::list<std::tr1::shared_ptr<ERServicePointer>> ptrPool;
 
 	public:
 		virtual ~ERApplication();
 
 	private:
+		template<typename T>
+		T *appendPointer(T *ptr)
+		{
+			ERServicePointerImpl<T> *sptr = new ERServicePointerImpl<T>(ptr);
+			ptrPool.push_back(shared_ptr<ERServicePointer>(sptr));
+			return ptr;
+		}
+		void removePointer(void *);
+
+	private:
 		virtual void *getServicePointerImpl(const ERUUID &uuid, const void *param);
+		virtual void removeServicePointerImpl(const ERUUID &uuid, void *ptr);
 
 	public:
 		virtual HWND getWindow() const;
@@ -71,12 +110,12 @@ namespace EACRipper
 			friend class Singleton<MusicEncoderRegister>;
 		};
 
-		class StringCodepageConverter : public IERServiceStringCodepageConverter, public Singleton<StringCodepageConverter>
+		class StringCodepageConverter : public IERServiceStringCodepageConverter
 		{
 		private:
 			uint32_t codepage;
 
-		private:
+		public:
 			StringCodepageConverter();
 			virtual ~StringCodepageConverter();
 

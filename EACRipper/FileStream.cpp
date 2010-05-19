@@ -20,12 +20,12 @@ FileStreamReader::~FileStreamReader()
 	close();
 }
 
-bool FileStreamReader::open(const wchar_t *name)
+bool FileStreamReader::open(const wchar_t *name, bool make)
 {
 	if(!close())
 		return false;
 
-	file = CreateFileW(name, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, 0, nullptr);
+	file = CreateFileW(name, GENERIC_READ, FILE_SHARE_READ, nullptr, (make ? OPEN_ALWAYS : OPEN_EXISTING), 0, nullptr);
 	if(file == INVALID_HANDLE_VALUE)
 		return false;
 
@@ -98,14 +98,17 @@ FileStreamWriter::~FileStreamWriter()
 	close();
 }
 
-bool FileStreamWriter::open(const wchar_t *name)
+bool FileStreamWriter::open(const wchar_t *name, bool truncate)
 {
 	if(!close())
 		return false;
 
-	file = CreateFileW(name, GENERIC_WRITE, FILE_SHARE_READ, nullptr, CREATE_ALWAYS, 0, nullptr);
+	file = CreateFileW(name, GENERIC_WRITE, FILE_SHARE_READ, nullptr, (truncate ? CREATE_ALWAYS : OPEN_ALWAYS), 0, nullptr);
 	if(file == INVALID_HANDLE_VALUE)
 		return false;
+
+	if(truncate)
+		seek(0, END);
 
 	return true;
 }
@@ -137,7 +140,7 @@ uint64_t FileStreamWriter::size() const
 bool FileStreamWriter::seek(int64_t pos, ERStreamSeekMode mode)
 {
 	long high = static_cast<long>(pos >> 32);
-	uint32_t res = SetFilePointer(file, static_cast<long>(pos & 0xFFFFFFFFll), &high, static_cast<unsigned>(mode));
+	uint32_t res = SetFilePointer(file, static_cast<long>(pos & 0xFFFFFFFFull), &high, static_cast<unsigned>(mode));
 	if(res == INVALID_SET_FILE_POINTER && GetLastError() != ERROR_SUCCESS)
 		return false;
 	return true;

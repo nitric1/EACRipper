@@ -28,6 +28,7 @@ namespace ER = EACRipper;
 
 #include <limits>
 
+#include <list>
 #include <map>
 #include <vector>
 #include <string>

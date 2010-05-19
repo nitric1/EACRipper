@@ -119,7 +119,7 @@ public:
 	virtual ~IERFileWriter() = 0 {}
 
 public:
-	virtual bool open(const wchar_t *path, bool clear = true) = 0;
+	virtual bool open(const wchar_t *path, bool truncate = true) = 0;
 	virtual bool close() = 0;
 };
 

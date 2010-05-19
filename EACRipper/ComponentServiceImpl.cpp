@@ -4,11 +4,31 @@
 #include "MainWindow.h"
 #include "ComponentServiceImpl.h"
 #include "MusicCoderManager.h"
+#include "FileStream.h"
+
+using namespace std;
+using namespace std::tr1;
 
 namespace EACRipper
 {
+	ERServicePointer::~ERServicePointer()
+	{
+	}
+
 	ERApplication::~ERApplication()
 	{
+	}
+
+	void ERApplication::removePointer(void *ptr)
+	{
+		for(auto it = ptrPool.begin(); it != ptrPool.end(); ++ it)
+		{
+			if(it->get()->get() == ptr)
+			{
+				ptrPool.erase(it);
+				break;
+			}
+		}
 	}
 
 	void *ERApplication::getServicePointerImpl(const ERUUID &uuid, const void *param)
@@ -22,9 +42,20 @@ namespace EACRipper
 		else if(uuid == ERServiceUUID<IERServiceMusicEncoderRegister>::uuid)
 			return &MusicEncoderRegister::instance();
 		else if(uuid == ERServiceUUID<IERServiceStringCodepageConverter>::uuid)
-			return &StringCodepageConverter::instance();
+			return appendPointer(new StringCodepageConverter());
+		else if(uuid == ERServiceUUID<IERServiceStringCharsetConverter>::uuid)
+			;
+		else if(uuid == ERServiceUUID<IERFileReader>::uuid)
+			return appendPointer(new FileStreamReader());
+		else if(uuid == ERServiceUUID<IERFileWriter>::uuid)
+			return appendPointer(new FileStreamWriter());
 
 		return nullptr;
+	}
+
+	void ERApplication::removeServicePointerImpl(const ERUUID &uuid, void *ptr)
+	{
+		removePointer(ptr);
 	}
 
 	HWND ERApplication::getWindow() const

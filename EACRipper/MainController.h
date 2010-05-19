@@ -3,7 +3,7 @@
 #include "Singleton.h"
 #include "MainWindow.h"
 #include "ComponentManager.h"
-#include "MusicCoderManager.h"
+#include "CoderManager.h"
 
 namespace EACRipper
 {

@@ -3,7 +3,7 @@
 #include "MainController.h"
 #include "MainWindow.h"
 #include "ComponentServiceImpl.h"
-#include "MusicCoderManager.h"
+#include "CoderManager.h"
 #include "FileStream.h"
 
 using namespace std;
@@ -82,7 +82,7 @@ namespace EACRipper
 		bool MusicDecoderRegister::registDecoder(IERAllocator *alloc)
 		{
 			IERComponentMusicDecoder *p = static_cast<IERComponentMusicDecoder *>(alloc->alloc());
-			bool res = MusicCoderManager::instance().addCoder(p->getInfo().name, MusicCoderManager::Decoder, alloc);
+			bool res = MusicCoderManager::instance().addCoder(make_pair(p->getInfo().name, MusicCoderManager::Decoder), alloc);
 			alloc->free(p);
 			return res;
 		}
@@ -94,7 +94,7 @@ namespace EACRipper
 		bool InCueMusicDecoderRegister::registInCueDecoder(IERAllocator *alloc)
 		{
 			IERComponentInCueMusicDecoder *p = static_cast<IERComponentInCueMusicDecoder *>(alloc->alloc());
-			bool res = MusicCoderManager::instance().addCoder(p->getInfo().name, MusicCoderManager::InCueDecoder, alloc);
+			bool res = MusicCoderManager::instance().addCoder(make_pair(p->getInfo().name, MusicCoderManager::InCueDecoder), alloc);
 			alloc->free(p);
 			return res;
 		}
@@ -106,7 +106,7 @@ namespace EACRipper
 		bool MusicEncoderRegister::registEncoder(IERAllocator *alloc)
 		{
 			IERComponentMusicEncoder *p = static_cast<IERComponentMusicEncoder *>(alloc->alloc());
-			bool res = MusicCoderManager::instance().addCoder(p->getInfo().name, MusicCoderManager::Encoder, alloc);
+			bool res = MusicCoderManager::instance().addCoder(make_pair(p->getInfo().name, MusicCoderManager::Encoder), alloc);
 			alloc->free(p);
 			return res;
 		}

@@ -31,6 +31,43 @@ namespace EACRipper
 		return str;
 	}
 
+	vector<wstring> split(const wstring &str, const wstring &sep)
+	{
+		size_t ppos, pos = static_cast<size_t>(-1);
+		vector<wstring> ve;
+
+		while(true)
+		{
+			ppos = pos;
+			pos = str.find(sep, ++ ppos);
+
+			if(pos == wstring::npos)
+			{
+				ve.push_back(str.substr(ppos));
+				break;
+			}
+			else
+				ve.push_back(str.substr(ppos, pos - ppos));
+		}
+
+		return ve;
+	}
+
+	wstring join(const vector<wstring> &ve, const wstring &sep)
+	{
+		if(ve.empty())
+			return wstring();
+
+		wstring str = ve.front();
+		for(auto it = ++ ve.begin(); it != ve.end(); ++ it)
+		{
+			str += sep;
+			str += *it;
+		}
+
+		return str;
+	}
+
 	wstring &getDirectoryPath(wstring &path)
 	{
 		size_t pos = path.rfind(L'\\');

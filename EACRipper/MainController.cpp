@@ -5,6 +5,7 @@
 #include "MainWindow.h"
 #include "PreferenceWindow.h"
 #include "FileDialog.h"
+#include "Utility.h"
 
 using namespace Gdiplus;
 using namespace std;
@@ -107,11 +108,35 @@ namespace EACRipper
 	bool MainController::onOpenInCue(WindowEventArgs e)
 	{
 		FileDialogFilter fi;
-		// TODO: Filter
+
+		MusicCoderManager *mcm;
+		IERAllocator *alloc;
+		DecoderInformation info;
+
+		mcm = &MusicCoderManager::instance();
+		auto cd = mcm->coders();
+		vector<wstring> ve;
+		IERComponentInCueMusicDecoder *dec;
+		for(auto it = cd.begin(); it != cd.end(); ++ it)
+		{
+			if(it->second == MusicCoderManager::InCueDecoder)
+			{
+				alloc = mcm->getCoder(*it);
+				dec = static_cast<IERComponentInCueMusicDecoder *>(alloc->alloc());
+				info = dec->getInfo();
+				ve = split(info.extension, L";");
+				alloc->free(dec);
+
+				for_each(ve.begin(), ve.end(), [](wstring &str) { str = L"*." + str; });
+
+				fi.add(it->first, join(ve, L";"));
+			}
+		}
+
 		FileDialog fd(true, mainWin, L"Open InCue File", fi);
 		if(fd.show())
 		{
-			// TODO: Set Cover Art
+			// TODO: Open InCue Implementation
 		}
 
 		return true;
@@ -124,7 +149,7 @@ namespace EACRipper
 		FileDialog fd(true, mainWin, L"Open Archive File", fi);
 		if(fd.show())
 		{
-			// TODO: Set Cover Art
+			// TODO: Open Archive Implementation
 		}
 
 		return true;

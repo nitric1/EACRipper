@@ -176,6 +176,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CoderManager.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentManager.cpp" />
     <ClCompile Include="ComponentServiceImpl.cpp" />
@@ -191,7 +192,6 @@
     <ClCompile Include="FileStream.cpp" />
     <ClCompile Include="MainController.cpp" />
     <ClCompile Include="MainWindow.cpp" />
-    <ClCompile Include="MusicCoderManager.cpp" />
     <ClCompile Include="PreferenceWindow.cpp" />
     <ClCompile Include="RipManager.cpp" />
     <ClCompile Include="ShortcutKey.cpp" />
@@ -200,6 +200,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Common\Component\Definition.h" />
+    <ClInclude Include="CoderManager.h" />
     <ClInclude Include="ChildWindow.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentManager.h" />
@@ -211,7 +212,6 @@
     <ClInclude Include="FileStream.h" />
     <ClInclude Include="MainController.h" />
     <ClInclude Include="MainWindow.h" />
-    <ClInclude Include="MusicCoderManager.h" />
     <ClInclude Include="PreferenceWindow.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="RipManager.h" />

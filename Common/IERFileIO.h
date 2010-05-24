@@ -4,12 +4,12 @@
 
 #include <cinttypes>
 
-typedef enum _ERStreamSeekMode
+enum ERStreamSeekMode
 {
 	BEGIN,
 	CURRENT,
 	END
-} ERStreamSeekMode;
+};
 
 class IERStreamReader
 {
@@ -19,6 +19,7 @@ public:
 	 */
 	virtual ~IERStreamReader() = 0 {}
 
+public:
 	/**
 	 * Return whether the file is usable or not.
 	 * @return true if the file is usable, false otherwise.
@@ -62,6 +63,7 @@ public:
 	 */
 	virtual ~IERStreamWriter() = 0 {}
 
+public:
 	/**
 	 * Return whether the file is usable or not.
 	 * @return true if the file is usable, false otherwise.
@@ -101,7 +103,7 @@ class IERFileReader : public IERStreamReader
 {
 public:
 	/**
-	 * Destructor for save deriving.
+	 * Destructor for safe deriving.
 	 */
 	virtual ~IERFileReader() = 0 {}
 
@@ -114,12 +116,34 @@ class IERFileWriter : public IERStreamWriter
 {
 public:
 	/**
-	 * Destructor for save deriving.
+	 * Destructor for safe deriving.
 	 */
 	virtual ~IERFileWriter() = 0 {}
 
 public:
 	virtual bool open(const wchar_t *path, bool truncate = true) = 0;
+	virtual bool close() = 0;
+};
+
+class IERDirectory
+{
+public:
+	/**
+	 * Destructor for safe deriving.
+	 */
+	virtual ~IERDirectory() = 0 {}
+};
+
+class IERLocalDirectory : public IERDirectory
+{
+public:
+	/**
+	 * Destructor for safe deriving.
+	 */
+	virtual ~IERLocalDirectory() = 0 {}
+
+public:
+	virtual bool open(const wchar_t *path, bool make = false) = 0;
 	virtual bool close() = 0;
 };
 
@@ -132,3 +156,8 @@ template<>
 const ERUUID ERServiceUUID<IERFileWriter>::uuid
 	= ERUUID(0x7609A084, 0xABE8, 0x462B, 0x96AB, 0x5F, 0x61, 0x73, 0x03, 0xA6, 0x93);
 // 7609A084-ABE8-462B-96AB-5F617303A693
+
+template<>
+const ERUUID ERServiceUUID<IERLocalDirectory>::uuid
+	= ERUUID(0x5C947F5C, 0xB8D1, 0x4FA1, 0xAB01, 0x6D, 0xB0, 0xA9, 0xBF, 0xBB, 0x66);
+// 5C947F5C-B8D1-4FA1-AB01-6DB0A9BFBB66

@@ -230,7 +230,7 @@
     <ClInclude Include="..\Common\IERComponentMusic.h" />
     <ClInclude Include="..\Common\IERMusicComponent.h" />
     <ClInclude Include="..\Common\IEROption.h" />
-    <ClInclude Include="..\Common\IERStream.h" />
+    <ClInclude Include="..\Common\IERFileIO.h" />
     <ClInclude Include="..\Common\IERString.h" />
     <ClInclude Include="..\Common\inttypes.h" />
     <ClInclude Include="..\Common\stdint.h" />

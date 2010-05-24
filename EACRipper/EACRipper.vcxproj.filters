@@ -155,9 +155,6 @@
     <ClInclude Include="..\Common\IEROption.h">
       <Filter>Common Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Common\IERStream.h">
-      <Filter>Common Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Common\IERString.h">
       <Filter>Common Files</Filter>
     </ClInclude>
@@ -205,6 +202,9 @@
     </ClInclude>
     <ClInclude Include="CoderManager.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\IERFileIO.h">
+      <Filter>Common Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -3,20 +3,23 @@
 #include "ERUUID.h"
 
 #include "IERAllocator.h"
+#include "IERFileIO.h"
 
-typedef struct _DecoderInformation
+struct DecoderInformation
 {
 	const wchar_t *name; // e.g. "RIFF Audio (Wave)"
 	const wchar_t *extension; // e.g. L"wav;wave"
 	const wchar_t *mime; // e.g. L"audio/wav;audio/wave;audio/x-wav;audio/vnd.wave"
-} DecoderInformation;
+	size_t magicLength; // e.g. 2
+	const uint8_t *magic; // e.g. "\x4D\x5A"
+};
 
-typedef struct _EncoderInformation
+struct EncoderInformation
 {
 	const wchar_t *name; // e.g. "RIFF Audio (Wave)"
 	const wchar_t *extension; // e.g. L"wav"
 	const wchar_t *mime; // e.g. L"audio/wav"
-} EncoderInformation;
+};
 
 class IERComponentMusicDecoder
 {
@@ -41,6 +44,8 @@ public:
 	virtual bool setStream(IERStreamReader *stream) = 0;
 
 	/**
+	 * Clean up the decoder to let the decoder not use a reader and some reading information moreover.
+	 * @return true if closed correctly, false otherwise.
 	 */
 	virtual bool close() = 0;
 

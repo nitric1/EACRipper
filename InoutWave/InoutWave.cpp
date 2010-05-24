@@ -113,7 +113,9 @@ const DecoderInformation InWave::info =
 {
 	L"RIFF Audio (Wave)",
 	L"wav;wave",
-	L"audio/wav;audio/wave;audio/x-wav;audio/vnd.wave"
+	L"audio/wav;audio/wave;audio/x-wav;audio/vnd.wave",
+	2,
+	reinterpret_cast<unsigned char *>("\x4D\x5A")
 };
 
 InWave::~InWave()

@@ -3,7 +3,7 @@
 #include "Component/Definition.h"
 
 #include "IERAllocator.h"
-#include "IERStream.h"
+#include "IERFileIO.h"
 #include "IERString.h"
 
 #include "IERApplication.h"
@@ -127,8 +127,25 @@ namespace EACRipper
 			virtual size_t getConvertedLengthFromUTF16(const wchar_t *, size_t = std::numeric_limits<size_t>::max());
 			virtual size_t convertToUTF16(wchar_t *, size_t, const char *, size_t = std::numeric_limits<size_t>::max());
 			virtual size_t convertFromUTF16(char *, size_t, const wchar_t *, size_t = std::numeric_limits<size_t>::max());
+		};
 
-			friend class Singleton<StringCodepageConverter>;
+		class StringCharsetConverter : public IERServiceStringCharsetConverter
+		{
+		private:
+			std::string charset;
+
+		public:
+			StringCharsetConverter();
+			virtual ~StringCharsetConverter();
+
+		public:
+			virtual const char *getCharset() const;
+			virtual bool setCharset(const char *charset);
+
+			virtual size_t getConvertedLengthToUTF16(const char *, size_t = std::numeric_limits<size_t>::max());
+			virtual size_t getConvertedLengthFromUTF16(const wchar_t *, size_t = std::numeric_limits<size_t>::max());
+			virtual size_t convertToUTF16(wchar_t *, size_t, const char *, size_t = std::numeric_limits<size_t>::max());
+			virtual size_t convertFromUTF16(char *, size_t, const wchar_t *, size_t = std::numeric_limits<size_t>::max());
 		};
 	}
 }

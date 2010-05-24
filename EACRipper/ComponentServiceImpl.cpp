@@ -21,14 +21,10 @@ namespace EACRipper
 
 	void ERApplication::removePointer(void *ptr)
 	{
-		for(auto it = ptrPool.begin(); it != ptrPool.end(); ++ it)
-		{
-			if(it->get()->get() == ptr)
-			{
-				ptrPool.erase(it);
-				break;
-			}
-		}
+		auto it = find_if(ptrPool.begin(), ptrPool.end(),
+			[&ptr](const shared_ptr<ERServicePointer> &obj) -> bool { return obj.get()->get() == ptr; });
+		if(it != ptrPool.end())
+			ptrPool.erase(it);
 	}
 
 	void *ERApplication::getServicePointerImpl(const ERUUID &uuid, const void *param)
@@ -44,7 +40,7 @@ namespace EACRipper
 		else if(uuid == ERServiceUUID<IERServiceStringCodepageConverter>::uuid)
 			return appendPointer(new StringCodepageConverter());
 		else if(uuid == ERServiceUUID<IERServiceStringCharsetConverter>::uuid)
-			;
+			return appendPointer(new StringCharsetConverter());
 		else if(uuid == ERServiceUUID<IERFileReader>::uuid)
 			return appendPointer(new FileStreamReader());
 		else if(uuid == ERServiceUUID<IERFileWriter>::uuid)
@@ -149,6 +145,47 @@ namespace EACRipper
 		size_t StringCodepageConverter::convertFromUTF16(char *toString, size_t toBufferLength, const wchar_t *fromString, size_t fromLength)
 		{
 			return WideCharToMultiByte(codepage, 0, fromString, static_cast<int>(fromLength), toString, static_cast<int>(toBufferLength), nullptr, nullptr);
+		}
+
+		StringCharsetConverter::StringCharsetConverter()
+			: charset("UTF-8")
+		{
+		}
+
+		StringCharsetConverter::~StringCharsetConverter()
+		{
+		}
+
+		const char *StringCharsetConverter::getCharset() const
+		{
+			return charset.c_str();
+		}
+
+		bool StringCharsetConverter::setCharset(const char *icharset)
+		{
+			charset = icharset;
+			return true;
+		}
+
+		// TODO: Implement StringCharsetConverter's functions.
+		size_t StringCharsetConverter::getConvertedLengthToUTF16(const char *str, size_t length)
+		{
+			return 0;
+		}
+
+		size_t StringCharsetConverter::getConvertedLengthFromUTF16(const wchar_t *str, size_t length)
+		{
+			return 0;
+		}
+
+		size_t StringCharsetConverter::convertToUTF16(wchar_t *toString, size_t toBufferLength, const char *fromString, size_t fromLength)
+		{
+			return 0;
+		}
+
+		size_t StringCharsetConverter::convertFromUTF16(char *toString, size_t toBufferLength, const wchar_t *fromString, size_t fromLength)
+		{
+			return 0;
 		}
 	}
 }

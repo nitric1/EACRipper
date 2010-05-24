@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IERStream.h"
+#include "IERFileIO.h"
 
 class FileStreamReader : public IERFileReader
 {

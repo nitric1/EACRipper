@@ -1,8 +1,8 @@
 #pragma once
 
-#include "IERFileIO.h"
+#include "IERStream.h"
 
-class FileStreamReader : public IERFileReader
+class FileStreamReader : public IERFileStreamReader
 {
 private:
 	HANDLE file;
@@ -17,12 +17,12 @@ public:
 	virtual bool close();
 	virtual bool usable() const;
 	virtual uint64_t size() const;
-	virtual bool seek(int64_t, ERStreamSeekMode);
+	virtual bool seek(int64_t, int32_t);
 	virtual uint64_t tell() const;
 	virtual size_t read(void *, size_t);
 };
 
-class FileStreamWriter : public IERFileWriter
+class FileStreamWriter : public IERFileStreamWriter
 {
 private:
 	HANDLE file;
@@ -37,7 +37,7 @@ public:
 	virtual bool close();
 	virtual bool usable() const;
 	virtual uint64_t size() const;
-	virtual bool seek(int64_t, ERStreamSeekMode);
+	virtual bool seek(int64_t, int32_t);
 	virtual uint64_t tell() const;
 	virtual size_t write(const void *, size_t);
 };

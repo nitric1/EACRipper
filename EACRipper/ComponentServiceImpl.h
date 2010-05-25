@@ -3,7 +3,8 @@
 #include "Component/Definition.h"
 
 #include "IERAllocator.h"
-#include "IERFileIO.h"
+#include "IERStream.h"
+#include "IERFile.h"
 #include "IERString.h"
 
 #include "IERApplication.h"

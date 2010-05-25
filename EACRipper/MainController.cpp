@@ -115,7 +115,9 @@ namespace EACRipper
 
 		mcm = &MusicCoderManager::instance();
 		auto cd = mcm->coders();
-		vector<wstring> ve;
+		wstring ext;
+		vector<wstring> ve, allExt;
+		vector<pair<wstring, wstring>> fiVec;
 		IERComponentInCueMusicDecoder *dec;
 		for(auto it = cd.begin(); it != cd.end(); ++ it)
 		{
@@ -128,9 +130,16 @@ namespace EACRipper
 				alloc->free(dec);
 
 				for_each(ve.begin(), ve.end(), [](wstring &str) { str = L"*." + str; });
-
-				fi.add(it->first, join(ve, L";"));
+				ext = join(ve, L";");
+				fiVec.push_back(make_pair(it->first, ext));
+				allExt.push_back(ext);
 			}
+		}
+
+		if(!fiVec.empty())
+		{
+			fi.add(L"All Supported inCue Files", join(allExt, L";"));
+			fi.add(fiVec);
 		}
 
 		FileDialog fd(true, mainWin, L"Open InCue File", fi);

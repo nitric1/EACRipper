@@ -9,7 +9,8 @@
 
 #include "ERUUID.h"
 #include "IERString.h"
-#include "IERFileIO.h"
+#include "IERStream.h"
+#include "IERFile.h"
 #include "IERApplication.h"
 #include "IERComponentArchive.h"
 #include "IERComponentEntrypoint.h"

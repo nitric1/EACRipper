@@ -56,7 +56,7 @@ uint64_t FileStreamReader::size() const
 	return (static_cast<uint64_t>(sizeHigh) << 32) | static_cast<uint64_t>(sizeLow);
 }
 
-bool FileStreamReader::seek(int64_t pos, ERStreamSeekMode mode)
+bool FileStreamReader::seek(int64_t pos, int32_t mode)
 {
 	long high = static_cast<long>(pos >> 32);
 	uint32_t res = SetFilePointer(file, static_cast<long>(pos & 0xFFFFFFFFll), &high, static_cast<unsigned>(mode));
@@ -137,7 +137,7 @@ uint64_t FileStreamWriter::size() const
 	return (static_cast<uint64_t>(sizeHigh) << 32) | static_cast<uint64_t>(sizeLow);
 }
 
-bool FileStreamWriter::seek(int64_t pos, ERStreamSeekMode mode)
+bool FileStreamWriter::seek(int64_t pos, int32_t mode)
 {
 	long high = static_cast<long>(pos >> 32);
 	uint32_t res = SetFilePointer(file, static_cast<long>(pos & 0xFFFFFFFFull), &high, static_cast<unsigned>(mode));

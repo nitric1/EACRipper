@@ -35,10 +35,10 @@ public:
 	/**
 	 * Set the file pointer's position.
 	 * @param pos Position to seek in byte.
-	 * @param mode Seeking mode.
+	 * @param mode Seeking mode one of ERStreamSeekMode.
 	 * @return true if the file is sought correctly, false otherwise.
 	 */
-	virtual bool seek(int64_t pos, ERStreamSeekMode mode) = 0;
+	virtual bool seek(int64_t pos, int32_t mode) = 0;
 
 	/**
 	 * Get the file pointer's position from begin.
@@ -79,10 +79,10 @@ public:
 	/**
 	 * Set the file pointer's position.
 	 * @param pos Position to seek in byte.
-	 * @param mode Seeking mode.
+	 * @param mode Seeking mode one of ERStreamSeekMode.
 	 * @return true if the file is sought correctly, false otherwise.
 	 */
-	virtual bool seek(int64_t pos, ERStreamSeekMode mode) = 0;
+	virtual bool seek(int64_t pos, int32_t mode) = 0;
 
 	/**
 	 * Get the file pointer's position from begin.
@@ -99,65 +99,38 @@ public:
 	virtual size_t write(const void *buffer, size_t bufferSize) = 0;
 };
 
-class IERFileReader : public IERStreamReader
+class IERFileStreamReader : public IERStreamReader
 {
 public:
 	/**
 	 * Destructor for safe deriving.
 	 */
-	virtual ~IERFileReader() = 0 {}
+	virtual ~IERFileStreamReader() = 0 {}
 
 public:
 	virtual bool open(const wchar_t *path, bool make = false) = 0;
 	virtual bool close() = 0;
 };
 
-class IERFileWriter : public IERStreamWriter
+class IERFileStreamWriter : public IERStreamWriter
 {
 public:
 	/**
 	 * Destructor for safe deriving.
 	 */
-	virtual ~IERFileWriter() = 0 {}
+	virtual ~IERFileStreamWriter() = 0 {}
 
 public:
 	virtual bool open(const wchar_t *path, bool truncate = true) = 0;
 	virtual bool close() = 0;
 };
 
-class IERDirectory
-{
-public:
-	/**
-	 * Destructor for safe deriving.
-	 */
-	virtual ~IERDirectory() = 0 {}
-};
-
-class IERLocalDirectory : public IERDirectory
-{
-public:
-	/**
-	 * Destructor for safe deriving.
-	 */
-	virtual ~IERLocalDirectory() = 0 {}
-
-public:
-	virtual bool open(const wchar_t *path, bool make = false) = 0;
-	virtual bool close() = 0;
-};
-
 template<>
-const ERUUID ERServiceUUID<IERFileReader>::uuid
+const ERUUID ERServiceUUID<IERFileStreamReader>::uuid
 	= ERUUID(0x14CFC829, 0x7B48, 0x4786, 0xAFB2, 0x01, 0xA2, 0x4E, 0x39, 0xB7, 0x16);
 // 14CFC829-7B48-4786-AFB2-01A24E39B716
 
 template<>
-const ERUUID ERServiceUUID<IERFileWriter>::uuid
+const ERUUID ERServiceUUID<IERFileStreamWriter>::uuid
 	= ERUUID(0x7609A084, 0xABE8, 0x462B, 0x96AB, 0x5F, 0x61, 0x73, 0x03, 0xA6, 0x93);
 // 7609A084-ABE8-462B-96AB-5F617303A693
-
-template<>
-const ERUUID ERServiceUUID<IERLocalDirectory>::uuid
-	= ERUUID(0x5C947F5C, 0xB8D1, 0x4FA1, 0xAB01, 0x6D, 0xB0, 0xA9, 0xBF, 0xBB, 0x66);
-// 5C947F5C-B8D1-4FA1-AB01-6DB0A9BFBB66

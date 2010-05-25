@@ -203,7 +203,10 @@
     <ClInclude Include="CoderManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Common\IERFileIO.h">
+    <ClInclude Include="..\Common\IERStream.h">
+      <Filter>Common Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\IERFile.h">
       <Filter>Common Files</Filter>
     </ClInclude>
   </ItemGroup>

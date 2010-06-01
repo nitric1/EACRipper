@@ -178,7 +178,10 @@
   <ItemGroup>
     <ClCompile Include="CoderManager.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="ComponentFileServiceImpl.cpp" />
+    <ClCompile Include="ComponentStringServiceImpl.cpp" />
     <ClCompile Include="ComponentManager.cpp" />
+    <ClCompile Include="ComponentMusicServiceImpl.cpp" />
     <ClCompile Include="ComponentServiceImpl.cpp" />
     <ClCompile Include="Configure.cpp" />
     <ClCompile Include="CueParser.cpp" />

@@ -30,9 +30,6 @@ bool InoutWaveEntrypoint::onInit()
 	MusicDecoderFactory<InWave, InWave> waveDecoderFac;
 	MusicEncoderFactory<OutWave, OutWave> waveEncoderFac;
 
-	// ServiceFactory<IERServiceStringCodepageConverter> conv;
-	// conv->setCodepage(65001);
-
 	return true;
 }
 
@@ -46,31 +43,31 @@ typedef struct _WaveHeader
 {
 	union
 	{
-		unsigned char chunkText[4];
-		unsigned long chunkID;
+		uint8_t chunkCC[4];
+		uint32_t chunkID;
 	};
 	unsigned long chunkSize;
 	union
 	{
-		unsigned char formatText[4];
-		unsigned long formatID;
+		uint8_t formatCC[4];
+		uint32_t formatID;
 	};
 	union
 	{
-		unsigned char subchunkText[4];
-		unsigned long subchunkID;
+		uint8_t subchunkCC[4];
+		uint32_t subchunkID;
 	};
-	unsigned long subchunkSize;
-	unsigned short audioFormat;
-	unsigned short channels;
-	unsigned long samplingRate;
-	unsigned long byteRate;
-	unsigned short blockAlign;
-	unsigned short bitsPerSample;
+	uint32_t subchunkSize;
+	uint16_t audioFormat;
+	uint16_t channels;
+	uint32_t samplingRate;
+	uint32_t byteRate;
+	uint16_t blockAlign;
+	uint16_t bitsPerSample;
 	union
 	{
-		unsigned char dataText[4];
-		unsigned long dataID;
+		uint8_t dataCC[4];
+		uint32_t dataID;
 	};
 	unsigned long dataSize;
 } WaveHeader;
@@ -115,7 +112,7 @@ const DecoderInformation InWave::info =
 	L"wav;wave",
 	L"audio/wav;audio/wave;audio/x-wav;audio/vnd.wave",
 	2,
-	reinterpret_cast<unsigned char *>("\x4D\x5A")
+	reinterpret_cast<const uint8_t *>("\x4D\x5A")
 };
 
 InWave::~InWave()

@@ -113,10 +113,9 @@ public:
 	 * Return required buffer length about wchar_t of inCue string.
 	 * @param buffer Buffer in which inCue string is to be stored.
 	 * @param bufferSize The buffer's length in characters.
-	 * @param converter String converter to convert non-wchar_t string.
 	 * @return true if succeeded, false otherwise.
 	 */
-	virtual bool readInCue(wchar_t *buffer, size_t bufferSize, IERServiceStringConverter *converter) = 0;
+	virtual bool readInCue(wchar_t *buffer, size_t bufferSize) = 0;
 };
 
 class IERComponentMusicEncoder

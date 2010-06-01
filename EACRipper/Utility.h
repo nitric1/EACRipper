@@ -16,6 +16,7 @@ namespace EACRipper
 
 	std::wstring &trim(std::wstring &);
 	std::vector<std::wstring> split(const std::wstring &, const std::wstring &);
+	std::vector<std::wstring> splitAnyOf(const std::wstring &, const std::wstring &);
 	std::wstring join(const std::vector<std::wstring> &, const std::wstring &);
 	std::wstring &getDirectoryPath(std::wstring &);
 	std::wstring &getFileName(std::wstring &);

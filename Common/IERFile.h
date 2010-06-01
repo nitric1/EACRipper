@@ -17,8 +17,8 @@ public:
 	virtual bool canRead() = 0;
 	virtual bool canWrite() = 0;
 
-	virtual IERStreamReader *getStreamReader();
-	virtual IERStreamWriter *getStreamWriter();
+	virtual IERStreamReader *getStreamReader(bool make = false) = 0;
+	virtual IERStreamWriter *getStreamWriter(bool truncate = true) = 0;
 };
 
 class IERLocalFile : public IERFile
@@ -43,7 +43,7 @@ public:
 	virtual ~IERDirectory() = 0 {}
 
 public:
-	virtual IERFile *getFile(const wchar_t *relativePath);
+	virtual IERFile *getFile(const wchar_t *relativePath) = 0;
 };
 
 class IERLocalDirectory : public IERDirectory

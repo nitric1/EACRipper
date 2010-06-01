@@ -20,36 +20,56 @@ namespace EACRipper
 {
 	class ERApplication;
 
-	class ERServicePointer
+	class ServicePointer
 	{
 	public:
-		virtual ~ERServicePointer();
+		virtual ~ServicePointer();
 
 	public:
 		virtual void *get() = 0;
 	};
 
 	template<typename T>
-	class ERServicePointerImpl : public ERServicePointer
+	class ServicePointerImpl : public ServicePointer
 	{
 	private:
 		std::tr1::shared_ptr<T> ptr;
 
 	public:
-		ERServicePointerImpl(T *iptr) : ptr(iptr) {}
+		ServicePointerImpl(T *iptr) : ptr(iptr) {}
 		template<typename Other>
-		ERServicePointerImpl(const std::tr1::shared_ptr<Other> &iptr) : ptr(iptr) {}
-		virtual ~ERServicePointerImpl() {}
+		ServicePointerImpl(const std::tr1::shared_ptr<Other> &iptr) : ptr(iptr) {}
+		virtual ~ServicePointerImpl() {}
 
 	public:
 		virtual void *get() { return ptr.get(); }
+	};
+
+	class ServicePointerManager : public Singleton<ServicePointerManager>
+	{
+	private:
+		std::list<std::tr1::shared_ptr<ServicePointer>> ptrPool;
+
+	private:
+		virtual ~ServicePointerManager();
+
+	public:
+		template<typename T>
+		T *append(T *ptr)
+		{
+			ServicePointerImpl<T> *sptr = new ServicePointerImpl<T>(ptr);
+			ptrPool.push_back(std::tr1::shared_ptr<ServicePointer>(sptr));
+			return ptr;
+		}
+		void remove(void *);
+
+		friend class Singleton<ServicePointerManager>;
 	};
 
 	class ERApplication : public IERApplication
 	{
 	private:
 		IERComponentInfo *info;
-		std::list<std::tr1::shared_ptr<ERServicePointer>> ptrPool;
 
 	public:
 		virtual ~ERApplication();
@@ -58,9 +78,7 @@ namespace EACRipper
 		template<typename T>
 		T *appendPointer(T *ptr)
 		{
-			ERServicePointerImpl<T> *sptr = new ERServicePointerImpl<T>(ptr);
-			ptrPool.push_back(shared_ptr<ERServicePointer>(sptr));
-			return ptr;
+			return ServicePointerManager::instance().append(ptr);
 		}
 		void removePointer(void *);
 
@@ -147,6 +165,44 @@ namespace EACRipper
 			virtual size_t getConvertedLengthFromUTF16(const wchar_t *, size_t = std::numeric_limits<size_t>::max());
 			virtual size_t convertToUTF16(wchar_t *, size_t, const char *, size_t = std::numeric_limits<size_t>::max());
 			virtual size_t convertFromUTF16(char *, size_t, const wchar_t *, size_t = std::numeric_limits<size_t>::max());
+		};
+
+		class LocalFile : public IERLocalFile
+		{
+		private:
+			uint32_t attr;
+			std::wstring path;
+
+		public:
+			LocalFile();
+			virtual ~LocalFile();
+
+		public:
+			virtual bool open(const wchar_t *);
+			virtual bool close();
+
+			virtual bool exists();
+			virtual bool canRead();
+			virtual bool canWrite();
+
+			virtual IERStreamReader *getStreamReader(bool = false);
+			virtual IERStreamWriter *getStreamWriter(bool = true);
+		};
+
+		class LocalDirectory : public IERLocalDirectory
+		{
+		private:
+			std::wstring path;
+
+		public:
+			LocalDirectory();
+			virtual ~LocalDirectory();
+
+		public:
+			virtual bool open(const wchar_t *, bool = false);
+			virtual bool close();
+
+			virtual IERFile *getFile(const wchar_t *);
 		};
 	}
 }

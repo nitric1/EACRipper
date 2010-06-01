@@ -33,13 +33,35 @@ namespace EACRipper
 
 	vector<wstring> split(const wstring &str, const wstring &sep)
 	{
+		size_t ppos, pos = static_cast<size_t>(-sep.size());
+		vector<wstring> ve;
+
+		while(true)
+		{
+			ppos = pos + sep.size();
+			pos = str.find(sep, ppos);
+
+			if(pos == wstring::npos)
+			{
+				ve.push_back(str.substr(ppos));
+				break;
+			}
+			else
+				ve.push_back(str.substr(ppos, pos - ppos));
+		}
+
+		return ve;
+	}
+
+	vector<wstring> splitAnyOf(const wstring &str, const wstring &sep)
+	{
 		size_t ppos, pos = static_cast<size_t>(-1);
 		vector<wstring> ve;
 
 		while(true)
 		{
 			ppos = pos;
-			pos = str.find(sep, ++ ppos);
+			pos = str.find_first_of(sep, ++ ppos);
 
 			if(pos == wstring::npos)
 			{

@@ -38,7 +38,7 @@ namespace EACRipper
 
 		bool LocalFile::canRead()
 		{
-			return (attr & FILE_ATTRIBUTE_DIRECTORY) != FILE_ATTRIBUTE_DIRECTORY;
+			return attr != INVALID_FILE_ATTRIBUTES && (attr & FILE_ATTRIBUTE_DIRECTORY) != FILE_ATTRIBUTE_DIRECTORY;
 		}
 
 		bool LocalFile::canWrite()

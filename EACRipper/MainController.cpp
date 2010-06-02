@@ -126,7 +126,7 @@ namespace EACRipper
 				alloc = mcm->getCoder(*it);
 				dec = static_cast<IERComponentInCueMusicDecoder *>(alloc->alloc());
 				info = dec->getInfo();
-				ve = split(info.extension, L";");
+				ve = move(split(info.extension, L";"));
 				alloc->free(dec);
 
 				for_each(ve.begin(), ve.end(), [](wstring &str) { str = L"*." + str; });

@@ -11,13 +11,23 @@ namespace EACRipper
 	{
 	}
 
-	FileDialogFilter::FileDialogFilter(const vector<pair<wstring, wstring> > &ve)
+	FileDialogFilter::FileDialogFilter(const vector<pair<wstring, wstring>> &ve)
+		: list(ve)
+	{
+	}
+
+	FileDialogFilter::FileDialogFilter(vector<pair<wstring, wstring>> &&ve)
 		: list(ve)
 	{
 	}
 
 	FileDialogFilter::FileDialogFilter(const FileDialogFilter &f)
 		: list(f.list)
+	{
+	}
+
+	FileDialogFilter::FileDialogFilter(FileDialogFilter &&f)
+		: list(move(f.list))
 	{
 	}
 
@@ -37,10 +47,10 @@ namespace EACRipper
 		return true;
 	}
 
-	const vector<COMDLG_FILTERSPEC> &FileDialogFilter::getCDFilter() const
+	vector<COMDLG_FILTERSPEC> FileDialogFilter::getCDFilter() const
 	{
+		vector<COMDLG_FILTERSPEC> cdFilter;
 		COMDLG_FILTERSPEC cdf;
-		cdFilter.clear();
 
 		for(auto it = list.begin(); it != list.end(); ++ it)
 		{
@@ -52,9 +62,9 @@ namespace EACRipper
 		return cdFilter;
 	}
 
-	const wstring &FileDialogFilter::getOFNFilter() const
+	wstring FileDialogFilter::getOFNFilter() const
 	{
-		ofnFilter.clear();
+		wstring ofnFilter;
 
 		for(auto it = list.begin(); it != list.end(); ++ it)
 		{

@@ -111,7 +111,6 @@ namespace EACRipper
 
 		MusicCoderManager *mcm;
 		IERAllocator *alloc;
-		DecoderInformation info;
 
 		mcm = &MusicCoderManager::instance();
 		auto cd = mcm->coders();
@@ -125,7 +124,7 @@ namespace EACRipper
 			{
 				alloc = mcm->getCoder(*it);
 				dec = static_cast<IERComponentInCueMusicDecoder *>(alloc->alloc());
-				info = dec->getInfo();
+				const DecoderInformation &info = dec->getInfo();
 				ve = move(split(info.extension, L";"));
 				alloc->free(dec);
 

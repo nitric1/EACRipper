@@ -10,21 +10,21 @@ namespace EACRipper
 	{
 	private:
 		std::vector<std::pair<std::wstring, std::wstring> > list;
-		mutable std::wstring ofnFilter;
-		mutable std::vector<COMDLG_FILTERSPEC> cdFilter;
 
 	public:
 		FileDialogFilter();
-		explicit FileDialogFilter(const std::vector<std::pair<std::wstring, std::wstring> > &);
+		explicit FileDialogFilter(const std::vector<std::pair<std::wstring, std::wstring>> &);
+		explicit FileDialogFilter(std::vector<std::pair<std::wstring, std::wstring>> &&);
 		FileDialogFilter(const FileDialogFilter &);
+		FileDialogFilter(FileDialogFilter &&);
 		virtual ~FileDialogFilter();
 
 	public:
 		virtual bool add(const std::wstring &, const std::wstring &);
 		virtual bool add(const std::vector<std::pair<std::wstring, std::wstring> > &);
 
-		virtual const std::vector<COMDLG_FILTERSPEC> &getCDFilter() const;
-		virtual const std::wstring &getOFNFilter() const;
+		virtual std::vector<COMDLG_FILTERSPEC> getCDFilter() const;
+		virtual std::wstring getOFNFilter() const;
 
 		friend class FileDialog;
 	};

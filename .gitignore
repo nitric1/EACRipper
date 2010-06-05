@@ -1,14 +1,17 @@
 EACRipper/EACRipper.vcxproj.user
+EACRipper/EACRipper.aps
 EACRipper/Debug
 EACRipper/Release
 EACRipper/x64
 
 UUIDGen/UUIDGen.vcxproj.user
+UUIDGen/UUIDGen.aps
 UUIDGen/Debug
 UUIDGen/Release
 UUIDGen/x64
 
 InoutWave/InoutWave.vcxproj.user
+InoutWave/InoutWave.aps
 InoutWave/Debug
 InoutWave/Release
 InoutWave/x64

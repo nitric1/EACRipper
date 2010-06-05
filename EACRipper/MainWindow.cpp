@@ -97,20 +97,6 @@ namespace EACRipper
 				}
 				break;
 
-			case IDC_ARTIST:
-				if(HIWORD(wParam) == EN_CHANGE)
-				{
-					return 1;
-				}
-				break;
-
-			case IDC_TITLE:
-				if(HIWORD(wParam) == EN_CHANGE)
-				{
-					return 1;
-				}
-				break;
-
 			case IDC_SET_COVER_ART:
 				if(!self.runEventListener(L"setCoverArt", e))
 					break;
@@ -137,11 +123,9 @@ namespace EACRipper
 				{
 				case IDC_LIST:
 					{
-						switch(hdr->code)
+						/*switch(hdr->code)
 						{
-						case LVN_ITEMCHANGED:
-							return 1;
-						}
+						}*/
 					}
 					break;
 				}

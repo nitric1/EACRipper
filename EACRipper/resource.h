@@ -28,6 +28,8 @@
 #define IDC_ENCODING_LABEL              1019
 #define IDC_DISC_CURRENT                1020
 #define IDC_DISC_TOTAL                  1021
+#define IDC_GROUP_ALBUM_INFO            1022
+#define IDC_GROUP_COVER_ART             1023
 #define IDM_FILE_OPEN                   40001
 #define IDM_INCUE_OPEN                  40002
 #define IDM_ARCHIVE_OPEN                40003
@@ -40,7 +42,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        106
 #define _APS_NEXT_COMMAND_VALUE         40006
-#define _APS_NEXT_CONTROL_VALUE         1022
+#define _APS_NEXT_CONTROL_VALUE         1024
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

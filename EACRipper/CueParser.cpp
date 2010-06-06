@@ -128,28 +128,40 @@ namespace EACRipper
 		return true;
 	}
 
-	const map<wstring, wstring> &CueParser::getAlbumFields()
+	const map<wstring, wstring> &CueParser::getAlbumFields() const
 	{
 		return albumFields;
 	}
 
-	const wstring &CueParser::getAlbumField(const wstring &field)
+	wstring CueParser::getAlbumField(const wstring &field) const
 	{
-		return albumFields[field];
+		auto it = albumFields.find(field);
+		if(it == albumFields.end())
+			return wstring();
+		return it->second;
 	}
 
-	size_t CueParser::getTrackCount()
+	size_t CueParser::getTrackCount() const
 	{
 		return tracks.size();
 	}
 
-	const map<wstring, wstring> &CueParser::getTrackFields(size_t track)
+	const map<wstring, wstring> &CueParser::getTrackFields(size_t track) const
 	{
-		return tracks[track];
+		auto it = tracks.find(track);
+		if(it == tracks.end())
+			throw(runtime_error("The track does not exists."));
+		return it->second;
 	}
 
-	const wstring &CueParser::getTrackField(size_t track, const wstring &field)
+	wstring CueParser::getTrackField(size_t track, const wstring &field) const
 	{
-		return tracks[track][field];
+		auto it = tracks.find(track);
+		if(it == tracks.end())
+			return wstring();
+		auto fit = it->second.find(field);
+		if(fit == it->second.end())
+			return wstring();
+		return fit->second;
 	}
 }

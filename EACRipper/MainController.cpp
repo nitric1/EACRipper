@@ -179,7 +179,7 @@ namespace EACRipper
 		FileDialog fd(true, mainWin, L"Open Cover Art", fi, L"jpg");
 		if(fd.show())
 		{
-			// TODO: Set Cover Art
+			mainWin->setCoverArt(fd.getPath());
 		}
 
 		return true;
@@ -187,6 +187,7 @@ namespace EACRipper
 
 	bool MainController::onCancelCoverArt(WindowEventArgs e)
 	{
+		mainWin->cancelCoverArt();
 		return true;
 	}
 

@@ -42,9 +42,6 @@
     <ClCompile Include="Configure.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CueParser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Defaults.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -87,6 +84,9 @@
     <ClCompile Include="ComponentFileServiceImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TrackList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -99,9 +99,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Configure.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CueParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Defaults.h">
@@ -217,6 +214,9 @@
     </ClInclude>
     <ClInclude Include="..\Common\IERFile.h">
       <Filter>Common Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TrackList.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

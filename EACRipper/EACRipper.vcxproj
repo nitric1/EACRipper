@@ -184,7 +184,6 @@
     <ClCompile Include="ComponentMusicServiceImpl.cpp" />
     <ClCompile Include="ComponentServiceImpl.cpp" />
     <ClCompile Include="Configure.cpp" />
-    <ClCompile Include="CueParser.cpp" />
     <ClCompile Include="Defaults.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -198,6 +197,7 @@
     <ClCompile Include="PreferenceWindow.cpp" />
     <ClCompile Include="RipManager.cpp" />
     <ClCompile Include="ShortcutKey.cpp" />
+    <ClCompile Include="TrackList.cpp" />
     <ClCompile Include="Utility.cpp" />
     <ClCompile Include="Version.cpp" />
   </ItemGroup>
@@ -210,7 +210,6 @@
     <ClInclude Include="ComponentManager.h" />
     <ClInclude Include="ComponentServiceImpl.h" />
     <ClInclude Include="Configure.h" />
-    <ClInclude Include="CueParser.h" />
     <ClInclude Include="Defaults.h" />
     <ClInclude Include="FileDialog.h" />
     <ClInclude Include="FileStream.h" />
@@ -221,6 +220,7 @@
     <ClInclude Include="RipManager.h" />
     <ClInclude Include="ShortcutKey.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="TrackList.h" />
     <ClInclude Include="Utility.h" />
     <ClInclude Include="Version.h" />
     <ClInclude Include="Window.h" />

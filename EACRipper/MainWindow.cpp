@@ -282,7 +282,7 @@ namespace EACRipper
 		lvc.pszText = L"Process";
 		ListView_InsertColumn(list, 5, &lvc);
 
-		LVITEMW lvi = LVITEMW();
+		/*LVITEMW lvi = LVITEMW();
 		wchar_t *lstr[][19] =
 		{
 			{L"右肩の蝶", L"初音ミクの暴走 -Full ver.-", L"いろは唄", L"ローリンガール", L"パラジクロロベンゼン", L"IMITATION BLACK", L"イケ恋歌", L"番凩", L"紡唄 -つむぎうた-",
@@ -342,7 +342,7 @@ namespace EACRipper
 			ListView_SetItem(list, &lvi);
 
 			ListView_SetCheckState(list, lvi.iItem, TRUE);
-		}
+		}*/
 	}
 
 	void MainWindow::addFormat(const wstring &name)

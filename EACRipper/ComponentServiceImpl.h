@@ -159,12 +159,21 @@ namespace EACRipper
 
 		public:
 			virtual const char *getCharset() const;
-			virtual bool setCharset(const char *charset);
+			virtual bool setCharset(const char *);
 
 			virtual size_t getConvertedLengthToUTF16(const char *, size_t = std::numeric_limits<size_t>::max());
 			virtual size_t getConvertedLengthFromUTF16(const wchar_t *, size_t = std::numeric_limits<size_t>::max());
 			virtual size_t convertToUTF16(wchar_t *, size_t, const char *, size_t = std::numeric_limits<size_t>::max());
 			virtual size_t convertFromUTF16(char *, size_t, const wchar_t *, size_t = std::numeric_limits<size_t>::max());
+		};
+
+		class CharsetDetector : public IERServiceCharsetDetector
+		{
+		public:
+			virtual ~CharsetDetector();
+
+		public:
+			virtual IERServiceStringConverter *detect(const char *);
 		};
 
 		class LocalFile : public IERLocalFile

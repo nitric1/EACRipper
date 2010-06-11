@@ -88,5 +88,16 @@ namespace EACRipper
 		{
 			return 0;
 		}
+
+		CharsetDetector::~CharsetDetector()
+		{
+		}
+
+		IERServiceStringConverter *CharsetDetector::detect(const char *str)
+		{
+			// TODO: Implement this function.
+			// return ServicePointerManager::instance().append<IERServiceStringConverter>(c);
+			return nullptr;
+		}
 	}
 }

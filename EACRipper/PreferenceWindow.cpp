@@ -51,6 +51,18 @@ namespace EACRipper
 					self.setWindow(nullptr);
 				}
 				return 1;
+
+			case IDC_CHARSET_MARK:
+				return 1;
+
+			case IDC_CHARSET_UNMARK:
+				return 1;
+
+			case IDC_CHARSET_ORDER_UP:
+				return 1;
+				
+			case IDC_CHARSET_ORDER_DOWN:
+				return 1;
 			}
 			break;
 

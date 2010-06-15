@@ -115,6 +115,19 @@ BEGIN
     LTEXT           "ÆÄÀÏ ÀÎÄÚµù:",IDC_ENCODING_LABEL,0,2,46,8
 END
 
+IDD_ABOUT DIALOGEX 0, 0, 190, 72
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "EACRipper Á¤º¸"
+FONT 9, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "È®ÀÎ",IDOK,135,53,50,14
+    LTEXT           "EACRipper",IDC_EACRIPPER_TEXT,41,5,144,8
+    LTEXT           "An EAC music ripper",IDC_STATIC,41,17,144,8
+    LTEXT           "Copyright 2009-2010 HNO3",IDC_STATIC,41,29,144,8
+    ICON            IDI_MAIN_ICON,IDC_STATIC,5,5,20,20,SS_CENTERIMAGE
+    LTEXT           "http://er.h3o.kr/",IDC_WEBSITE_LINK,41,41,144,8,SS_NOTIFY
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -218,6 +231,24 @@ BEGIN
         BOTTOMMARGIN, 13
         HORZGUIDE, 6
     END
+
+    IDD_ABOUT, DIALOG
+    BEGIN
+        LEFTMARGIN, 5
+        RIGHTMARGIN, 185
+        VERTGUIDE, 37
+        VERTGUIDE, 41
+        TOPMARGIN, 5
+        BOTTOMMARGIN, 67
+        HORZGUIDE, 13
+        HORZGUIDE, 17
+        HORZGUIDE, 25
+        HORZGUIDE, 29
+        HORZGUIDE, 37
+        HORZGUIDE, 41
+        HORZGUIDE, 49
+        HORZGUIDE, 53
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -236,6 +267,7 @@ BEGIN
         MENUITEM "¾ÐÃà ¿­±â(&A)¡¦\tCtrl+P",          IDM_ARCHIVE_OPEN
     END
     MENUITEM "¼³Á¤(&P)¡¦",                     IDM_OPTION
+    MENUITEM "Á¤º¸(&A)...",                   IDM_ABOUT
     MENUITEM "¸®ÇÎ(&R)",                      IDM_RIP
 END
 
@@ -274,7 +306,7 @@ BEGIN
             VALUE "FileDescription", "Audio CD Ripper only for EAC files."
             VALUE "FileVersion", "0, 4, 0, 0"
             VALUE "InternalName", "EACRipper"
-            VALUE "LegalCopyright", "Copyright 2009 HNO3, All rights reserved."
+            VALUE "LegalCopyright", "Copyright 2009-2010 HNO3, All rights reserved."
             VALUE "OriginalFilename", "EACRipper.exe"
             VALUE "ProductName", "EACRipper"
             VALUE "ProductVersion", "0, 4, 0, 0"
@@ -302,20 +334,6 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 //
 // Dialog
 //
-
-IDD_OPTION DIALOGEX 0, 0, 350, 60
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Preferences"
-FONT 9, "MS Shell Dlg", 400, 0, 0x0
-BEGIN
-    RTEXT           "Target Path: ",IDC_STATIC,5,8,50,8
-    EDITTEXT        IDC_PATH,55,5,256,14,ES_AUTOHSCROLL
-    PUSHBUTTON      "…",IDC_PATH_SELECT,315,5,30,14
-    RTEXT           "Name Format: ",IDC_STATIC,5,26,50,8
-    EDITTEXT        IDC_NAME_FORMAT,55,23,290,14,ES_AUTOHSCROLL
-    DEFPUSHBUTTON   "OK",IDOK,240,41,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,295,41,50,14
-END
 
 IDD_OPEN_DIALOG DIALOGEX 0, 0, 634, 14
 STYLE DS_SETFONT | DS_3DLOOK | DS_FIXEDSYS | DS_CONTROL | WS_CHILD | WS_CLIPSIBLINGS | WS_SYSMENU
@@ -360,6 +378,42 @@ BEGIN
     PUSHBUTTON      "Cancel",IDC_CANCEL,385,286,50,14,WS_DISABLED
 END
 
+IDD_OPTION DIALOGEX 0, 0, 370, 192
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "EACRipper ??"
+FONT 9, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    RTEXT           "Target Path: ",IDC_STATIC,5,8,50,8
+    EDITTEXT        IDC_PATH,55,5,276,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "…",IDC_PATH_SELECT,335,5,30,14
+    RTEXT           "Name Format: ",IDC_STATIC,5,26,50,8
+    EDITTEXT        IDC_NAME_FORMAT,55,23,310,14,ES_AUTOHSCROLL
+    GROUPBOX        "Character Set Detection",IDC_STATIC,5,41,360,128
+    CTEXT           "Character Set for Detection && Order",IDC_STATIC,9,53,162,8
+    LISTBOX         IDC_CHARSET_DETECT,9,65,162,82,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Up Order",IDC_CHARSET_ORDER_UP,38,151,50,14
+    PUSHBUTTON      "Down Order",IDC_CHARSET_ORDER_DOWN,92,151,50,14
+    PUSHBUTTON      "<<",IDC_CHARSET_MARK,175,99,20,14
+    PUSHBUTTON      ">>",IDC_CHARSET_UNMARK,175,117,20,14
+    CTEXT           "Available Character Set",IDC_STATIC,199,53,162,8
+    LISTBOX         IDC_CHARSET_POOL,199,65,162,100,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,260,173,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,314,173,51,14
+END
+
+IDD_ABOUT DIALOGEX 0, 0, 190, 72
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About EACRipper"
+FONT 9, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,135,53,50,14
+    LTEXT           "EACRipper",IDC_EACRIPPER_TEXT,41,5,144,8
+    LTEXT           "An EAC music ripper",IDC_STATIC,41,17,144,8
+    LTEXT           "Copyright 2009-2010 HNO3.",IDC_STATIC,41,29,144,8
+    ICON            IDI_MAIN_ICON,IDC_STATIC,5,5,20,20,SS_CENTERIMAGE
+    LTEXT           "http://er.h3o.kr/",IDC_WEBSITE_LINK,41,41,144,8,SS_NOTIFY
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -369,25 +423,6 @@ END
 #ifdef APSTUDIO_INVOKED
 GUIDELINES DESIGNINFO
 BEGIN
-    IDD_OPTION, DIALOG
-    BEGIN
-        LEFTMARGIN, 5
-        RIGHTMARGIN, 345
-        VERTGUIDE, 55
-        VERTGUIDE, 290
-        VERTGUIDE, 295
-        VERTGUIDE, 311
-        VERTGUIDE, 315
-        TOPMARGIN, 5
-        BOTTOMMARGIN, 55
-        HORZGUIDE, 12
-        HORZGUIDE, 19
-        HORZGUIDE, 23
-        HORZGUIDE, 30
-        HORZGUIDE, 37
-        HORZGUIDE, 41
-    END
-
     IDD_OPEN_DIALOG, DIALOG
     BEGIN
         RIGHTMARGIN, 255
@@ -444,6 +479,62 @@ BEGIN
         HORZGUIDE, 286
         HORZGUIDE, 293
     END
+
+    IDD_OPTION, DIALOG
+    BEGIN
+        LEFTMARGIN, 5
+        RIGHTMARGIN, 365
+        VERTGUIDE, 9
+        VERTGUIDE, 55
+        VERTGUIDE, 88
+        VERTGUIDE, 92
+        VERTGUIDE, 171
+        VERTGUIDE, 175
+        VERTGUIDE, 185
+        VERTGUIDE, 195
+        VERTGUIDE, 199
+        VERTGUIDE, 310
+        VERTGUIDE, 314
+        VERTGUIDE, 331
+        VERTGUIDE, 335
+        VERTGUIDE, 361
+        TOPMARGIN, 5
+        BOTTOMMARGIN, 187
+        HORZGUIDE, 12
+        HORZGUIDE, 19
+        HORZGUIDE, 23
+        HORZGUIDE, 30
+        HORZGUIDE, 37
+        HORZGUIDE, 41
+        HORZGUIDE, 53
+        HORZGUIDE, 61
+        HORZGUIDE, 65
+        HORZGUIDE, 113
+        HORZGUIDE, 117
+        HORZGUIDE, 147
+        HORZGUIDE, 151
+        HORZGUIDE, 165
+        HORZGUIDE, 169
+        HORZGUIDE, 173
+    END
+
+    IDD_ABOUT, DIALOG
+    BEGIN
+        LEFTMARGIN, 5
+        RIGHTMARGIN, 185
+        VERTGUIDE, 37
+        VERTGUIDE, 41
+        TOPMARGIN, 5
+        BOTTOMMARGIN, 67
+        HORZGUIDE, 13
+        HORZGUIDE, 17
+        HORZGUIDE, 25
+        HORZGUIDE, 29
+        HORZGUIDE, 37
+        HORZGUIDE, 41
+        HORZGUIDE, 49
+        HORZGUIDE, 53
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -462,6 +553,7 @@ BEGIN
         MENUITEM "Open &Archive…\tCtrl+P",      IDM_ARCHIVE_OPEN
     END
     MENUITEM "&Preferences…",               IDM_OPTION
+    MENUITEM "&About...",                   IDM_ABOUT
     MENUITEM "&Rip",                        IDM_RIP
 END
 

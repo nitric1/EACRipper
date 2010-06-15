@@ -7,6 +7,7 @@
 #define IDD_OPTION                      103
 #define IDI_MAIN_ICON                   104
 #define IDD_OPEN_DIALOG                 105
+#define IDD_ABOUT                       106
 #define IDC_ALBUM_TITLE                 1001
 #define IDC_ALBUM_ARTIST                1002
 #define IDC_DATE                        1003
@@ -36,19 +37,22 @@
 #define IDC_CHARSET_UNMARK              1027
 #define IDC_CHARSET_ORDER_UP            1028
 #define IDC_CHARSET_ORDER_DOWN          1029
+#define IDC_EACRIPPER_TEXT              1030
+#define IDC_WEBSITE_LINK                1031
 #define IDM_FILE_OPEN                   40001
 #define IDM_INCUE_OPEN                  40002
 #define IDM_ARCHIVE_OPEN                40003
 #define IDM_OPTION                      40004
 #define IDM_RIP                         40005
+#define IDM_ABOUT                       40006
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        106
-#define _APS_NEXT_COMMAND_VALUE         40006
-#define _APS_NEXT_CONTROL_VALUE         1030
+#define _APS_NEXT_RESOURCE_VALUE        107
+#define _APS_NEXT_COMMAND_VALUE         40007
+#define _APS_NEXT_CONTROL_VALUE         1032
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

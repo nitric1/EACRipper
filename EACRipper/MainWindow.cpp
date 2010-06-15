@@ -97,6 +97,11 @@ namespace EACRipper
 					break;
 				return 1;
 
+			case IDM_ABOUT:
+				if(!self.runEventListener(L"about", e))
+					break;
+				return 1;
+
 			case IDM_RIP:
 				if(!self.runEventListener(L"rip", e))
 					break;

@@ -9,7 +9,7 @@ class IERServiceStringConverter
 {
 public:
 	/**
-	 * Destructor for save deriving.
+	 * Destructor for safe deriving.
 	 */
 	virtual ~IERServiceStringConverter() = 0 {}
 
@@ -24,7 +24,7 @@ class IERServiceStringCodepageConverter : public IERServiceStringConverter
 {
 public:
 	/**
-	 * Destructor for save deriving.
+	 * Destructor for safe deriving.
 	 */
 	virtual ~IERServiceStringCodepageConverter() = 0 {}
 
@@ -37,7 +37,7 @@ class IERServiceStringCharsetConverter : public IERServiceStringConverter
 {
 public:
 	/**
-	 * Destructor for save deriving.
+	 * Destructor for safe deriving.
 	 */
 	virtual ~IERServiceStringCharsetConverter() = 0 {}
 

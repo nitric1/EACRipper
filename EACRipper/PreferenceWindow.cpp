@@ -40,14 +40,11 @@ namespace EACRipper
 			case IDOK:
 				{
 					// TODO: Process Saving Preference
-					EndDialog(window, IDOK);
-					self.setWindow(nullptr);
 				}
-				return 1;
 
 			case IDCANCEL:
 				{
-					EndDialog(window, IDCANCEL);
+					EndDialog(window, LOWORD(wParam));
 					self.setWindow(nullptr);
 				}
 				return 1;

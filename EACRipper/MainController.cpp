@@ -6,6 +6,7 @@
 #include "MainController.h"
 #include "MainWindow.h"
 #include "PreferenceWindow.h"
+#include "AboutWindow.h"
 #include "FileDialog.h"
 #include "TrackList.h"
 #include "Utility.h"
@@ -73,6 +74,7 @@ namespace EACRipper
 		mainWin->addEventListener(L"setCoverArt", delegateEvent(this, &MainController::onSetCoverArt));
 		mainWin->addEventListener(L"cancelCoverArt", delegateEvent(this, &MainController::onCancelCoverArt));
 		mainWin->addEventListener(L"rip", delegateEvent(this, &MainController::onRip));
+		mainWin->addEventListener(L"about", delegateEvent(this, &MainController::onAbout));
 
 		mainWin->addEventListener(L"prefInit", delegateEvent(this, &MainController::onPrefInit));
 	}
@@ -191,9 +193,7 @@ namespace EACRipper
 	bool MainController::onOption(WindowEventArgs e)
 	{
 		PreferenceWindow &win = PreferenceWindow::instance();
-
 		win.showWithParent(mainWin);
-
 		return true;
 	}
 
@@ -218,6 +218,13 @@ namespace EACRipper
 
 	bool MainController::onRip(WindowEventArgs e)
 	{
+		return true;
+	}
+
+	bool MainController::onAbout(WindowEventArgs e)
+	{
+		AboutWindow &win = AboutWindow::instance();
+		win.showWithParent(mainWin);
 		return true;
 	}
 

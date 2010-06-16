@@ -176,6 +176,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AboutWindow.cpp" />
     <ClCompile Include="CoderManager.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentFileServiceImpl.cpp" />
@@ -204,7 +205,9 @@
   <ItemGroup>
     <ClInclude Include="..\Common\Component\Definition.h" />
     <ClInclude Include="..\Common\EREndian.h" />
+    <ClInclude Include="..\Common\ERString.h" />
     <ClInclude Include="..\Common\IERFile.h" />
+    <ClInclude Include="AboutWindow.h" />
     <ClInclude Include="CoderManager.h" />
     <ClInclude Include="ChildWindow.h" />
     <ClInclude Include="Component.h" />

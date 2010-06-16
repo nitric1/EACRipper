@@ -1,17 +1,24 @@
 #include "Defaults.h"
 
 #include "Configure.h"
+#include "FileStream.h"
+#include "ComponentServiceImpl.h"
 #include "MainController.h"
 #include "MainWindow.h"
 #include "PreferenceWindow.h"
+#include "AboutWindow.h"
 #include "FileDialog.h"
+#include "TrackList.h"
 #include "Utility.h"
 
 using namespace Gdiplus;
 using namespace std;
+using namespace std::tr1;
 
 namespace EACRipper
 {
+	using namespace ServiceImpl;
+
 	MainController::MainController()
 	{
 		mainWin = &MainWindow::instance();
@@ -67,6 +74,7 @@ namespace EACRipper
 		mainWin->addEventListener(L"setCoverArt", delegateEvent(this, &MainController::onSetCoverArt));
 		mainWin->addEventListener(L"cancelCoverArt", delegateEvent(this, &MainController::onCancelCoverArt));
 		mainWin->addEventListener(L"rip", delegateEvent(this, &MainController::onRip));
+		mainWin->addEventListener(L"about", delegateEvent(this, &MainController::onAbout));
 
 		mainWin->addEventListener(L"prefInit", delegateEvent(this, &MainController::onPrefInit));
 	}
@@ -100,6 +108,25 @@ namespace EACRipper
 		if(fd.show())
 		{
 			// TODO: Open Cuesheet Implementation
+			FileStreamReader f;
+			if(!f.open(fd.getPath().c_str()))
+				return false;
+			vector<char> ve(static_cast<size_t>(f.size()) + 1);
+			f.read(&*ve.begin(), ve.size());
+			ve.back() = '\0';
+			f.close();
+
+			// TODO: Charset detection or user-selected encoding
+			CharsetDetector cd;
+			IERServiceStringConverter *cv = cd.detect(&*ve.begin());
+			vector<wchar_t> doc(cv->getConvertedLengthToUTF16(&*ve.begin()) + 1);
+			cv->convertToUTF16(&*doc.begin(), doc.size(), &*ve.begin());
+			doc.back() = L'\0';
+
+			CuesheetTrackList *ptr = new CuesheetTrackList(wstring(&*doc.begin()));
+			shared_ptr<TrackList> tr(ptr);
+
+			// mainWin->setTrackList(tr);
 		}
 
 		return true;
@@ -166,9 +193,7 @@ namespace EACRipper
 	bool MainController::onOption(WindowEventArgs e)
 	{
 		PreferenceWindow &win = PreferenceWindow::instance();
-
 		win.showWithParent(mainWin);
-
 		return true;
 	}
 
@@ -193,6 +218,13 @@ namespace EACRipper
 
 	bool MainController::onRip(WindowEventArgs e)
 	{
+		return true;
+	}
+
+	bool MainController::onAbout(WindowEventArgs e)
+	{
+		AboutWindow &win = AboutWindow::instance();
+		win.showWithParent(mainWin);
 		return true;
 	}
 

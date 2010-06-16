@@ -39,6 +39,7 @@ namespace EACRipper
 		bool onSetCoverArt(WindowEventArgs);
 		bool onCancelCoverArt(WindowEventArgs);
 		bool onRip(WindowEventArgs);
+		bool onAbout(WindowEventArgs);
 
 		bool onPrefInit(WindowEventArgs);
 

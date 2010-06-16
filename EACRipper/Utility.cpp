@@ -9,31 +9,15 @@ namespace EACRipper
 {
 	wstring &trim(wstring &str)
 	{
-		wstring::iterator it;
-		wstring::reverse_iterator rit;
-		
-		for(it = str.begin(); it != str.end(); ++ it)
-		{
-			if(*it != L' ' && *it != L'¡¡' && *it != L'\t' && *it != L'\n' && *it != L'\r')
-				break;
-		}
-
-		str.erase(str.begin(), it);
-
-		for(rit = str.rbegin(); rit != str.rend(); ++ rit)
-		{
-			if(*rit != L' ' && *rit != L'¡¡' && *rit != L'\t' && *rit != L'\n' && *rit != L'\r')
-				break;
-		}
-
-		str.erase(rit.base(), str.end());
-
+		auto fn = [](wchar_t ch) { return ch != L' ' && ch != L'¡¡' && ch != L'\t' && ch != L'\n' && ch != L'\r'; };
+		str.erase(str.begin(), find_if(str.begin(), str.end(), fn));
+		str.erase(find_if(str.rbegin(), str.rend(), fn).base(), str.end());
 		return str;
 	}
 
 	vector<wstring> split(const wstring &str, const wstring &sep)
 	{
-		size_t ppos, pos = static_cast<size_t>(-sep.size());
+		size_t ppos, pos = static_cast<size_t>(-static_cast<intptr_t>(sep.size()));
 		vector<wstring> ve;
 
 		while(true)

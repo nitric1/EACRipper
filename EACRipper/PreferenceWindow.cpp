@@ -40,16 +40,25 @@ namespace EACRipper
 			case IDOK:
 				{
 					// TODO: Process Saving Preference
-					EndDialog(window, IDOK);
+				}
+
+			case IDCANCEL:
+				{
+					EndDialog(window, LOWORD(wParam));
 					self.setWindow(nullptr);
 				}
 				return 1;
 
-			case IDCANCEL:
-				{
-					EndDialog(window, IDCANCEL);
-					self.setWindow(nullptr);
-				}
+			case IDC_CHARSET_MARK:
+				return 1;
+
+			case IDC_CHARSET_UNMARK:
+				return 1;
+
+			case IDC_CHARSET_ORDER_UP:
+				return 1;
+				
+			case IDC_CHARSET_ORDER_DOWN:
 				return 1;
 			}
 			break;

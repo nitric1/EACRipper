@@ -63,7 +63,7 @@ namespace EACRipper
 		case WM_GETMINMAXINFO:
 			{
 				MINMAXINFO *mmi = reinterpret_cast<MINMAXINFO *>(lParam);
-				mmi->ptMinTrackSize.x = 700;
+				mmi->ptMinTrackSize.x = 730;
 				mmi->ptMinTrackSize.y = 525;
 			}
 			return 1;
@@ -94,6 +94,11 @@ namespace EACRipper
 
 			case IDM_OPTION:
 				if(!self.runEventListener(L"option", e))
+					break;
+				return 1;
+
+			case IDM_ABOUT:
+				if(!self.runEventListener(L"about", e))
 					break;
 				return 1;
 

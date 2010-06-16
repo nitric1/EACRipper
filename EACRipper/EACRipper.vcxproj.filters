@@ -87,6 +87,9 @@
     <ClCompile Include="TrackList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AboutWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -220,6 +223,12 @@
     </ClInclude>
     <ClInclude Include="..\Common\EREndian.h">
       <Filter>Common Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\ERString.h">
+      <Filter>Common Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AboutWindow.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -39,7 +39,6 @@ namespace EACRipper
 				str.push_back(digitHex(*it >> 4));
 				str.push_back(digitHex(*it & 0x0F));
 			}
-
 			set(name, str);
 		}
 		void remove(const std::wstring &);

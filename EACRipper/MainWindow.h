@@ -7,8 +7,6 @@
 
 namespace EACRipper
 {
-	class MainController;
-
 	class MainWindow : public Window, public Singleton<MainWindow>
 	{
 	private:

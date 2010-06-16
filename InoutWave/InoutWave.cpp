@@ -73,10 +73,10 @@ typedef struct _WaveHeader
 } WaveHeader;
 #pragma pack(pop)
 
-static const int32_t waveChunkID = 0x46464952;
-static const int32_t waveFormatID = 0x45564157;
-static const int32_t waveSubchunkID = 0x20746d66;
-static const int32_t waveDataID = 0x61746164;
+static const uint32_t waveChunkID = EREndian::N2L(0x46464952u);
+static const uint32_t waveFormatID = EREndian::N2L(0x45564157u);
+static const uint32_t waveSubchunkID = EREndian::N2L(0x20746d66u);
+static const uint32_t waveDataID = EREndian::N2L(0x61746164u);
 
 class InWave : public IERComponentMusicDecoder
 {

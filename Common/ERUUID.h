@@ -11,7 +11,7 @@
 #include <iomanip>
 #include <algorithm>
 
-#include <boost/detail/endian.hpp>
+#include "EREndian.h"
 
 class ERUUID;
 
@@ -191,13 +191,10 @@ private:
 			}
 		}
 
-#ifdef BOOST_LITTLE_ENDIAN
-		std::swap(data.unpacked[0], data.unpacked[3]);
-		std::swap(data.unpacked[1], data.unpacked[2]);
-		std::swap(data.unpacked[4], data.unpacked[5]);
-		std::swap(data.unpacked[6], data.unpacked[7]);
-		std::swap(data.unpacked[8], data.unpacked[9]);
-#endif
+		EREndian::B2N(data.val1);
+		EREndian::B2N(data.val2);
+		EREndian::B2N(data.val3);
+		EREndian::B2N(data.val4);
 
 		return true;
 	}
@@ -223,13 +220,10 @@ private:
 			}
 		}
 
-#ifdef BOOST_LITTLE_ENDIAN
-		std::swap(data.unpacked[0], data.unpacked[3]);
-		std::swap(data.unpacked[1], data.unpacked[2]);
-		std::swap(data.unpacked[4], data.unpacked[5]);
-		std::swap(data.unpacked[6], data.unpacked[7]);
-		std::swap(data.unpacked[8], data.unpacked[9]);
-#endif
+		EREndian::B2N(data.val1);
+		EREndian::B2N(data.val2);
+		EREndian::B2N(data.val3);
+		EREndian::B2N(data.val4);
 
 		return true;
 	}

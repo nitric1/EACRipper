@@ -24,6 +24,7 @@ namespace ER = EACRipper;
 #include <stdexcept>
 
 #include <algorithm>
+#include <functional>
 #include <memory>
 
 #include <limits>

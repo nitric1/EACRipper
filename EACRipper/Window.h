@@ -76,22 +76,33 @@ namespace EACRipper
 
 	private:
 		HWND window;
+		int showCommand;
 
 	protected:
 		explicit Window(HWND iwindow = nullptr) : window(iwindow) {}
 		virtual ~Window() = 0 {}
 
 	public:
-		virtual bool show() = 0;
-
-		virtual void setWindow(HWND iwindow)
+		virtual int getShowStatus() const
 		{
-			window = iwindow;
+			return showCommand;
 		}
+
+		virtual void setShowStatus(int ishowCommand)
+		{
+			showCommand = ishowCommand;
+		}
+
+		virtual bool show() = 0;
 
 		virtual HWND getWindow() const
 		{
 			return window;
+		}
+
+		virtual void setWindow(HWND iwindow)
+		{
+			window = iwindow;
 		}
 
 		virtual bool addEventListener(const std::wstring &name, std::tr1::shared_ptr<EventDelegate> listener)

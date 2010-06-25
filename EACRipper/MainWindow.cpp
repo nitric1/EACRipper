@@ -48,6 +48,8 @@ namespace EACRipper
 				self.baseUnitX = rc.right;
 				self.baseUnitY = rc.bottom;
 
+				ShowWindow(window, self.getShowStatus());
+
 				if(!self.runEventListener(L"init", e))
 					break;
 			}

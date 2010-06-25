@@ -27,7 +27,7 @@ namespace EACRipper
 		void registerEvents();
 		void initializeApp();
 		void uninitializeApp();
-		bool run(HINSTANCE);
+		bool run(HINSTANCE, const std::wstring &, int);
 
 	public:
 		bool onInit(WindowEventArgs);

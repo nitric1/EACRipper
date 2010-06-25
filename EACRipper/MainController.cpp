@@ -79,12 +79,13 @@ namespace EACRipper
 		mainWin->addEventListener(L"prefInit", delegateEvent(this, &MainController::onPrefInit));
 	}
 
-	bool MainController::run(HINSTANCE instHandle)
+	bool MainController::run(HINSTANCE instHandle, const wstring &commandLine, int showCommand)
 	{
 		inst = instHandle;
 
 		registerEvents();
 
+		mainWin->setShowStatus(showCommand);
 		return mainWin->show();
 	}
 
@@ -231,13 +232,13 @@ namespace EACRipper
 	bool MainController::onPrefInit(WindowEventArgs e)
 	{
 		Configure &c = Configure::instance();
-		static_cast<PreferenceWindow *>(e.window)->setValue(L"BasePath", c.get(L"BasePath"));
+		dynamic_cast<PreferenceWindow *>(e.window)->setValue(L"BasePath", c.get(L"BasePath"));
 
 		return true;
 	}
 }
 
-int __stdcall wWinMain(HINSTANCE inst, HINSTANCE, wchar_t *, int)
+int __stdcall wWinMain(HINSTANCE inst, HINSTANCE, wchar_t *commandLine, int showCommand)
 {
-	return ER::MainController::instance().run(inst) ? 0 : 1;
+	return ER::MainController::instance().run(inst, commandLine, showCommand) ? 0 : 1;
 }

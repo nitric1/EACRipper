@@ -204,6 +204,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Common\Component\Definition.h" />
+    <ClInclude Include="..\Common\EREndian.h" />
     <ClInclude Include="..\Common\ERString.h" />
     <ClInclude Include="..\Common\IERFile.h" />
     <ClInclude Include="AboutWindow.h" />

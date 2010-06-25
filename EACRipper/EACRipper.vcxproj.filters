@@ -221,6 +221,9 @@
     <ClInclude Include="TrackList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\Common\EREndian.h">
+      <Filter>Common Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\Common\ERString.h">
       <Filter>Common Files</Filter>
     </ClInclude>

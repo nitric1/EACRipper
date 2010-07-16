@@ -90,6 +90,12 @@
     <ClCompile Include="AboutWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Control.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EditListControl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -228,6 +234,12 @@
       <Filter>Common Files</Filter>
     </ClInclude>
     <ClInclude Include="AboutWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Control.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EditListControl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,6 +4,7 @@
 #include "Singleton.h"
 #include "ShortcutKey.h"
 #include "ComponentManager.h"
+#include "EditListControl.h"
 
 namespace EACRipper
 {
@@ -20,6 +21,7 @@ namespace EACRipper
 		int baseUnitX, baseUnitY;
 		Gdiplus::Image *coverArtThumbnail;
 		int coverArtLeft, coverArtTop, coverArtWidth, coverArtHeight;
+		EditListControl trackList;
 
 	private:
 		MainWindow();

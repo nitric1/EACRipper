@@ -48,6 +48,8 @@ namespace EACRipper
 				self.baseUnitX = rc.right;
 				self.baseUnitY = rc.bottom;
 
+				self.trackList.attach(GetDlgItem(window, IDC_LIST));
+
 				ShowWindow(window, self.getShowStatus());
 
 				if(!self.runEventListener(L"init", e))
@@ -138,6 +140,7 @@ namespace EACRipper
 
 			case IDC_CANCEL:
 				// TODO: Is ripping
+				if(false)
 				{
 					return 1;
 				}

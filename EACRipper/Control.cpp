@@ -24,7 +24,7 @@ namespace EACRipper
 		return ShowWindow(getWindow(), SW_SHOW) != FALSE;
 	}
 
-	WNDPROC Control::getOldProc()
+	WNDPROC Control::getOldProc() const
 	{
 		return oldProc;
 	}

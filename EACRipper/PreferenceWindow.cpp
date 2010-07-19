@@ -9,7 +9,7 @@ using namespace std;
 namespace EACRipper
 {
 	PreferenceWindow::PreferenceWindow()
-		: ChildWindow(nullptr), conf(&Configure::instance())
+		: Dialog(nullptr), conf(&Configure::instance())
 	{
 	}
 
@@ -39,7 +39,8 @@ namespace EACRipper
 			{
 			case IDOK:
 				{
-					// TODO: Process Saving Preference
+					if(!self.runEventListener(L"prefOK", e))
+						break;
 				}
 
 			case IDCANCEL:
@@ -74,6 +75,16 @@ namespace EACRipper
 		return 0;
 	}
 
+	const wchar_t *PreferenceWindow::getDialogName()
+	{
+		return MAKEINTRESOURCEW(DIALOG_ID);
+	}
+
+	bool PreferenceWindow::show()
+	{
+		return Dialog::show(procMessage);
+	}
+
 	wstring PreferenceWindow::getValue(const wstring &item)
 	{
 		HWND itemWin;
@@ -83,8 +94,8 @@ namespace EACRipper
 			return wstring();
 
 		int len = static_cast<size_t>(GetWindowTextLengthW(itemWin));
-		vector<wchar_t> buf(static_cast<size_t>(len));
-		GetWindowTextW(itemWin, &*buf.begin(), len);
+		vector<wchar_t> buf(static_cast<size_t>(len) + 1);
+		GetWindowTextW(itemWin, &*buf.begin(), len + 1);
 
 		return wstring(buf.begin(), buf.end());
 	}
@@ -94,11 +105,5 @@ namespace EACRipper
 		if(item == L"BasePath")
 			return SetDlgItemTextW(getWindow(), IDC_PATH, value.c_str()) != FALSE;
 		return false;
-	}
-
-	bool PreferenceWindow::show()
-	{
-		intptr_t res = DialogBoxParamW(MainController::instance().getInstance(), MAKEINTRESOURCEW(DIALOG_ID), getParent()->getWindow(), procMessage, 0);
-		return res == IDOK;
 	}
 }

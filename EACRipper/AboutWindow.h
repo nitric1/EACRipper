@@ -1,11 +1,11 @@
 #pragma once
 
-#include "ChildWindow.h"
+#include "Dialog.h"
 #include "Singleton.h"
 
 namespace EACRipper
 {
-	class AboutWindow : public ChildWindow, public Singleton<AboutWindow>
+	class AboutWindow : public Dialog, public Singleton<AboutWindow>
 	{
 	private:
 		enum { DIALOG_ID = IDD_ABOUT };
@@ -24,6 +24,8 @@ namespace EACRipper
 		static uintptr_t __stdcall procLink(HWND, unsigned, WPARAM, LPARAM);
 
 	public:
+		virtual const wchar_t *getDialogName();
+
 		virtual bool show();
 
 		friend class Singleton<AboutWindow>;

@@ -96,6 +96,9 @@
     <ClCompile Include="EditListControl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Dialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -206,9 +209,6 @@
     <ClInclude Include="PreferenceWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ChildWindow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Common\inttypes.h">
       <Filter>Common Files\Standard Header Files</Filter>
     </ClInclude>
@@ -240,6 +240,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EditListControl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

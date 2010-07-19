@@ -16,7 +16,7 @@ namespace EACRipper
 
 	protected:
 		virtual WNDPROC getWindowProc() = 0;
-		WNDPROC getOldProc();
+		WNDPROC getOldProc() const;
 
 	private:
 		bool addControl(HWND);
@@ -27,7 +27,7 @@ namespace EACRipper
 
 	public:
 		virtual bool show();
-		bool attach(HWND);
-		bool detach();
+		virtual bool attach(HWND);
+		virtual bool detach();
 	};
 }

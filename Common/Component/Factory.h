@@ -14,6 +14,7 @@ namespace ERComponent
 	public:
 		ServiceFactory() { ptr = ApplicationInfo::instance().getApp().getServicePointer<T>(); }
 		explicit ServiceFactory(const void *param) { ptr = ApplicationInfo::instance().getApp().getServicePointer<T>(param); }
+		explicit ServiceFactory(T *iptr) : ptr(iptr) {}
 		virtual ~ServiceFactory() { ApplicationInfo::instance().getApp().removeServicePointer<T>(ptr); }
 
 	public:

@@ -42,6 +42,7 @@ namespace EACRipper
 		bool onAbout(WindowEventArgs);
 
 		bool onPrefInit(WindowEventArgs);
+		bool onPrefOK(WindowEventArgs);
 
 		friend class Singleton<MainController>;
 	};

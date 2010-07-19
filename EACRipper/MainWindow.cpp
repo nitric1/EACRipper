@@ -9,7 +9,7 @@ using namespace Gdiplus;
 namespace EACRipper
 {
 	MainWindow::MainWindow()
-		: Window(nullptr), iconSmall(nullptr), iconBig(nullptr), shortcut(&ShortcutKey::instance()), baseUnitX(1), baseUnitY(1)
+		: Dialog(nullptr), iconSmall(nullptr), iconBig(nullptr), shortcut(&ShortcutKey::instance()), baseUnitX(1), baseUnitY(1)
 	{
 	}
 
@@ -36,6 +36,8 @@ namespace EACRipper
 				SendMessageW(window, WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(self.iconSmall));
 				SendMessageW(window, WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(self.iconBig));
 
+				self.trackList.attach(GetDlgItem(window, IDC_LIST));
+
 				self.initList();
 
 				SetWindowTextW(window, EACRIPPER_TITLE L" " EACRIPPER_VERSION);
@@ -48,9 +50,11 @@ namespace EACRipper
 				self.baseUnitX = rc.right;
 				self.baseUnitY = rc.bottom;
 
-				self.trackList.attach(GetDlgItem(window, IDC_LIST));
-
 				ShowWindow(window, self.getShowStatus());
+
+				GetClientRect(window, &rc);
+
+				self.resizeLayout(rc.right - rc.left, rc.bottom - rc.top);
 
 				if(!self.runEventListener(L"init", e))
 					break;
@@ -171,6 +175,8 @@ namespace EACRipper
 
 				EndDialog(window, 0);
 
+				self.uninit();
+
 				DestroyIcon(self.iconSmall);
 				DestroyIcon(self.iconBig);
 
@@ -214,10 +220,14 @@ namespace EACRipper
 		return CallWindowProcW(self.coverArtOldProc, window, message, wParam, lParam);
 	}
 
+	const wchar_t *MainWindow::getDialogName()
+	{
+		return MAKEINTRESOURCEW(DIALOG_ID);
+	}
+
 	bool MainWindow::show()
 	{
-		intptr_t res = DialogBoxParamW(MainController::instance().getInstance(), MAKEINTRESOURCEW(DIALOG_ID), nullptr, procMessage, 0);
-		return res == IDOK;
+		return Dialog::show(procMessage);
 	}
 
 	void MainWindow::resizeLayout(int width, int height)
@@ -260,37 +270,12 @@ namespace EACRipper
 		HWND list = GetDlgItem(getWindow(), IDC_LIST);
 		ListView_SetExtendedListViewStyle(list, LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES | LVS_EX_CHECKBOXES);
 
-		LVCOLUMNW lvc;
-		lvc.cx = 50;
-		lvc.fmt = LVCFMT_RIGHT;
-		lvc.pszText = L"#";
-		lvc.mask = LVCF_WIDTH | LVCF_FMT | LVCF_TEXT;
-		ListView_InsertColumn(list, 0, &lvc);
-
-		lvc.cx = 120;
-		lvc.fmt = LVCFMT_LEFT;
-		lvc.pszText = L"Artist";
-		ListView_InsertColumn(list, 1, &lvc);
-
-		lvc.cx = 210;
-		lvc.fmt = LVCFMT_LEFT;
-		lvc.pszText = L"Title";
-		ListView_InsertColumn(list, 2, &lvc);
-
-		lvc.cx = 100;
-		lvc.fmt = LVCFMT_LEFT;
-		lvc.pszText = L"Composer";
-		ListView_InsertColumn(list, 3, &lvc);
-
-		lvc.cx = 175;
-		lvc.fmt = LVCFMT_LEFT;
-		lvc.pszText = L"Length";
-		ListView_InsertColumn(list, 4, &lvc);
-
-		lvc.cx = 60;
-		lvc.fmt = LVCFMT_LEFT;
-		lvc.pszText = L"Process";
-		ListView_InsertColumn(list, 5, &lvc);
+		trackList.addColumn(L"#", 50, EditListControl::ALIGN_RIGHT);
+		trackList.addColumn(L"Artist", 120, EditListControl::ALIGN_LEFT);
+		trackList.addColumn(L"Title", 210, EditListControl::ALIGN_LEFT);
+		trackList.addColumn(L"Composer", 100, EditListControl::ALIGN_LEFT);
+		trackList.addColumn(L"Length", 175, EditListControl::ALIGN_LEFT);
+		trackList.addColumn(L"Progress", 60, EditListControl::ALIGN_RIGHT);
 
 		/*LVITEMW lvi = LVITEMW();
 		wchar_t *lstr[][19] =
@@ -353,6 +338,10 @@ namespace EACRipper
 
 			ListView_SetCheckState(list, lvi.iItem, TRUE);
 		}*/
+	}
+
+	void MainWindow::uninit()
+	{
 	}
 
 	void MainWindow::addFormat(const wstring &name)

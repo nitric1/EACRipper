@@ -157,9 +157,14 @@ namespace EACRipper
 		return CallWindowProcW(self.linkOldProc, window, message, wParam, lParam);
 	}
 
+	const wchar_t *AboutWindow::getDialogName()
+	{
+		return MAKEINTRESOURCEW(DIALOG_ID);
+	}
+
 	bool AboutWindow::show()
 	{
-		DialogBoxParamW(MainController::instance().getInstance(), MAKEINTRESOURCEW(DIALOG_ID), getParent()->getWindow(), procMessage, 0);
+		Dialog::show(procMessage);
 		return true;
 	}
 }

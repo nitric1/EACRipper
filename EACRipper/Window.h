@@ -77,6 +77,7 @@ namespace EACRipper
 	private:
 		HWND window;
 		int showCommand;
+		Window *parent;
 
 	protected:
 		explicit Window(HWND iwindow = nullptr) : window(iwindow) {}
@@ -103,6 +104,27 @@ namespace EACRipper
 		virtual void setWindow(HWND iwindow)
 		{
 			window = iwindow;
+		}
+
+		Window *getParent()
+		{
+			return parent;
+		}
+
+		const Window *getParent() const
+		{
+			return parent;
+		}
+
+		void setParent(Window *iparent)
+		{
+			parent = iparent;
+		}
+
+		virtual bool showWithParent(Window *parent)
+		{
+			setParent(parent);
+			return show();
 		}
 
 		virtual bool addEventListener(const std::wstring &name, std::tr1::shared_ptr<EventDelegate> listener)

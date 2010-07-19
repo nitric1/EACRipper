@@ -192,6 +192,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Dialog.cpp" />
     <ClCompile Include="FileDialog.cpp" />
     <ClCompile Include="FileStream.cpp" />
     <ClCompile Include="MainController.cpp" />
@@ -211,13 +212,13 @@
     <ClInclude Include="..\Common\IERFile.h" />
     <ClInclude Include="AboutWindow.h" />
     <ClInclude Include="CoderManager.h" />
-    <ClInclude Include="ChildWindow.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentManager.h" />
     <ClInclude Include="ComponentServiceImpl.h" />
     <ClInclude Include="Configure.h" />
     <ClInclude Include="Control.h" />
     <ClInclude Include="Defaults.h" />
+    <ClInclude Include="Dialog.h" />
     <ClInclude Include="FileDialog.h" />
     <ClInclude Include="FileStream.h" />
     <ClInclude Include="MainController.h" />

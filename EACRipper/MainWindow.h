@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Window.h"
+#include "Dialog.h"
 #include "Singleton.h"
 #include "ShortcutKey.h"
 #include "ComponentManager.h"
@@ -8,7 +8,7 @@
 
 namespace EACRipper
 {
-	class MainWindow : public Window, public Singleton<MainWindow>
+	class MainWindow : public Dialog, public Singleton<MainWindow>
 	{
 	private:
 		typedef ComponentManager CM;
@@ -34,11 +34,14 @@ namespace EACRipper
 		static uintptr_t __stdcall procCoverArt(HWND, unsigned, WPARAM, LPARAM);
 
 	public:
+		virtual const wchar_t *getDialogName();
+
 		virtual bool show();
 		void resizeLayout(int, int);
 		void resizeItemDLU(int, int, int, int, int);
 
 		void initList();
+		void uninit();
 
 		void addFormat(const std::wstring &);
 		void selectFormat(const std::wstring &);

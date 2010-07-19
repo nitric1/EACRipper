@@ -76,7 +76,10 @@ namespace EACRipper
 		mainWin->addEventListener(L"rip", delegateEvent(this, &MainController::onRip));
 		mainWin->addEventListener(L"about", delegateEvent(this, &MainController::onAbout));
 
-		mainWin->addEventListener(L"prefInit", delegateEvent(this, &MainController::onPrefInit));
+		PreferenceWindow *prefWin = &PreferenceWindow::instance();
+
+		prefWin->addEventListener(L"prefInit", delegateEvent(this, &MainController::onPrefInit));
+		prefWin->addEventListener(L"prefOK", delegateEvent(this, &MainController::onPrefOK));
 	}
 
 	bool MainController::run(HINSTANCE instHandle, const wstring &commandLine, int showCommand)
@@ -108,7 +111,6 @@ namespace EACRipper
 		FileDialog fd(true, mainWin, L"Open Cuesheet", fi, L"cue");
 		if(fd.show())
 		{
-			// TODO: Open Cuesheet Implementation
 			FileStreamReader f;
 			if(!f.open(fd.getPath().c_str()))
 				return false;
@@ -123,6 +125,7 @@ namespace EACRipper
 			vector<wchar_t> doc(cv->getConvertedLengthToUTF16(&*ve.begin()) + 1);
 			cv->convertToUTF16(&*doc.begin(), doc.size(), &*ve.begin());
 			doc.back() = L'\0';
+			ServicePointerManager::instance().remove(cv);
 
 			CuesheetTrackList *ptr = new CuesheetTrackList(wstring(&*doc.begin()));
 			shared_ptr<TrackList> tr(ptr);
@@ -232,8 +235,20 @@ namespace EACRipper
 	bool MainController::onPrefInit(WindowEventArgs e)
 	{
 		Configure &c = Configure::instance();
-		dynamic_cast<PreferenceWindow *>(e.window)->setValue(L"BasePath", c.get(L"BasePath"));
+		PreferenceWindow *prefWin = dynamic_cast<PreferenceWindow *>(e.window);
+		if(prefWin == nullptr)
+			return false;
+		prefWin->setValue(L"BasePath", c.get(L"BasePath"));
+		return true;
+	}
 
+	bool MainController::onPrefOK(WindowEventArgs e)
+	{
+		Configure &c = Configure::instance();
+		PreferenceWindow *prefWin = dynamic_cast<PreferenceWindow *>(e.window);
+		if(prefWin == nullptr)
+			return false;
+		c.set(L"BasePath", prefWin->getValue(L"BasePath"));
 		return true;
 	}
 }

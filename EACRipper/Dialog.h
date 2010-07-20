@@ -15,7 +15,7 @@ namespace EACRipper
 
 	protected:
 		virtual const wchar_t *getDialogName() = 0;
-		virtual const uint8_t *getDialogTemplateWithSystemFont();
+		virtual const void *getDialogTemplateWithSystemFont();
 		virtual bool show(DLGPROC);
 	};
 };

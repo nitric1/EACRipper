@@ -3,6 +3,8 @@
 #include "MainController.h"
 #include "Dialog.h"
 
+using namespace std;
+
 namespace EACRipper
 {
 	Dialog::Dialog(HWND window)

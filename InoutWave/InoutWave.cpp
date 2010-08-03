@@ -46,7 +46,7 @@ typedef struct _WaveHeader
 		uint8_t chunkCC[4];
 		uint32_t chunkID;
 	};
-	unsigned long chunkSize;
+	uint32_t chunkSize;
 	union
 	{
 		uint8_t formatCC[4];
@@ -69,14 +69,14 @@ typedef struct _WaveHeader
 		uint8_t dataCC[4];
 		uint32_t dataID;
 	};
-	unsigned long dataSize;
+	uint32_t dataSize;
 } WaveHeader;
 #pragma pack(pop)
 
-static const uint32_t waveChunkID = EREndian::N2L(0x46464952u);
-static const uint32_t waveFormatID = EREndian::N2L(0x45564157u);
-static const uint32_t waveSubchunkID = EREndian::N2L(0x20746d66u);
-static const uint32_t waveDataID = EREndian::N2L(0x61746164u);
+static const uint32_t waveChunkID = 0x46464952u;
+static const uint32_t waveFormatID = 0x45564157u;
+static const uint32_t waveSubchunkID = 0x20746d66u;
+static const uint32_t waveDataID = 0x61746164u;
 
 class InWave : public IERComponentMusicDecoder
 {
@@ -139,6 +139,20 @@ bool InWave::setStream(IERStreamReader *stream)
 		close();
 		return false;
 	}
+
+	header.chunkID = EREndian::L2N(header.chunkID);
+	header.chunkSize = EREndian::L2N(header.chunkSize);
+	header.formatID = EREndian::L2N(header.formatID);
+	header.subchunkID = EREndian::L2N(header.subchunkID);
+	header.subchunkSize = EREndian::L2N(header.subchunkSize);
+	header.audioFormat = EREndian::L2N(header.audioFormat);
+	header.channels = EREndian::L2N(header.channels);
+	header.samplingRate = EREndian::L2N(header.samplingRate);
+	header.byteRate = EREndian::L2N(header.byteRate);
+	header.blockAlign = EREndian::L2N(header.blockAlign);
+	header.bitsPerSample = EREndian::L2N(header.bitsPerSample);
+	header.dataID = EREndian::L2N(header.dataID);
+	header.dataSize = EREndian::L2N(header.dataSize);
 
 	if(header.chunkID != waveChunkID || header.formatID != waveFormatID || header.subchunkID != waveSubchunkID || header.dataID != waveDataID || header.audioFormat != WAVE_FORMAT_PCM)
 	{
@@ -274,6 +288,20 @@ bool OutWave::setStream(IERStreamWriter *stream, uint8_t channels, uint8_t bitsP
 	header.bitsPerSample = bitsPerSample;
 	header.dataID = waveDataID;
 	header.dataSize = totalSize;
+
+	header.chunkID = EREndian::N2L(header.chunkID);
+	header.chunkSize = EREndian::N2L(header.chunkSize);
+	header.formatID = EREndian::N2L(header.formatID);
+	header.subchunkID = EREndian::N2L(header.subchunkID);
+	header.subchunkSize = EREndian::N2L(header.subchunkSize);
+	header.audioFormat = EREndian::N2L(header.audioFormat);
+	header.channels = EREndian::N2L(header.channels);
+	header.samplingRate = EREndian::N2L(header.samplingRate);
+	header.byteRate = EREndian::N2L(header.byteRate);
+	header.blockAlign = EREndian::N2L(header.blockAlign);
+	header.bitsPerSample = EREndian::N2L(header.bitsPerSample);
+	header.dataID = EREndian::N2L(header.dataID);
+	header.dataSize = EREndian::N2L(header.dataSize);
 
 	if(writer->write(&header, sizeof(header)) != sizeof(header))
 	{

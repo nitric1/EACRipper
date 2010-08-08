@@ -2,6 +2,8 @@
 
 #include "ComponentServiceImpl.h"
 
+#include <boost/detail/endian.hpp>
+
 using namespace std;
 
 namespace EACRipper
@@ -49,12 +51,42 @@ namespace EACRipper
 		}
 
 		StringCharsetConverter::StringCharsetConverter()
-			: charset("UTF-8")
+			: charset("UTF-8"), cv(nullptr)
 		{
+			makeConverter();
 		}
 
 		StringCharsetConverter::~StringCharsetConverter()
 		{
+			if(cv != nullptr)
+				ucnv_close(cv);
+		}
+
+		void StringCharsetConverter::makeConverter()
+		{
+			if(cv != nullptr)
+				ucnv_close(cv);
+
+			UErrorCode err;
+			cv = ucnv_open(charset.c_str(), &err);
+
+			if(U_FAILURE(err) && charset != "iso-8859-1")
+			{
+				string basecs = charset;
+				charset = "iso-8859-1";
+				try
+				{
+					makeConverter();
+				}
+				catch(int)
+				{
+					throw(runtime_error("Specified charset " + basecs + " cannot be opened and so is iso-8859-1."));
+				}
+			}
+			else if(U_FAILURE(err))
+				throw(0);
+
+			ucnv_setSubstString(cv, L"\x3F", -1, &err); // "?" U+003F QUESTION MARK
 		}
 
 		const char *StringCharsetConverter::getCharset() const
@@ -65,28 +97,53 @@ namespace EACRipper
 		bool StringCharsetConverter::setCharset(const char *icharset)
 		{
 			charset = icharset;
+			makeConverter();
 			return true;
 		}
 
 		// TODO: Implement StringCharsetConverter's functions.
 		size_t StringCharsetConverter::getConvertedLengthToUTF16(const char *str, size_t length)
 		{
-			return 0;
+			UErrorCode err;
+			int32_t size = ucnv_toUChars(cv, nullptr, 0, str, static_cast<int32_t>(length), &err);
+			if(U_FAILURE(err))
+				return static_cast<size_t>(-1);
+			if(length == numeric_limits<size_t>::max())
+				++ size;
+			return static_cast<size_t>(size);
 		}
 
 		size_t StringCharsetConverter::getConvertedLengthFromUTF16(const wchar_t *str, size_t length)
 		{
-			return 0;
+			UErrorCode err;
+			int32_t size = ucnv_fromUChars(cv, nullptr, 0, str, static_cast<int32_t>(length), &err);
+			if(U_FAILURE(err))
+				return static_cast<size_t>(-1);
+			if(length == numeric_limits<size_t>::max())
+				++ size;
+			return static_cast<size_t>(size);
 		}
 
 		size_t StringCharsetConverter::convertToUTF16(wchar_t *toString, size_t toBufferLength, const char *fromString, size_t fromLength)
 		{
-			return 0;
+			UErrorCode err;
+			int32_t size = ucnv_toUChars(cv, toString, static_cast<int32_t>(toBufferLength), fromString, static_cast<int32_t>(fromLength), &err);
+			if(U_FAILURE(err))
+				return static_cast<size_t>(-1);
+			if(fromLength == numeric_limits<size_t>::max())
+				++ size;
+			return static_cast<size_t>(size);
 		}
 
 		size_t StringCharsetConverter::convertFromUTF16(char *toString, size_t toBufferLength, const wchar_t *fromString, size_t fromLength)
 		{
-			return 0;
+			UErrorCode err;
+			int32_t size = ucnv_fromUChars(cv, toString, static_cast<int32_t>(toBufferLength), fromString, static_cast<int32_t>(fromLength), &err);
+			if(U_FAILURE(err))
+				return static_cast<size_t>(-1);
+			if(fromLength == numeric_limits<size_t>::max())
+				++ size;
+			return static_cast<size_t>(size);
 		}
 
 		CharsetDetector::~CharsetDetector()

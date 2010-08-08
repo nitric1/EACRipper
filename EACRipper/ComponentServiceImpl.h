@@ -152,10 +152,14 @@ namespace EACRipper
 		{
 		private:
 			std::string charset;
+			UConverter *cv;
 
 		public:
 			StringCharsetConverter();
 			virtual ~StringCharsetConverter();
+
+		private:
+			void makeConverter();
 
 		public:
 			virtual const char *getCharset() const;

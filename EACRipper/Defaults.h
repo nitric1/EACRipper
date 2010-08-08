@@ -15,6 +15,8 @@ namespace ER = EACRipper;
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 
+// Standard C/C++ Library Inclusion
+
 #include <cstdio>
 #include <cstdlib>
 
@@ -40,6 +42,12 @@ namespace ER = EACRipper;
 
 using std::max; using std::min;
 
+// ICU Library Inclusion
+
+#include <unicode/ucnv.h>
+
+// Windows API Library Inclusion
+
 #include <windows.h>
 #include <windowsx.h>
 
@@ -55,5 +63,7 @@ using std::max; using std::min;
 #include <shellapi.h>
 
 #include <gdiplus.h>
+
+// Other Common Inclusion
 
 #include "resource.h"

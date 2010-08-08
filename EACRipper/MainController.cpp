@@ -84,12 +84,21 @@ namespace EACRipper
 
 	bool MainController::run(HINSTANCE instHandle, const wstring &commandLine, int showCommand)
 	{
-		inst = instHandle;
+		try
+		{
+			inst = instHandle;
 
-		registerEvents();
+			registerEvents();
 
-		mainWin->setShowStatus(showCommand);
-		return mainWin->show();
+			mainWin->setShowStatus(showCommand);
+			return mainWin->show();
+		}
+		catch(exception &e)
+		{
+			string str = string("Unexpected exception occured: ") + e.what() + string("\nThe program will be terminated.");
+			MessageBoxA(nullptr, str.c_str(), "Error occured", MB_ICONSTOP | MB_OK);
+			return false;
+		}
 	}
 
 	bool MainController::onInit(WindowEventArgs e)

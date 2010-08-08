@@ -96,6 +96,8 @@ namespace EACRipper
 
 		bool StringCharsetConverter::setCharset(const char *icharset)
 		{
+			if(charset == icharset)
+				return true;
 			charset = icharset;
 			makeConverter();
 			return true;
@@ -106,7 +108,7 @@ namespace EACRipper
 		{
 			UErrorCode err;
 			int32_t size = ucnv_toUChars(cv, nullptr, 0, str, static_cast<int32_t>(length), &err);
-			if(U_FAILURE(err))
+			if(err != U_ZERO_ERROR && err != U_BUFFER_OVERFLOW_ERROR && err != U_STRING_NOT_TERMINATED_WARNING)
 				return static_cast<size_t>(-1);
 			if(length == numeric_limits<size_t>::max())
 				++ size;
@@ -117,7 +119,7 @@ namespace EACRipper
 		{
 			UErrorCode err;
 			int32_t size = ucnv_fromUChars(cv, nullptr, 0, str, static_cast<int32_t>(length), &err);
-			if(U_FAILURE(err))
+			if(err != U_ZERO_ERROR && err != U_BUFFER_OVERFLOW_ERROR && err != U_STRING_NOT_TERMINATED_WARNING)
 				return static_cast<size_t>(-1);
 			if(length == numeric_limits<size_t>::max())
 				++ size;
@@ -128,7 +130,7 @@ namespace EACRipper
 		{
 			UErrorCode err;
 			int32_t size = ucnv_toUChars(cv, toString, static_cast<int32_t>(toBufferLength), fromString, static_cast<int32_t>(fromLength), &err);
-			if(U_FAILURE(err))
+			if(err != U_ZERO_ERROR && err != U_BUFFER_OVERFLOW_ERROR && err != U_STRING_NOT_TERMINATED_WARNING)
 				return static_cast<size_t>(-1);
 			if(fromLength == numeric_limits<size_t>::max())
 				++ size;
@@ -139,7 +141,7 @@ namespace EACRipper
 		{
 			UErrorCode err;
 			int32_t size = ucnv_fromUChars(cv, toString, static_cast<int32_t>(toBufferLength), fromString, static_cast<int32_t>(fromLength), &err);
-			if(U_FAILURE(err))
+			if(err != U_ZERO_ERROR && err != U_BUFFER_OVERFLOW_ERROR && err != U_STRING_NOT_TERMINATED_WARNING)
 				return static_cast<size_t>(-1);
 			if(fromLength == numeric_limits<size_t>::max())
 				++ size;

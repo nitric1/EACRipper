@@ -42,6 +42,9 @@ namespace ER = EACRipper;
 
 using std::max; using std::min;
 
+// Boost Library Inclusion
+#include <boost/lexical_cast.hpp>
+
 // ICU Library Inclusion
 
 #include <unicode/ucnv.h>

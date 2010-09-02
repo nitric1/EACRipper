@@ -59,6 +59,11 @@ namespace EACRipper
 		return 0;
 	}
 
+	void EditListControl::clear()
+	{
+		SendMessageW(getWindow(), LVM_DELETEALLITEMS, 0, 0);
+	}
+
 	bool EditListControl::attach(HWND window)
 	{
 		HWND header = reinterpret_cast<HWND>(SendMessageW(window, LVM_GETHEADER, 0, 0));

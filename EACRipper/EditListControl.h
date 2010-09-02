@@ -32,6 +32,7 @@ namespace EACRipper
 		int32_t insertColumn(int32_t, const std::wstring &, int32_t, int32_t = ALIGN_LEFT, const std::wstring & = std::wstring());
 		int32_t addItem(const std::vector<std::wstring> &);
 		int32_t insertItem(int32_t, const std::vector<std::wstring> &);
+		void clear();
 
 	public:
 		virtual bool attach(HWND);

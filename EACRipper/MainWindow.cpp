@@ -274,7 +274,7 @@ namespace EACRipper
 		trackList.addColumn(L"Artist", 120, EditListControl::ALIGN_LEFT);
 		trackList.addColumn(L"Title", 210, EditListControl::ALIGN_LEFT);
 		trackList.addColumn(L"Composer", 100, EditListControl::ALIGN_LEFT);
-		trackList.addColumn(L"Length", 175, EditListControl::ALIGN_LEFT);
+		trackList.addColumn(L"Length (M:S:MS)", 175, EditListControl::ALIGN_LEFT);
 		trackList.addColumn(L"Progress", 60, EditListControl::ALIGN_RIGHT);
 
 		/*LVITEMW lvi = LVITEMW();
@@ -413,5 +413,32 @@ namespace EACRipper
 		}
 
 		InvalidateRect(GetDlgItem(getWindow(), IDC_COVER_ART), NULL, TRUE);
+	}
+
+	void MainWindow::setTrackList(const TrackList &list)
+	{
+		static wstring fields[] =
+		{
+			L"Track",
+			L"Artist",
+			L"Title",
+			L"Composer",
+			L"Length"
+		};
+
+		clearTrackList();
+		size_t len = list.getTrackCount();
+		vector<wstring> item(6);
+		for(size_t i = 0; i < len; ++ i)
+		{
+			for(size_t j = 0; j < (sizeof(fields) / sizeof(*fields)); ++ j)
+				item[j] = list[i][fields[j]];
+			trackList.addItem(item);
+		}
+	}
+
+	void MainWindow::clearTrackList()
+	{
+		trackList.clear();
 	}
 }

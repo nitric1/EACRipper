@@ -13,6 +13,7 @@ namespace EACRipper
 		HINSTANCE inst;
 		MainWindow *mainWin;
 		ComponentManager *comp;
+		std::shared_ptr<TrackList> list;
 
 		ULONG_PTR gpToken;
 

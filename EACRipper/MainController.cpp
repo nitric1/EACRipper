@@ -136,10 +136,10 @@ namespace EACRipper
 			doc.back() = L'\0';
 			ServicePointerManager::instance().remove(cv);
 
-			CuesheetTrackList *ptr = new CuesheetTrackList(wstring(&*doc.begin()));
-			shared_ptr<TrackList> tr(ptr);
+			CuesheetTrackList *plist = new CuesheetTrackList(wstring(&*doc.begin()));
+			list = shared_ptr<TrackList>(plist);
 
-			// mainWin->setTrackList(tr);
+			mainWin->setTrackList(*plist);
 		}
 
 		return true;

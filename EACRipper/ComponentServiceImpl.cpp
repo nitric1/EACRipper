@@ -49,6 +49,8 @@ namespace EACRipper
 			return appendPointer(new StringCodepageConverter());
 		else if(uuid == ERServiceUUID<IERServiceStringCharsetConverter>::uuid)
 			return appendPointer(new StringCharsetConverter());
+		else if(uuid == ERServiceUUID<IERServiceCharsetDetector>::uuid)
+			return &CharsetDetector::instance();
 		else if(uuid == ERServiceUUID<IERFileStreamReader>::uuid)
 			return appendPointer(new FileStreamReader());
 		else if(uuid == ERServiceUUID<IERFileStreamWriter>::uuid)

@@ -159,7 +159,13 @@ namespace EACRipper
 			virtual ~StringCharsetConverter();
 
 		private:
-			void makeConverter();
+			static std::vector<std::wstring> makeCharsetList();
+
+		public:
+			static const std::vector<std::wstring> &getCharsetList();
+
+		private:
+			bool makeConverter();
 
 		public:
 			virtual const char *getCharset() const;
@@ -171,13 +177,21 @@ namespace EACRipper
 			virtual size_t convertFromUTF16(char *, size_t, const wchar_t *, size_t = std::numeric_limits<size_t>::max());
 		};
 
-		class CharsetDetector : public IERServiceCharsetDetector
+		class CharsetDetector : public IERServiceCharsetDetector, public Singleton<CharsetDetector>
 		{
+		private:
+			UCharsetDetector *cd;
+
 		public:
+			CharsetDetector();
+
+		private:
 			virtual ~CharsetDetector();
 
 		public:
 			virtual IERServiceStringConverter *detect(const char *);
+
+			friend class Singleton<CharsetDetector>;
 		};
 
 		class LocalFile : public IERLocalFile

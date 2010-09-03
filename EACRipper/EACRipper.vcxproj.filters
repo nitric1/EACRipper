@@ -99,6 +99,9 @@
     <ClCompile Include="Dialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CharsetFileDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -243,6 +246,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Dialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\ERTypes.h">
+      <Filter>Common Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CharsetFileDialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -25,7 +25,7 @@ namespace EACRipper
 		virtual WNDPROC getWindowProc();
 
 	private:
-		static intptr_t __stdcall windowProc(HWND, unsigned, WPARAM, LPARAM);
+		static LRESULT __stdcall windowProc(HWND, unsigned, WPARAM, LPARAM);
 
 	public:
 		int32_t addColumn(const std::wstring &, int32_t, int32_t = ALIGN_LEFT, const std::wstring & = std::wstring());

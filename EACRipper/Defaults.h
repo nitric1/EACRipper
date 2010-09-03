@@ -45,6 +45,7 @@ using std::max; using std::min;
 // ICU Library Inclusion
 
 #include <unicode/ucnv.h>
+#include <unicode/ucsdet.h>
 
 // Windows API Library Inclusion
 

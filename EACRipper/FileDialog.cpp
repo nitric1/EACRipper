@@ -110,9 +110,11 @@ namespace EACRipper
 					throw(runtime_error("Failed to set file filters."));
 			}
 
-			/*hr = dlg->QueryInterface(IID_PPV_ARGS(&cust));
+			hr = dlg->QueryInterface(IID_PPV_ARGS(&cust));
+			if(FAILED(hr))
+				throw(runtime_error("Failed to query a file dialog customizer."));
 
-			cust->StartVisualGroup(0, L"&Encoding");
+			/*cust->StartVisualGroup(0, L"&Encoding");
 
 			cust->EndVisualGroup();*/
 		}
@@ -131,8 +133,8 @@ namespace EACRipper
 
 	FileDialog::~FileDialog()
 	{
-		/*if(cust != nullptr)
-			cust->Release();*/
+		if(cust != nullptr)
+			cust->Release();
 		if(dlg != nullptr)
 			dlg->Release();
 	}

@@ -91,7 +91,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>shlwapi.lib;gdiplus.lib;icudt.lib;icuucd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>shlwapi.lib;gdiplus.lib;icudt.lib;icuucd.lib;icuind.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -114,7 +114,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>shlwapi.lib;gdiplus.lib;icudt.lib;icuucd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>shlwapi.lib;gdiplus.lib;icudt.lib;icuucd.lib;icuind.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
@@ -138,7 +138,7 @@
       </DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>shlwapi.lib;gdiplus.lib;icudt.lib;icuuc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>shlwapi.lib;gdiplus.lib;icudt.lib;icuuc.lib;icuin.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -167,7 +167,7 @@
       </DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>shlwapi.lib;gdiplus.lib;icudt.lib;icuuc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>shlwapi.lib;gdiplus.lib;icudt.lib;icuuc.lib;icuin.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -177,6 +177,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AboutWindow.cpp" />
+    <ClCompile Include="CharsetFileDialog.cpp" />
     <ClCompile Include="CoderManager.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentFileServiceImpl.cpp" />
@@ -209,8 +210,10 @@
     <ClInclude Include="..\Common\Component\Definition.h" />
     <ClInclude Include="..\Common\EREndian.h" />
     <ClInclude Include="..\Common\ERString.h" />
+    <ClInclude Include="..\Common\ERTypes.h" />
     <ClInclude Include="..\Common\IERFile.h" />
     <ClInclude Include="AboutWindow.h" />
+    <ClInclude Include="CharsetFileDialog.h" />
     <ClInclude Include="CoderManager.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentManager.h" />

@@ -38,7 +38,7 @@ namespace EACRipper
 		FileDialogFilter filter;
 		std::wstring ofnFilter;
 		IFileDialog *dlg;
-		//IFileDialogCustomize *cust;
+		IFileDialogCustomize *cust;
 		OPENFILENAMEW ofn;
 
 	public:

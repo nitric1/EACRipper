@@ -129,7 +129,7 @@ namespace EACRipper
 			f.close();
 
 			// TODO: Charset detection or user-selected encoding
-			CharsetDetector cd;
+			CharsetDetector &cd = CharsetDetector::instance();
 			IERServiceStringConverter *cv = cd.detect(&*ve.begin());
 			vector<wchar_t> doc(cv->getConvertedLengthToUTF16(&*ve.begin()) + 1);
 			cv->convertToUTF16(&*doc.begin(), doc.size(), &*ve.begin());
@@ -248,6 +248,12 @@ namespace EACRipper
 		if(prefWin == nullptr)
 			return false;
 		prefWin->setValue(L"BasePath", c.get(L"BasePath"));
+		prefWin->setValue(L"NameFormat", c.get(L"NameFormat"));
+
+		const vector<wstring> &list = StringCharsetConverter::getCharsetList();
+		for_each(list.begin(), list.end(), [&prefWin](const wstring &name) { prefWin->addCharsetName(name); });
+		prefWin->setValue(L"DetectPriority", c.get(L"DetectPriority", L"UTF-8"));
+
 		return true;
 	}
 
@@ -258,6 +264,8 @@ namespace EACRipper
 		if(prefWin == nullptr)
 			return false;
 		c.set(L"BasePath", prefWin->getValue(L"BasePath"));
+		c.set(L"NameFormat", prefWin->getValue(L"NameFormat"));
+		c.set(L"DetectPriority", prefWin->getValue(L"DetectPriority"));
 		return true;
 	}
 }

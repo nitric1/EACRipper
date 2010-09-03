@@ -31,14 +31,8 @@
 #define IDC_DISC_TOTAL                  1021
 #define IDC_GROUP_ALBUM_INFO            1022
 #define IDC_GROUP_COVER_ART             1023
-#define IDC_CHARSET_DETECT              1024
-#define IDC_CHARSET_POOL                1025
-#define IDC_CHARSET_MARK                1026
-#define IDC_CHARSET_UNMARK              1027
-#define IDC_CHARSET_ORDER_UP            1028
-#define IDC_CHARSET_ORDER_DOWN          1029
-#define IDC_EACRIPPER_TEXT              1030
-#define IDC_WEBSITE_LINK                1031
+#define IDC_EACRIPPER_TEXT              1024
+#define IDC_WEBSITE_LINK                1025
 #define IDM_FILE_OPEN                   40001
 #define IDM_INCUE_OPEN                  40002
 #define IDM_ARCHIVE_OPEN                40003
@@ -52,7 +46,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        107
 #define _APS_NEXT_COMMAND_VALUE         40007
-#define _APS_NEXT_CONTROL_VALUE         1032
+#define _APS_NEXT_CONTROL_VALUE         1026
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

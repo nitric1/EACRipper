@@ -20,7 +20,7 @@ namespace EACRipper
 		return windowProc;
 	}
 
-	intptr_t __stdcall EditListControl::windowProc(HWND window, unsigned message, WPARAM wParam, LPARAM lParam)
+	LRESULT __stdcall EditListControl::windowProc(HWND window, unsigned message, WPARAM wParam, LPARAM lParam)
 	{
 		EditListControl *selfptr = dynamic_cast<EditListControl *>(findControl(window));
 		if(selfptr == nullptr)

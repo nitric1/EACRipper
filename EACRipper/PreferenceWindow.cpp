@@ -3,6 +3,7 @@
 #include "MainController.h"
 #include "MainWindow.h"
 #include "PreferenceWindow.h"
+#include "Utility.h"
 
 using namespace std;
 
@@ -49,18 +50,6 @@ namespace EACRipper
 					self.setWindow(nullptr);
 				}
 				return 1;
-
-			case IDC_CHARSET_MARK:
-				return 1;
-
-			case IDC_CHARSET_UNMARK:
-				return 1;
-
-			case IDC_CHARSET_ORDER_UP:
-				return 1;
-				
-			case IDC_CHARSET_ORDER_DOWN:
-				return 1;
 			}
 			break;
 
@@ -90,6 +79,8 @@ namespace EACRipper
 		HWND itemWin;
 		if(item == L"BasePath")
 			itemWin = GetDlgItem(getWindow(), IDC_PATH);
+		else if(item == L"NameFormat")
+			itemWin = GetDlgItem(getWindow(), IDC_NAME_FORMAT);
 		else
 			return wstring();
 
@@ -97,13 +88,15 @@ namespace EACRipper
 		vector<wchar_t> buf(static_cast<size_t>(len) + 1);
 		GetWindowTextW(itemWin, &*buf.begin(), len + 1);
 
-		return wstring(buf.begin(), buf.end());
+		return wstring(&*buf.begin());
 	}
 
 	bool PreferenceWindow::setValue(const wstring &item, const wstring &value)
 	{
 		if(item == L"BasePath")
 			return SetDlgItemTextW(getWindow(), IDC_PATH, value.c_str()) != FALSE;
+		else if(item == L"NameFormat")
+			return SetDlgItemTextW(getWindow(), IDC_NAME_FORMAT, value.c_str()) != FALSE;
 		return false;
 	}
 }

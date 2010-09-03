@@ -9,7 +9,7 @@ namespace EACRipper
 {
 	wstring &trim(wstring &str)
 	{
-		auto fn = [](wchar_t ch) { return ch != L' ' && ch != L'¡¡' && ch != L'\t' && ch != L'\n' && ch != L'\r'; };
+		static auto fn = [](wchar_t ch) { return ch != L' ' && ch != L'¡¡' && ch != L'\t' && ch != L'\n' && ch != L'\r'; };
 		str.erase(str.begin(), find_if(str.begin(), str.end(), fn));
 		str.erase(find_if(str.rbegin(), str.rend(), fn).base(), str.end());
 		return str;
@@ -17,7 +17,7 @@ namespace EACRipper
 
 	vector<wstring> split(const wstring &str, const wstring &sep)
 	{
-		size_t ppos, pos = static_cast<size_t>(-static_cast<intptr_t>(sep.size()));
+		size_t ppos, pos = static_cast<size_t>(-static_cast<ptrdiff_t>(sep.size()));
 		vector<wstring> ve;
 
 		while(true)

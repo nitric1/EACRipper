@@ -5,6 +5,7 @@
 #include "ShortcutKey.h"
 #include "ComponentManager.h"
 #include "EditListControl.h"
+#include "TrackList.h"
 
 namespace EACRipper
 {
@@ -48,6 +49,9 @@ namespace EACRipper
 
 		void setCoverArt(const std::wstring &);
 		void cancelCoverArt();
+
+		void setTrackList(const TrackList &);
+		void clearTrackList();
 
 		friend class Singleton<MainWindow>;
 	};

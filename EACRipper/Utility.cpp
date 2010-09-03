@@ -74,6 +74,27 @@ namespace EACRipper
 		return str;
 	}
 
+	wstring makeTimestamp(uint32_t millisec)
+	{
+		wstringstream ss;
+		ss << setfill(L'0')
+			<< setw(2) << (millisec / 60000)
+			<< L':' << setw(2) << ((millisec / 1000) % 60)
+			<< L':' << setw(2) << ((millisec / 10) % 100);
+		return ss.str();
+	}
+
+	wstring getTimeDiff(const wstring &start, const wstring &end)
+	{
+		vector<wstring> starts(split(start, L":"));
+		vector<wstring> ends(split(end, L":"));
+
+		if(starts.size() != 3 || ends.size() != 3)
+			return wstring();
+
+		return wstring();
+	}
+
 	wstring &getDirectoryPath(wstring &path)
 	{
 		size_t pos = path.rfind(L'\\');

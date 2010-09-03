@@ -13,6 +13,7 @@ namespace EACRipper
 		HINSTANCE inst;
 		MainWindow *mainWin;
 		ComponentManager *comp;
+		std::shared_ptr<TrackList> list;
 
 		ULONG_PTR gpToken;
 
@@ -27,6 +28,9 @@ namespace EACRipper
 		void registerEvents();
 		void initializeApp();
 		void uninitializeApp();
+		void setTrackDetail();
+
+	public:
 		bool run(HINSTANCE, const std::wstring &, int);
 
 	public:

@@ -75,6 +75,8 @@ namespace EACRipper
 		virtual ~TrackList() = 0;
 
 	public:
+		virtual TrackList *clone() const = 0;
+
 		virtual bool parse(const std::wstring &) = 0;
 		virtual bool close() = 0;
 
@@ -106,6 +108,8 @@ namespace EACRipper
 		virtual ~CuesheetTrackList();
 
 	public:
+		virtual CuesheetTrackList *clone() const;
+
 		virtual bool parse(const std::wstring &);
 		virtual bool close();
 

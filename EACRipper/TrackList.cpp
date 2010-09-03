@@ -116,6 +116,11 @@ namespace EACRipper
 	{
 	}
 
+	CuesheetTrackList *CuesheetTrackList::clone() const
+	{
+		return new CuesheetTrackList(*this);
+	}
+
 	bool CuesheetTrackList::parse(const wstring &str)
 	{
 		if(!close())

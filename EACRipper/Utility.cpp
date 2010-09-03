@@ -86,6 +86,12 @@ namespace EACRipper
 
 	wstring getTimeDiff(const wstring &start, const wstring &end)
 	{
+		vector<wstring> starts(split(start, L":"));
+		vector<wstring> ends(split(end, L":"));
+
+		if(starts.size() != 3 || ends.size() != 3)
+			return wstring();
+
 		return wstring();
 	}
 

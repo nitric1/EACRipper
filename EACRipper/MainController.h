@@ -28,6 +28,9 @@ namespace EACRipper
 		void registerEvents();
 		void initializeApp();
 		void uninitializeApp();
+		void setTrackDetail();
+
+	public:
 		bool run(HINSTANCE, const std::wstring &, int);
 
 	public:

@@ -258,10 +258,10 @@
     <None Include="..\Common\Changelog.txt">
       <Filter>Common Files</Filter>
     </None>
-    <None Include="..\Common\cinttypes">
+    <None Include="..\Common\cstdint">
       <Filter>Common Files\Standard Header Files</Filter>
     </None>
-    <None Include="..\Common\cstdint">
+    <None Include="..\Common\cinttypes">
       <Filter>Common Files\Standard Header Files</Filter>
     </None>
   </ItemGroup>

@@ -82,6 +82,20 @@ namespace EACRipper
 		prefWin->addEventListener(L"prefOK", delegateEvent(this, &MainController::onPrefOK));
 	}
 
+	void MainController::setTrackDetail()
+	{
+		wstring file = (*list)[L"File"];
+		LocalFile lf;
+		lf.open(file.c_str());
+		if(!lf.exists()) // TODO: Process unavailable file types.
+		{
+			do
+			{
+			}
+			while(!lf.exists());
+		}
+	}
+
 	bool MainController::run(HINSTANCE instHandle, const wstring &commandLine, int showCommand)
 	{
 		try
@@ -138,6 +152,8 @@ namespace EACRipper
 
 			CuesheetTrackList *plist = new CuesheetTrackList(wstring(&*doc.begin()));
 			list = shared_ptr<TrackList>(plist);
+
+			setTrackDetail();
 
 			mainWin->setTrackList(*plist);
 		}

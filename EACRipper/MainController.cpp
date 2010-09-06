@@ -85,15 +85,24 @@ namespace EACRipper
 	void MainController::setTrackDetail()
 	{
 		wstring file = (*list)[L"File"];
+		size_t dotp = file.find_last_of(L'.');
+		wstring base = file.substr(0, dotp);
+		wstring ext;
+		if(dotp != wstring::npos)
+			ext = file.substr(++ dotp);
 		LocalFile lf;
 		lf.open(file.c_str());
-		if(!lf.exists()) // TODO: Process unavailable file types.
+		if(!lf.exists() || !MusicCoderManager::instance().isSupportedExtension(ext, MusicCoderManager::Decoder)) // TODO: Process unavailable file types.
 		{
+			/*
 			do
 			{
 			}
 			while(!lf.exists());
+			*/
 		}
+
+		size_t tracks = list->getTrackCount();
 	}
 
 	bool MainController::run(HINSTANCE instHandle, const wstring &commandLine, int showCommand)
@@ -169,7 +178,7 @@ namespace EACRipper
 		IERAllocator *alloc;
 
 		mcm = &MusicCoderManager::instance();
-		auto cd = mcm->coders();
+		auto cd = move(mcm->coders());
 		wstring ext;
 		vector<wstring> ve, allExt;
 		vector<pair<wstring, wstring>> fiVec;

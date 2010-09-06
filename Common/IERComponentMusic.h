@@ -104,7 +104,7 @@ public:
 public:
 	/**
 	 * Return required buffer length about wchar_t of inCue string.
-	 * @param converter String converter to convert non-wchar_t string.
+	 * @param converter String converter to convert non-wchar_t string. if nullptr, charset will be automatically detected.
 	 * @return Required buffer length.
 	 */
 	virtual size_t getInCueLength(IERServiceStringConverter *converter) = 0;
@@ -113,9 +113,10 @@ public:
 	 * Return required buffer length about wchar_t of inCue string.
 	 * @param buffer Buffer in which inCue string is to be stored.
 	 * @param bufferSize The buffer's length in characters.
+	 * @param converter String converter to convert non-wchar_t string. if nullptr, charset will be automatically detected.
 	 * @return true if succeeded, false otherwise.
 	 */
-	virtual bool readInCue(wchar_t *buffer, size_t bufferSize) = 0;
+	virtual bool readInCue(wchar_t *buffer, size_t bufferSize, IERServiceStringConverter *converter) = 0;
 };
 
 class IERComponentMusicEncoder

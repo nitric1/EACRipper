@@ -15,6 +15,7 @@ namespace ERComponent
 		T dec;
 
 	public:
+		virtual const DecoderInformation &getInfo() { return dec.getInfo(); }
 		virtual bool setStream(IERStreamReader *stream) { dec.setStream(stream); return true; }
 		virtual uint8_t getChannels() const { return dec.getChannels(); }
 		virtual uint8_t getBitsPerSample() const { return dec.getBitsPerSample(); }

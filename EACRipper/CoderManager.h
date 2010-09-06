@@ -42,6 +42,9 @@ namespace EACRipper
 
 	class MusicCoderManager : public CoderManager<std::pair<std::wstring, int_fast32_t>>, public Singleton<MusicCoderManager>
 	{
+	private:
+		std::map<std::pair<std::wstring, int_fast32_t>, std::wstring> extMap, mimeMap;
+
 	public:
 		typedef enum _CoderType
 		{
@@ -53,6 +56,10 @@ namespace EACRipper
 	private:
 		~MusicCoderManager();
 
+	public:
+		bool addCoder(const std::pair<std::wstring, int_fast32_t> &, IERAllocator *);
+		std::wstring getCoderByExtension(const std::wstring &, int_fast32_t);
+		
 		friend class Singleton<MusicCoderManager>;
 	};
 }

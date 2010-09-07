@@ -19,6 +19,11 @@ namespace EACRipper
 
 	bool MusicCoderManager::addCoder(const std::pair<std::wstring, int_fast32_t> &key, IERAllocator *alloc)
 	{
+		if(key.second == InCueDecoder)
+		{
+			addCoder(make_pair(key.first, Decoder), alloc);
+		}
+
 		switch(key.second)
 		{
 		case Decoder:
@@ -28,8 +33,7 @@ namespace EACRipper
 				DecoderInformation info = dec->getInfo();
 				alloc->free(dec);
 
-				auto exts = move(split(info.extension, L";"));
-				auto mimes = move(split(info.mime, L";"));
+				vector<wstring> exts = move(split(info.extension, L";")), mimes = move(split(info.mime, L";"));
 
 				for_each(exts.begin(), exts.end(), [this, &key](const wstring &ext) { extMap.insert(make_pair(make_pair(ext, key.second), key.first)); });
 				for_each(mimes.begin(), mimes.end(), [this, &key](const wstring &mime) { mimeMap.insert(make_pair(make_pair(mime, key.second), key.first)); });
@@ -40,7 +44,7 @@ namespace EACRipper
 			{
 				IERComponentMusicEncoder *enc = static_cast<IERComponentMusicEncoder *>(alloc->alloc());
 				EncoderInformation info = enc->getInfo();
-				alloc->free(dec);
+				alloc->free(enc);
 
 				extMap.insert(make_pair(make_pair(wstring(info.extension), key.second), key.first));
 				mimeMap.insert(make_pair(make_pair(wstring(info.mime), key.second), key.first));

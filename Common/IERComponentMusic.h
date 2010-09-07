@@ -3,6 +3,7 @@
 #include "ERUUID.h"
 
 #include "IERAllocator.h"
+#include "IERString.h"
 #include "IERStream.h"
 
 struct DecoderInformation

@@ -20,7 +20,10 @@ namespace ER = EACRipper;
 #include <cstdio>
 #include <cstdlib>
 
+#include <cstdint>
 #include <cinttypes>
+
+#include "ERTypes.h"
 
 #include <exception>
 #include <stdexcept>

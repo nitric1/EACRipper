@@ -7,6 +7,7 @@
 
 #include <windows.h>
 
+#include "ERTypes.h"
 #include "EREndian.h"
 #include "ERUUID.h"
 #include "IERString.h"

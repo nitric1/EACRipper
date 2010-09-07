@@ -92,7 +92,7 @@ namespace EACRipper
 			ext = file.substr(++ dotp);
 		LocalFile lf;
 		lf.open(file.c_str());
-		if(!lf.exists() || !MusicCoderManager::instance().isSupportedExtension(ext, MusicCoderManager::Decoder)) // TODO: Process unavailable file types.
+		if(!lf.exists() || MusicCoderManager::instance().getCoderByExtension(ext, MusicCoderManager::Decoder).empty()) // TODO: Process unavailable file types.
 		{
 			/*
 			do
@@ -275,9 +275,9 @@ namespace EACRipper
 		prefWin->setValue(L"BasePath", c.get(L"BasePath"));
 		prefWin->setValue(L"NameFormat", c.get(L"NameFormat"));
 
-		const vector<wstring> &list = StringCharsetConverter::getCharsetList();
+		/*const vector<wstring> &list = StringCharsetConverter::getCharsetList();
 		for_each(list.begin(), list.end(), [&prefWin](const wstring &name) { prefWin->addCharsetName(name); });
-		prefWin->setValue(L"DetectPriority", c.get(L"DetectPriority", L"UTF-8"));
+		prefWin->setValue(L"DetectPriority", c.get(L"DetectPriority", L"UTF-8"));*/
 
 		return true;
 	}
@@ -290,7 +290,7 @@ namespace EACRipper
 			return false;
 		c.set(L"BasePath", prefWin->getValue(L"BasePath"));
 		c.set(L"NameFormat", prefWin->getValue(L"NameFormat"));
-		c.set(L"DetectPriority", prefWin->getValue(L"DetectPriority"));
+		//c.set(L"DetectPriority", prefWin->getValue(L"DetectPriority"));
 		return true;
 	}
 }

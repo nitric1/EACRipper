@@ -53,6 +53,9 @@ namespace EACRipper
 		void setTrackList(const TrackList &);
 		void clearTrackList();
 
+		void setAlbumField(const std::wstring &, const std::wstring &);
+		void clearAlbumFields();
+
 		friend class Singleton<MainWindow>;
 	};
 }

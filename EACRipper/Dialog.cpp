@@ -99,9 +99,14 @@ namespace EACRipper
 	bool Dialog::show(DLGPROC procMessage)
 	{
 		HWND parentWin = nullptr;
-		if(getParent())
+		if(getParent() != nullptr)
 			parentWin = getParent()->getWindow();
 		return DialogBoxIndirectParamW(MainController::instance().getInstance(),
 			static_cast<const DLGTEMPLATE *>(getDialogTemplateWithSystemFont()), parentWin, procMessage, 0) == IDOK;
+	}
+
+	HWND Dialog::getItemWindow(int32_t id)
+	{
+		return GetDlgItem(getWindow(), id);
 	}
 }

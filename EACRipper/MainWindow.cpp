@@ -427,6 +427,7 @@ namespace EACRipper
 		};
 
 		clearTrackList();
+		clearAlbumFields();
 		size_t len = list.getTrackCount();
 		vector<wstring> item(6);
 		for(size_t i = 1; i <= len; ++ i)
@@ -435,10 +436,74 @@ namespace EACRipper
 				item[j] = list[i][fields[j]];
 			trackList.addItem(item);
 		}
+
+		setAlbumField(L"Album Title", static_cast<wstring>(list[L"Album Title"]));
+		setAlbumField(L"Album Artist", static_cast<wstring>(list[L"Album Artist"]));
+		setAlbumField(L"Date", static_cast<wstring>(list[L"Date"]));
+		setAlbumField(L"Genre", static_cast<wstring>(list[L"Genre"]));
 	}
 
 	void MainWindow::clearTrackList()
 	{
 		trackList.clear();
+	}
+
+	namespace
+	{
+		class Fields : public Singleton<Fields>
+		{
+		private:
+			map<wstring, int32_t> fieldMap;
+
+		private:
+			Fields();
+
+		public:
+			int32_t getFieldID(const wstring &) const;
+			const map<wstring, int32_t> &getMap() const;
+
+			friend class Singleton<Fields>;
+		};
+
+		Fields::Fields()
+		{
+			fieldMap[L"Album Title"] = IDC_ALBUM_TITLE;
+			fieldMap[L"Album Artist"] = IDC_ALBUM_ARTIST;
+			fieldMap[L"Date"] = IDC_DATE;
+			fieldMap[L"Disc Number"] = IDC_DISC_CURRENT;
+			fieldMap[L"Total Discs"] = IDC_DISC_TOTAL;
+			fieldMap[L"Genre"] = IDC_GENRE;
+		}
+
+		int32_t Fields::getFieldID(const wstring &field) const
+		{
+			auto it = fieldMap.find(field);
+			if(it == fieldMap.end())
+				return 0;
+			return it->second;
+		}
+
+		const map<wstring, int32_t> &Fields::getMap() const
+		{
+			return fieldMap;
+		}
+	}
+
+	void MainWindow::setAlbumField(const wstring &field, const wstring &value)
+	{
+		int32_t id = Fields::instance().getFieldID(field);
+		if(id != 0)
+			SendMessageW(getItemWindow(id), WM_SETTEXT, 0, reinterpret_cast<LPARAM>(value.c_str()));
+	}
+
+	void MainWindow::clearAlbumFields()
+	{
+		const map<wstring, int32_t> &map = Fields::instance().getMap();
+		for_each(map.begin(), map.end(), [this](const pair<wstring, int32_t> &item)
+		{
+			SendMessageW(getItemWindow(item.second), WM_SETTEXT, 0, reinterpret_cast<LPARAM>(L""));
+		});
+
+		SendMessageW(getItemWindow(IDC_SAME_ARTIST), BM_SETCHECK, BST_UNCHECKED, 0);
 	}
 }

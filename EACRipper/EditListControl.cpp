@@ -51,7 +51,7 @@ namespace EACRipper
 
 	int32_t EditListControl::addItem(const vector<wstring> &vec)
 	{
-		return insertItem(ListView_GetItemCount(getWindow()), vec);
+		return insertItem(static_cast<int32_t>(SendMessageW(getWindow(), LVM_GETITEMCOUNT, 0, 0)), vec);
 	}
 
 	int32_t EditListControl::insertItem(int32_t pos, const vector<wstring> &vec)
@@ -66,9 +66,9 @@ namespace EACRipper
 			lvi.iSubItem = order ++;
 			lvi.pszText = const_cast<wchar_t *>(str.c_str());
 			if(order == 1)
-				row = ListView_InsertItem(list, &lvi);
+				row = static_cast<int32_t>(SendMessageW(list, LVM_INSERTITEMW, 0, reinterpret_cast<LPARAM>(&lvi)));
 			else
-				ListView_SetItem(list, &lvi);
+				SendMessageW(list, LVM_SETITEMW, 0, reinterpret_cast<LPARAM>(&lvi));
 		});
 		ListView_SetCheckState(list, lvi.iItem, TRUE);
 		return row;
@@ -81,11 +81,11 @@ namespace EACRipper
 
 	bool EditListControl::attach(HWND window)
 	{
-		HWND header = ListView_GetHeader(window);
+		HWND header = reinterpret_cast<HWND>(SendMessageW(window, LVM_GETHEADER, 0, 0));
 		if(header == nullptr)
 			return false;
 
-		int32_t count = Header_GetItemCount(header);
+		int32_t count = static_cast<int32_t>(SendMessageW(header, HDM_GETITEMCOUNT, 0, 0));
 		if(count < 0)
 			return false;
 

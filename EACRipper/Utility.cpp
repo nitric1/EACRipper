@@ -109,16 +109,18 @@ namespace EACRipper
 		return makeTimeString(endTS - startTS);
 	}
 
-	wstring &getDirectoryPath(wstring &path)
+	wstring getDirectoryPath(const wstring &ipath)
 	{
+		wstring path = ipath;
 		size_t pos = path.rfind(L'\\');
 		if(pos != wstring::npos)
 			path.erase(++ pos);
 		return path;
 	}
 
-	wstring &getFileName(wstring &path)
+	wstring getFileName(const wstring &ipath)
 	{
+		wstring path = ipath;
 		size_t pos = path.rfind(L'\\');
 		if(pos != wstring::npos)
 			path.erase(0, ++ pos);

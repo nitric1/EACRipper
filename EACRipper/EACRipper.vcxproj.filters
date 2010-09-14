@@ -252,7 +252,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Common\ERTypes.h">
-      <Filter>Resource Files</Filter>
+      <Filter>Common Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

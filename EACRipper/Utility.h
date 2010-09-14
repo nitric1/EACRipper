@@ -21,8 +21,8 @@ namespace EACRipper
 	int32_t getTimestamp(const std::wstring &);
 	std::wstring makeTimeString(int32_t);
 	std::wstring getTimeStringDiff(const std::wstring &, const std::wstring &);
-	std::wstring &getDirectoryPath(std::wstring &);
-	std::wstring &getFileName(std::wstring &);
+	std::wstring getDirectoryPath(const std::wstring &);
+	std::wstring getFileName(const std::wstring &);
 	std::wstring getCurrentDirectoryPath();
 	bool overOSVersion(OSVERSION);
 }

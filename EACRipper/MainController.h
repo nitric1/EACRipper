@@ -28,6 +28,9 @@ namespace EACRipper
 		void registerEvents();
 		void initializeApp();
 		void uninitializeApp();
+
+	private:
+		std::wstring findLinkedMusicFile(const std::wstring &, bool = false) const;
 		void setTrackDetail();
 
 	public:

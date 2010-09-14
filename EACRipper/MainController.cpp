@@ -82,18 +82,18 @@ namespace EACRipper
 		prefWin->addEventListener(L"prefOK", delegateEvent(this, &MainController::onPrefOK));
 	}
 
-	void MainController::setTrackDetail()
+	wstring MainController::findLinkedMusicFile(const wstring &ifile, bool last) const
 	{
 		MusicCoderManager &mcm = MusicCoderManager::instance();
-		wstring file = (*list)[L"File"];
-		size_t dotp = file.find_last_of(L'.');
-		wstring base = getDirectoryPath(static_cast<wstring>((*list)[L"CuesheetPath"])) + file.substr(0, dotp);
-		wstring ext;
+		wstring file = ifile;
+		size_t dotp = file.find_last_of(L".");
+		wstring path = getDirectoryPath(static_cast<wstring>((*list)[L"CuesheetPath"]));
+		wstring base = path + file.substr(0, dotp), ext;
 		if(dotp != wstring::npos)
 			ext = file.substr(++ dotp);
 		LocalFile lf;
 		lf.open(file.c_str());
-		if(!lf.exists() || mcm.getCoderByExtension(ext, MusicCoderManager::Decoder).empty()) // TODO: Process unavailable file types.
+		if(!lf.exists() || mcm.getCoderByExtension(ext, MusicCoderManager::Decoder).empty())
 		{
 			vector<pair<wstring, int_fast32_t>> exts = move(mcm.extensions());
 			auto it = exts.begin();
@@ -114,13 +114,26 @@ namespace EACRipper
 
 			if(it == exts.end())
 			{
-				// Find also "CuesheetFileName.music" if base != CuesheetFileName
-				throw(runtime_error("Cannot find a linked music file."));
+				if(last)
+					throw(runtime_error("Cannot find a linked music file."));
+				else
+					return findLinkedMusicFile(getFileName(static_cast<wstring>((*list)[L"CuesheetPath"])), true);
 			}
 		}
 
+		return file;
+	}
+
+	void MainController::setTrackDetail()
+	{
+		wstring file = findLinkedMusicFile((*list)[L"File"]);
+		wstring ext = file.substr(file.find_last_of(L".") + 1);
+		LocalFile lf;
+		lf.open(file.c_str());
+
+		MusicCoderManager &mcm = MusicCoderManager::instance();
 		size_t tracks = list->getTrackCount();
-		IERAllocator *alloc = mcm.getCoder(make_pair(mcm.getCoderByExtension(ext, MusicCoderManager::Decoder), MusicCoderManager::Decoder));
+		IERAllocator *alloc = MusicCoderManager::instance().getCoder(make_pair(mcm.getCoderByExtension(ext, MusicCoderManager::Decoder), MusicCoderManager::Decoder));
 		if(alloc == nullptr)
 		{
 			throw(runtime_error("Cannot get a coder of a linked music file."));

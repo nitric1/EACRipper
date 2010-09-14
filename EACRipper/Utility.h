@@ -18,7 +18,9 @@ namespace EACRipper
 	std::vector<std::wstring> split(const std::wstring &, const std::wstring &);
 	std::vector<std::wstring> splitAnyOf(const std::wstring &, const std::wstring &);
 	std::wstring join(const std::vector<std::wstring> &, const std::wstring &);
-	std::wstring getTimeDiff(const std::wstring &, const std::wstring &);
+	int32_t getTimestamp(const std::wstring &);
+	std::wstring makeTimeString(int32_t);
+	std::wstring getTimeStringDiff(const std::wstring &, const std::wstring &);
 	std::wstring &getDirectoryPath(std::wstring &);
 	std::wstring &getFileName(std::wstring &);
 	std::wstring getCurrentDirectoryPath();

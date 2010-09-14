@@ -4,6 +4,7 @@
 #include "Singleton.h"
 
 using namespace std;
+using namespace boost;
 
 namespace EACRipper
 {
@@ -56,7 +57,7 @@ namespace EACRipper
 				ve.push_back(str.substr(ppos, pos - ppos));
 		}
 
-		return ve;
+		return move(ve);
 	}
 
 	wstring join(const vector<wstring> &ve, const wstring &sep)
@@ -71,28 +72,41 @@ namespace EACRipper
 			str += *it;
 		}
 
-		return str;
+		return move(str);
 	}
 
-	wstring makeTimestamp(uint32_t millisec)
+	int32_t getTimestamp(const wstring &time)
+	{
+		vector<wstring> times(split(time, L":"));
+		if(times.size() != 3)
+			return numeric_limits<int32_t>::max();
+
+		return lexical_cast<int32_t>(times[0]) * 60000
+			+ lexical_cast<int32_t>(times[1]) * 1000
+			+ lexical_cast<int32_t>(times[2]) * 10;
+	}
+
+	wstring makeTimeString(int32_t millisec)
 	{
 		wstringstream ss;
+		bool minus = millisec < 0;
+		millisec = abs(millisec);
 		ss << setfill(L'0')
+			<< (minus ? L"-" : L"")
 			<< setw(2) << (millisec / 60000)
 			<< L':' << setw(2) << ((millisec / 1000) % 60)
 			<< L':' << setw(2) << ((millisec / 10) % 100);
 		return ss.str();
 	}
 
-	wstring getTimeDiff(const wstring &start, const wstring &end)
+	wstring getTimeStringDiff(const wstring &start, const wstring &end)
 	{
-		vector<wstring> starts(split(start, L":"));
-		vector<wstring> ends(split(end, L":"));
-
-		if(starts.size() != 3 || ends.size() != 3)
+		int32_t startTS = getTimestamp(start);
+		int32_t endTS = getTimestamp(end);
+		if(startTS == numeric_limits<int32_t>::max() || endTS == numeric_limits<int32_t>::max())
 			return wstring();
 
-		return wstring();
+		return makeTimeString(endTS - startTS);
 	}
 
 	wstring &getDirectoryPath(wstring &path)

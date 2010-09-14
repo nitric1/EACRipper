@@ -7,7 +7,7 @@
 #include "MainWindow.h"
 #include "PreferenceWindow.h"
 #include "AboutWindow.h"
-#include "FileDialog.h"
+#include "CharsetFileDialog.h"
 #include "TrackList.h"
 #include "Utility.h"
 
@@ -84,25 +84,77 @@ namespace EACRipper
 
 	void MainController::setTrackDetail()
 	{
+		MusicCoderManager &mcm = MusicCoderManager::instance();
 		wstring file = (*list)[L"File"];
 		size_t dotp = file.find_last_of(L'.');
-		wstring base = file.substr(0, dotp);
+		wstring base = getDirectoryPath(static_cast<wstring>((*list)[L"CuesheetPath"])) + file.substr(0, dotp);
 		wstring ext;
 		if(dotp != wstring::npos)
 			ext = file.substr(++ dotp);
 		LocalFile lf;
 		lf.open(file.c_str());
-		if(!lf.exists() || MusicCoderManager::instance().getCoderByExtension(ext, MusicCoderManager::Decoder).empty()) // TODO: Process unavailable file types.
+		if(!lf.exists() || mcm.getCoderByExtension(ext, MusicCoderManager::Decoder).empty()) // TODO: Process unavailable file types.
 		{
-			/*
-			do
+			vector<pair<wstring, int_fast32_t>> exts = move(mcm.extensions());
+			auto it = exts.begin();
+			for(; it != exts.end(); ++ it)
 			{
+				if(it->second != MusicCoderManager::Decoder)
+					continue;
+				file = base;
+				file += L".";
+				file += it->first;
+				lf.open(file.c_str());
+				if(lf.exists())
+				{
+					ext = it->first;
+					break;
+				}
 			}
-			while(!lf.exists());
-			*/
+
+			if(it == exts.end())
+			{
+				// Find also "CuesheetFileName.music" if base != CuesheetFileName
+				throw(runtime_error("Cannot find a linked music file."));
+			}
 		}
 
 		size_t tracks = list->getTrackCount();
+		IERAllocator *alloc = mcm.getCoder(make_pair(mcm.getCoderByExtension(ext, MusicCoderManager::Decoder), MusicCoderManager::Decoder));
+		if(alloc == nullptr)
+		{
+			throw(runtime_error("Cannot get a coder of a linked music file."));
+		}
+		IERComponentMusicDecoder *dec = static_cast<IERComponentMusicDecoder *>(alloc->alloc());
+		IERStreamReader *r = lf.getStreamReader();
+		if(r == nullptr || !dec->setStream(r))
+		{
+			throw(runtime_error("Cannot open a linked music file."));
+		}
+
+		wstring eof = makeTimeString(static_cast<int32_t>(dec->getLength()));
+
+		dec->close();
+		alloc->free(dec);
+		ServicePointerManager::instance().remove(r);
+
+		wstring tmp, start, end;
+
+		for(size_t i = 1; i <= tracks; ++ i)
+		{
+			start = (*list)[i][L"Start Time"];
+			end = (*list)[i][L"End Time"];
+			if(end == L"EOF")
+				end = eof;
+			tmp = getTimeStringDiff(start, end);
+			tmp += L"(";
+			tmp += start;
+			tmp += L"-";
+			tmp += end;
+			tmp += L")";
+
+			(*list)[i][L"Length"] = tmp;
+		}
 	}
 
 	bool MainController::run(HINSTANCE instHandle, const wstring &commandLine, int showCommand)
@@ -140,7 +192,7 @@ namespace EACRipper
 	{
 		FileDialogFilter fi;
 		fi.add(L"Cuesheet", L"*.cue");
-		FileDialog fd(true, mainWin, L"Open Cuesheet", fi, L"cue");
+		CharsetFileDialog fd(true, mainWin, L"Open Cuesheet", fi, L"cue");
 		if(fd.show())
 		{
 			FileStreamReader f;
@@ -161,6 +213,8 @@ namespace EACRipper
 
 			CuesheetTrackList *plist = new CuesheetTrackList(wstring(&*doc.begin()));
 			list = shared_ptr<TrackList>(plist);
+
+			(*list)[L"CuesheetPath"] = fd.getPath();
 
 			setTrackDetail();
 

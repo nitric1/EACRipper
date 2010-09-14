@@ -61,4 +61,26 @@ namespace EACRipper
 			return wstring();
 		return it->second;
 	}
+
+	wstring MusicCoderManager::getCoderByMime(const wstring &ext, int_fast32_t type)
+	{
+		auto it = mimeMap.find(make_pair(ext, type));
+		if(it == mimeMap.end())
+			return wstring();
+		return it->second;
+	}
+
+	vector<pair<wstring, int_fast32_t>> MusicCoderManager::extensions()
+	{
+		vector<pair<wstring, int_fast32_t>> ve;
+		for_each(extMap.begin(), extMap.end(), [&ve](const pair<pair<wstring, int_fast32_t>, wstring> &elem) { ve.push_back(elem.first); });
+		return move(ve);
+	}
+
+	vector<pair<wstring, int_fast32_t>> MusicCoderManager::mimes()
+	{
+		vector<pair<wstring, int_fast32_t>> ve;
+		for_each(mimeMap.begin(), mimeMap.end(), [&ve](const pair<pair<wstring, int_fast32_t>, wstring> &elem) { ve.push_back(elem.first); });
+		return move(ve);
+	}
 }

@@ -429,7 +429,7 @@ namespace EACRipper
 		clearTrackList();
 		size_t len = list.getTrackCount();
 		vector<wstring> item(6);
-		for(size_t i = 0; i < len; ++ i)
+		for(size_t i = 1; i <= len; ++ i)
 		{
 			for(size_t j = 0; j < (sizeof(fields) / sizeof(*fields)); ++ j)
 				item[j] = list[i][fields[j]];

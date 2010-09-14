@@ -248,11 +248,11 @@
     <ClInclude Include="Dialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Common\ERTypes.h">
-      <Filter>Common Files</Filter>
-    </ClInclude>
     <ClInclude Include="CharsetFileDialog.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\ERTypes.h">
+      <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

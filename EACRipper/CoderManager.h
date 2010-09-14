@@ -59,6 +59,9 @@ namespace EACRipper
 	public:
 		bool addCoder(const std::pair<std::wstring, int_fast32_t> &, IERAllocator *);
 		std::wstring getCoderByExtension(const std::wstring &, int_fast32_t);
+		std::wstring getCoderByMime(const std::wstring &, int_fast32_t);
+		std::vector<std::pair<std::wstring, int_fast32_t>> extensions();
+		std::vector<std::pair<std::wstring, int_fast32_t>> mimes();
 		
 		friend class Singleton<MusicCoderManager>;
 	};

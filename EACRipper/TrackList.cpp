@@ -228,6 +228,26 @@ namespace EACRipper
 			}
 		}
 
+		map<size_t, map<wstring, wstring>>::iterator be, ed, i, tmp;
+		for(be = i = tracks.begin(), ed = tracks.end(); i != ed; ++ i)
+		{
+			if(i->second.find(L"Start Time") == i->second.end())
+			{
+				if(i == be)
+					i->second[L"Start Time"] = L"00:00:00";
+				else
+					i->second[L"Start Time"] = (-- (tmp = i))->second[L"End Time"];
+			}
+			
+			if(i->second.find(L"End Time") == i->second.end())
+			{
+				if(++ (tmp = i) == ed)
+					i->second[L"End Time"] = L"EOF";
+				else
+					i->second[L"End Time"] = (++ (tmp = i))->second[L"Start Time"];
+			}
+		}
+
 		return true;
 	}
 

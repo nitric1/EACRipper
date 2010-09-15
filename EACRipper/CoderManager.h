@@ -17,7 +17,7 @@ namespace EACRipper
 		{
 			vector<Key> ve;
 			std::for_each(coderMap.begin(), coderMap.end(), [&ve](const std::pair<Key, IERAllocator *> &elem) { ve.push_back(elem.first); });
-			return ve;
+			return move(ve);
 		}
 		bool addCoder(const Key &key, IERAllocator *alloc)
 		{

@@ -95,7 +95,7 @@ namespace EACRipper
 		lf.open(file.c_str());
 		if(!lf.exists() || mcm.getCoderByExtension(ext, MusicCoderManager::Decoder).empty())
 		{
-			vector<pair<wstring, int_fast32_t>> exts = move(mcm.extensions());
+			vector<pair<wstring, int_fast32_t>> exts = mcm.extensions();
 			auto it = exts.begin();
 			for(; it != exts.end(); ++ it)
 			{
@@ -245,7 +245,7 @@ namespace EACRipper
 		IERAllocator *alloc;
 
 		mcm = &MusicCoderManager::instance();
-		auto cd = move(mcm->coders());
+		auto cd = mcm->coders();
 		wstring ext;
 		vector<wstring> ve, allExt;
 		vector<pair<wstring, wstring>> fiVec;

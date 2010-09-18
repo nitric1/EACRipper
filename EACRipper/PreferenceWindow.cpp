@@ -38,6 +38,31 @@ namespace EACRipper
 		case WM_COMMAND:
 			switch(LOWORD(wParam))
 			{
+			case IDC_PATH_SELECT:
+				{
+					vector<wchar_t> buf(0x400);
+					BROWSEINFOW bi;
+					LPITEMIDLIST idl;
+
+					GetDlgItemTextW(window, IDC_PATH, &*buf.begin(), static_cast<int>(buf.size()));
+
+					bi.hwndOwner = window;
+					bi.pidlRoot = NULL;
+					bi.pszDisplayName = &*buf.begin();
+					bi.lpszTitle = L"Select the target path in which music is ripped.";
+					bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_STATUSTEXT | BIF_USENEWUI;
+					bi.lpfn = procBrowsePath;
+					bi.lParam = reinterpret_cast<LPARAM>(&*buf.begin());
+
+					idl = SHBrowseForFolderW(&bi);
+
+					if(idl != nullptr && SHGetPathFromIDListW(idl, &*buf.begin()))
+					{
+						self.setValue(L"BasePath", &*buf.begin());
+					}
+				}
+				return 1;
+
 			case IDOK:
 				{
 					if(!self.runEventListener(L"prefOK", e))
@@ -59,6 +84,18 @@ namespace EACRipper
 				self.setWindow(nullptr);
 			}
 			return 1;
+		}
+
+		return 0;
+	}
+
+	int __stdcall PreferenceWindow::procBrowsePath(HWND window, unsigned message, LPARAM param, LPARAM data)
+	{
+		switch(message)
+		{
+		case BFFM_INITIALIZED:
+			SendMessageW(window, BFFM_SETSELECTION, TRUE, data);
+			break;
 		}
 
 		return 0;

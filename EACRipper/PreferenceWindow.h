@@ -20,6 +20,7 @@ namespace EACRipper
 
 	private:
 		static intptr_t __stdcall procMessage(HWND, unsigned, WPARAM, LPARAM);
+		static int __stdcall procBrowsePath(HWND, unsigned, LPARAM, LPARAM);
 
 	public:
 		virtual const wchar_t *getDialogName();

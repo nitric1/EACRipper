@@ -42,6 +42,7 @@ namespace EACRipper
 		if(!CloseHandle(file))
 			return false;
 
+		file = INVALID_HANDLE_VALUE;
 		return true;
 	}
 

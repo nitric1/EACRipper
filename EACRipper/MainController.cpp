@@ -238,18 +238,37 @@ namespace EACRipper
 			FileStreamReader f;
 			if(!f.open(fd.getPath().c_str()))
 				return false;
-			vector<char> ve(static_cast<size_t>(f.size()) + 1);
+			vector<char> ve(static_cast<size_t>(f.size()) + 2);
 			f.read(&*ve.begin(), ve.size());
-			ve.back() = '\0';
 			f.close();
 
-			// TODO: Charset detection or user-selected encoding
-			CharsetDetector &cd = CharsetDetector::instance();
-			IERServiceStringConverter *cv = cd.detect(&*ve.begin());
-			vector<wchar_t> doc(cv->getConvertedLengthToUTF16(&*ve.begin()) + 1);
-			cv->convertToUTF16(&*doc.begin(), doc.size(), &*ve.begin());
-			doc.back() = L'\0';
-			ServicePointerManager::instance().remove(cv);
+			string cs = fd.getCharset();
+			vector<wchar_t> doc;
+			if(cs == "Auto")
+			{
+				CharsetDetector &cd = CharsetDetector::instance();
+				IERServiceStringConverter *cv = cd.detect(&*ve.begin());
+				size_t len = cv->getConvertedLengthToUTF16(&*ve.begin());
+				if(len == numeric_limits<size_t>::max())
+				{
+					// TODO: Cannot convert the string
+				}
+				doc.resize(len + 1);
+				cv->convertToUTF16(&*doc.begin(), doc.size(), &*ve.begin());
+				ServicePointerManager::instance().remove(cv);
+			}
+			else
+			{
+				StringCharsetConverter cv;
+				cv.setCharset(cs.c_str());
+				size_t len = cv.getConvertedLengthToUTF16(&*ve.begin());
+				if(len == numeric_limits<size_t>::max())
+				{
+					// TODO: Cannot convert the string
+				}
+				doc.resize(len + 1);
+				cv.convertToUTF16(&*doc.begin(), doc.size(), &*ve.begin());
+			}
 
 			CuesheetTrackList *plist = new CuesheetTrackList(wstring(&*doc.begin()));
 			list = shared_ptr<TrackList>(plist);

@@ -8,6 +8,8 @@ namespace EACRipper
 	{
 	private:
 		std::string charset;
+		std::vector<std::wstring> charsetList;
+		size_t charsetIdx;
 
 	public:
 		CharsetFileDialog(bool, Window *, const std::wstring &, const FileDialogFilter &, const std::wstring & = std::wstring());
@@ -17,7 +19,7 @@ namespace EACRipper
 		static uintptr_t __stdcall procCharsetFileDialog(HWND, unsigned, WPARAM, LPARAM);
 
 	private:
-		void convertRectToClient(HWND, RECT *);
+		static void convertRectToClient(HWND, RECT *);
 
 	public:
 		virtual bool show();

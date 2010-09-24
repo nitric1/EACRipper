@@ -21,7 +21,7 @@ namespace EACRipper
 		dlgData.clear();
 
 		NONCLIENTMETRICSW ncm = {0, };
-		ncm.cbSize = sizeof(ncm);
+		ncm.cbSize = CCSIZEOF_STRUCT(NONCLIENTMETRICSW, lfMessageFont); // For Windows under Vista.
 		SystemParametersInfoW(SPI_GETNONCLIENTMETRICS, 0, &ncm, 0);
 
 		HINSTANCE inst = MainController::instance().getInstance();
@@ -74,6 +74,8 @@ namespace EACRipper
 				data16 = static_cast<uint16_t>(static_cast<double>(-ncm.lfMessageFont.lfHeight * 72) / GetDeviceCaps(hdc, LOGPIXELSY));
 				ReleaseDC(desktop, hdc);
 			}
+			if(data16 < 9)
+				data16 = 9; // XXX: Dialog's font size must be least 9pt.
 			dlgData.insert(dlgData.end(), reinterpret_cast<uint8_t *>(&data16), reinterpret_cast<uint8_t *>(&data16 + 1));
 
 			prev += 2;

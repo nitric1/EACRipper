@@ -8,6 +8,8 @@ using namespace Gdiplus;
 
 namespace EACRipper
 {
+	// TODO: Implementaion of to load/save the window size and list columns' size.
+
 	MainWindow::MainWindow()
 		: Dialog(nullptr), iconSmall(nullptr), iconBig(nullptr), shortcut(&ShortcutKey::instance()), baseUnitX(1), baseUnitY(1)
 	{
@@ -71,8 +73,8 @@ namespace EACRipper
 		case WM_GETMINMAXINFO:
 			{
 				MINMAXINFO *mmi = reinterpret_cast<MINMAXINFO *>(lParam);
-				mmi->ptMinTrackSize.x = 730;
-				mmi->ptMinTrackSize.y = 525;
+				mmi->ptMinTrackSize.x = 630;
+				mmi->ptMinTrackSize.y = 440;
 			}
 			return 1;
 
@@ -238,10 +240,10 @@ namespace EACRipper
 		dlgY = height * 8 / baseUnitY;
 
 		resizeItemDLU(IDC_GROUP_ALBUM_INFO, 5, 5, dlgX - 100, 121);
-		resizeItemDLU(IDC_ALBUM_TITLE, 60, 17, dlgX - 104, 31);
-		resizeItemDLU(IDC_ALBUM_ARTIST, 60, 35, dlgX - 104, 49);
-		resizeItemDLU(IDC_FORMAT, 60, 104, dlgX - 158, 116);
-		resizeItemDLU(IDC_FORMAT_SETTING, dlgX - 154, 103, dlgX - 104, 117);
+		resizeItemDLU(IDC_ALBUM_TITLE, 70, 17, dlgX - 104, 31);
+		resizeItemDLU(IDC_ALBUM_ARTIST, 70, 35, dlgX - 104, 49);
+		resizeItemDLU(IDC_FORMAT, 70, 104, dlgX - 168, 116);
+		resizeItemDLU(IDC_FORMAT_SETTING, dlgX - 164, 103, dlgX - 104, 117);
 
 		resizeItemDLU(IDC_GROUP_COVER_ART, dlgX - 95, 5, dlgX - 5, 121);
 		resizeItemDLU(IDC_COVER_ART, dlgX - 91, 17, dlgX - 9, 99);
@@ -250,8 +252,8 @@ namespace EACRipper
 
 		resizeItemDLU(IDC_LIST, 5, 126, dlgX - 5, dlgY - 24);
 
-		resizeItemDLU(IDC_PROGRESS_TEXT, 5, dlgY - 16, 75, dlgY - 8);
-		resizeItemDLU(IDC_PROGRESS, 79, dlgY - 19, dlgX - 59, dlgY - 5);
+		resizeItemDLU(IDC_PROGRESS_TEXT, 5, dlgY - 16, 85, dlgY - 8);
+		resizeItemDLU(IDC_PROGRESS, 89, dlgY - 19, dlgX - 59, dlgY - 5);
 		resizeItemDLU(IDC_CANCEL, dlgX - 55, dlgY - 19, dlgX - 5, dlgY - 5);
 
 		InvalidateRect(getWindow(), NULL, TRUE);
@@ -274,70 +276,8 @@ namespace EACRipper
 		trackList.addColumn(L"Artist", 120, EditListControl::ALIGN_LEFT);
 		trackList.addColumn(L"Title", 210, EditListControl::ALIGN_LEFT);
 		trackList.addColumn(L"Composer", 100, EditListControl::ALIGN_LEFT);
-		trackList.addColumn(L"Length (M:S:MS)", 175, EditListControl::ALIGN_LEFT);
+		trackList.addColumn(L"Length (M:S:MS)", 180, EditListControl::ALIGN_LEFT);
 		trackList.addColumn(L"Progress", 60, EditListControl::ALIGN_RIGHT);
-
-		/*LVITEMW lvi = LVITEMW();
-		wchar_t *lstr[][19] =
-		{
-			{L"右肩の蝶", L"初音ミクの暴走 -Full ver.-", L"いろは唄", L"ローリンガール", L"パラジクロロベンゼン", L"IMITATION BLACK", L"イケ恋歌", L"番凩", L"紡唄 -つむぎうた-",
-			 L"リグレットメッセージ", L"しねばいいのに", L"リア充爆発しろ!", L"charActer", L"1/6 -genesis mix-", L"erase or zero (Vocalogenesis only NewMix)", L"Nostalogic (single edit)",
-			 L"DYE", L"Genesis", L"右肩の蝶 -Ver. 3.0.1-"},
-			{L"鏡音レン", L"初音ミク", L"鏡音リン", L"初音ミク", L"鏡音レン", L"KAITO&鏡音レン&神威がくぽ", L"鏡音レン", L"MEIKO&KAITO", L"鏡音リン&鏡音レン",
-			 L"鏡音リン", L"KAITO", L"初音ミク", L"初音ミク&巡音ルカ", L"初音ミク", L"KAITO&鏡音レン", L"MEIKO", L"巡音ルカ", L"初音ミク&巡音ルカ", L"鏡音レン"},
-			{L"のりぴー", L"cosMo@暴走P", L"銀サク", L"現実逃避P/wowaka", L"オワタP", L"SCL Project(natsuP)", L"れれれP", L"仕事してP", L"DATEKEN",
-			 L"悪ノP/mothy", L"どぶウサギ", L"KAZU-k", L"azuma", L"ぼーかりおどP/noa", L"クリスタルP/HzEdge", L"yuukiss", L"AVTechNO!", L"ジミーサムP", L"のりぴー"},
-			{L"04:24:60 (00:00:00-04:24:60)", 
-			L"04:47:70 (04:24:60-09:12:30)", 
-			L"04:05:92 (09:12:30-13:18:22)", 
-			L"03:12:00 (13:18:22-16:30:22)", 
-			L"03:54:92 (16:30:22-20:25:14)", 
-			L"03:43:45 (20:25:14-24:08:59)", 
-			L"03:41:00 (24:08:59-27:49:59)", 
-			L"03:45:07 (27:49:59-31:34:66)", 
-			L"05:21:92 (31:34:66-36:56:58)", 
-			L"03:22:62 (36:56:58-40:19:20)", 
-			L"05:31:85 (40:19:20-45:51:05)", 
-			L"01:33:45 (45:51:05-47:24:50)", 
-			L"03:53:22 (47:24:50-51:17:72)", 
-			L"04:20:53 (51:17:72-55:38:25)", 
-			L"03:50:92 (55:38:49-59:29:41)", 
-			L"04:00:77 (59:29:41-63:30:18)", 
-			L"03:49:30 (63:30:18-67:19:48)", 
-			L"05:39:77 (67:19:48-72:59:25)", 
-			L"04:55:68 (72:59:25-77:54:93)"}
-		};
-		wchar_t buf[10];
-
-		lvi.mask = LVIF_TEXT;
-
-		for(int i = 0; i < 19; ++ i)
-		{
-			_itow_s(i + 1, buf, 10);
-
-			lvi.iItem = i;
-			lvi.iSubItem = 0;
-			lvi.pszText = buf;
-			ListView_InsertItem(list, &lvi);
-
-			lvi.iSubItem = 1;
-			lvi.pszText = lstr[1][i];
-			ListView_SetItem(list, &lvi);
-
-			lvi.iSubItem = 2;
-			lvi.pszText = lstr[0][i];
-			ListView_SetItem(list, &lvi);
-
-			lvi.iSubItem = 3;
-			lvi.pszText = lstr[2][i];
-			ListView_SetItem(list, &lvi);
-
-			lvi.iSubItem = 4;
-			lvi.pszText = lstr[3][i];
-			ListView_SetItem(list, &lvi);
-
-			ListView_SetCheckState(list, lvi.iItem, TRUE);
-		}*/
 	}
 
 	void MainWindow::uninit()

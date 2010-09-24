@@ -231,17 +231,17 @@ END
 // Menu
 //
 
-IDR_MAIN_MENU MENU
+IDR_MAIN_MENU MENUEX
 BEGIN
-    POPUP "ÆÄÀÏ(&F)"
+    POPUP "ÆÄÀÏ(&F)",                         65535,MFT_STRING,MFS_ENABLED
     BEGIN
-        MENUITEM "Cuesheet ¿­±â(&O)¡¦\tCtrl+O",    IDM_FILE_OPEN
-        MENUITEM "&inCue À½¾Ç ¿­±â...\tCtrl+I",     IDM_INCUE_OPEN
-        MENUITEM "¾ÐÃà ¿­±â(&A)¡¦\tCtrl+P",          IDM_ARCHIVE_OPEN
+        MENUITEM "Cuesheet ¿­±â(&O)¡¦\tCtrl+O",    IDM_FILE_OPEN,MFT_STRING,MFS_ENABLED
+        MENUITEM "&inCue À½¾Ç ¿­±â...\tCtrl+I",     IDM_INCUE_OPEN,MFT_STRING,MFS_ENABLED
+        MENUITEM "¾ÐÃà ¿­±â(&A)¡¦\tCtrl+P",          IDM_ARCHIVE_OPEN,MFT_STRING,MFS_ENABLED
     END
-    MENUITEM "¼³Á¤(&P)¡¦",                     IDM_OPTION
-    MENUITEM "Á¤º¸(&A)...",                   IDM_ABOUT
-    MENUITEM "¸®ÇÎ(&R)",                      IDM_RIP
+    MENUITEM "¼³Á¤(&P)¡¦",                     IDM_OPTION,MFT_STRING,MFS_ENABLED
+    MENUITEM "¸®ÇÎ(&R)",                      IDM_RIP,MFT_STRING,MFS_ENABLED
+    MENUITEM "Á¤º¸(&A)...",                   IDM_ABOUT,MFT_STRING | MFT_RIGHTJUSTIFY,MFS_ENABLED
 END
 
 
@@ -489,17 +489,17 @@ END
 // Menu
 //
 
-IDR_MAIN_MENU MENU
+IDR_MAIN_MENU MENUEX
 BEGIN
-    POPUP "&File"
+    POPUP "&File",                          65535,MFT_STRING,MFS_ENABLED
     BEGIN
-        MENUITEM "&Open Cuesheet…\tCtrl+O",     IDM_FILE_OPEN
-        MENUITEM "Open &inCue Music…\tCtrl+I",  IDM_INCUE_OPEN
-        MENUITEM "Open &Archive…\tCtrl+P",      IDM_ARCHIVE_OPEN
+        MENUITEM "&Open Cuesheet…\tCtrl+O",     IDM_FILE_OPEN,MFT_STRING,MFS_ENABLED
+        MENUITEM "Open &inCue Music…\tCtrl+I",  IDM_INCUE_OPEN,MFT_STRING,MFS_ENABLED
+        MENUITEM "Open &Archive…\tCtrl+P",      IDM_ARCHIVE_OPEN,MFT_STRING,MFS_ENABLED
     END
-    MENUITEM "&Preferences…",               IDM_OPTION
-    MENUITEM "&About...",                   IDM_ABOUT
-    MENUITEM "&Rip",                        IDM_RIP
+    MENUITEM "&Preferences…",               IDM_OPTION,MFT_STRING,MFS_ENABLED
+    MENUITEM "&Rip",                        IDM_RIP,MFT_STRING,MFS_ENABLED
+    MENUITEM "&About...",                   IDM_ABOUT,MFT_STRING | MFT_RIGHTJUSTIFY,MFS_ENABLED
 END
 
 #endif    // English (United States) resources

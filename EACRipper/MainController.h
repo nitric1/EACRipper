@@ -14,6 +14,8 @@ namespace EACRipper
 		MainWindow *mainWin;
 		ComponentManager *comp;
 		std::shared_ptr<TrackList> list;
+		unsigned exceptionCode;
+		EXCEPTION_POINTERS exceptionPointers;
 
 		ULONG_PTR gpToken;
 
@@ -35,6 +37,9 @@ namespace EACRipper
 
 	public:
 		bool run(HINSTANCE, const std::wstring &, int);
+		bool runImpl(HINSTANCE, const std::wstring &, int);
+		int filterOSException(unsigned, EXCEPTION_POINTERS *);
+		bool showOSException();
 
 	public:
 		bool onInit(WindowEventArgs);

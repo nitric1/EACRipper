@@ -45,6 +45,10 @@ namespace EACRipper
 		FileDialog(bool, Window *, const std::wstring &, const FileDialogFilter &, const std::wstring & = std::wstring());
 		virtual ~FileDialog();
 
+	protected:
+		IFileDialogCustomize *getCustomize();
+		OPENFILENAMEW &getOpenFileName();
+
 	public:
 		virtual bool show();
 		virtual const std::wstring &getPath() const;

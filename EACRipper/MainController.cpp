@@ -172,6 +172,18 @@ namespace EACRipper
 
 	bool MainController::run(HINSTANCE instHandle, const wstring &commandLine, int showCommand)
 	{
+		__try
+		{
+			return runImpl(instHandle, commandLine, showCommand);
+		}
+		__except(filterOSException(GetExceptionCode(), GetExceptionInformation()))
+		{
+			return false;
+		}
+	}
+
+	bool MainController::runImpl(HINSTANCE instHandle, const wstring &commandLine, int showCommand)
+	{
 		try
 		{
 			inst = instHandle;
@@ -187,6 +199,20 @@ namespace EACRipper
 			MessageBoxA(nullptr, str.c_str(), "Error occured", MB_ICONSTOP | MB_OK);
 			return false;
 		}
+	}
+
+	int MainController::filterOSException(unsigned icode, EXCEPTION_POINTERS *iep)
+	{
+		exceptionCode = icode;
+		memcpy(&exceptionPointers, iep, sizeof(exceptionPointers));
+
+		return showOSException() ? EXCEPTION_EXECUTE_HANDLER : EXCEPTION_CONTINUE_SEARCH;
+	}
+
+	bool MainController::showOSException()
+	{
+		// TODO: Implementaion exception showing
+		return false;
 	}
 
 	bool MainController::onInit(WindowEventArgs e)
@@ -205,6 +231,7 @@ namespace EACRipper
 	{
 		FileDialogFilter fi;
 		fi.add(L"Cuesheet", L"*.cue");
+
 		CharsetFileDialog fd(true, mainWin, L"Open Cuesheet", fi, L"cue");
 		if(fd.show())
 		{
@@ -273,7 +300,7 @@ namespace EACRipper
 			fi.add(fiVec);
 		}
 
-		FileDialog fd(true, mainWin, L"Open InCue File", fi);
+		CharsetFileDialog fd(true, mainWin, L"Open InCue File", fi);
 		if(fd.show())
 		{
 			// TODO: Open InCue Implementation
@@ -286,7 +313,7 @@ namespace EACRipper
 	{
 		FileDialogFilter fi;
 		// TODO: Filter
-		FileDialog fd(true, mainWin, L"Open Archive File", fi);
+		CharsetFileDialog fd(true, mainWin, L"Open Archive File", fi);
 		if(fd.show())
 		{
 			// TODO: Open Archive Implementation

@@ -83,11 +83,11 @@ namespace EACRipper
 	}
 
 	FileDialog::FileDialog(bool iisOpen, Window *iowner, const std::wstring &ititle, const FileDialogFilter &ifilter, const std::wstring &idefExt)
-		: isOpen(iisOpen), owner(iowner), title(ititle), filter(ifilter), defExt(idefExt), dlg(nullptr), ofn()
+		: isOpen(iisOpen), owner(iowner), title(ititle), filter(ifilter), defExt(idefExt), dlg(nullptr), cust(nullptr), ofn()
 	{
 		HRESULT hr = CoCreateInstance(isOpen ? CLSID_FileOpenDialog : CLSID_FileSaveDialog, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&dlg));
 
-		if(SUCCEEDED(hr) && dlg != nullptr)
+		if(false && SUCCEEDED(hr) && dlg != nullptr)
 		{
 			unsigned long options;
 			hr = dlg->GetOptions(&options);
@@ -120,6 +120,12 @@ namespace EACRipper
 		}
 		else
 		{
+			if(dlg != nullptr)
+			{
+				dlg->Release();
+				dlg = nullptr;
+			}
+
 			ofnFilter = filter.getOFNFilter();
 
 			ofn.hwndOwner = owner->getWindow();
@@ -137,6 +143,16 @@ namespace EACRipper
 			cust->Release();
 		if(dlg != nullptr)
 			dlg->Release();
+	}
+
+	IFileDialogCustomize *FileDialog::getCustomize()
+	{
+		return cust;
+	}
+
+	OPENFILENAMEW &FileDialog::getOpenFileName()
+	{
+		return ofn;
 	}
 
 	bool FileDialog::show()

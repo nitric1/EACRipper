@@ -41,8 +41,7 @@ namespace EACRipper
 			case IDOK:
 			case IDCANCEL:
 				{
-					EndDialog(window, LOWORD(wParam));
-					self.setWindow(nullptr);
+					self.endDialog(LOWORD(wParam));
 				}
 				return 1;
 			}
@@ -50,8 +49,7 @@ namespace EACRipper
 
 		case WM_CLOSE:
 			{
-				EndDialog(window, IDOK);
-				self.setWindow(nullptr);
+				self.endDialog(IDOK);
 			}
 			return 1;
 		}
@@ -164,7 +162,7 @@ namespace EACRipper
 
 	bool AboutWindow::show()
 	{
-		Dialog::show(procMessage);
+		showModal(procMessage);
 		return true;
 	}
 }

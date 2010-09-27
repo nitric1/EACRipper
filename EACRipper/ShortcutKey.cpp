@@ -20,7 +20,7 @@ namespace EACRipper
 	{
 	}
 
-	ShortcutKey::Modifier ShortcutKey::getModifier(bool ctrl, bool alt, bool shift) const
+	ShortcutKey::Modifier ShortcutKey::getModifier(bool ctrl, bool alt, bool shift)
 	{
 		if(ctrl && shift && alt)
 			return Ctrl_Shift_Alt;
@@ -35,6 +35,12 @@ namespace EACRipper
 		else if(alt)
 			return Alt;
 		return None;
+	}
+
+	ShortcutKey::Key ShortcutKey::makeKey(Modifier modifier, uint32_t key)
+	{
+		Key skey = {modifier, key};
+		return skey;
 	}
 
 	bool ShortcutKey::addShortcut(const Window *window, uint32_t id, Key key, bool canExtended, bool canRepeated)
@@ -93,7 +99,7 @@ namespace EACRipper
 		key.modifier = getModifier(ctrl, alt, shift);
 		key.key = static_cast<uint32_t>(wParam);
 
-		uint32_t id = processShortcut(window, key, ((lParam & 0x01000000) == 0x01000000), ((lParam & 0x0000FFFF) > 0));
+		uint32_t id = processShortcut(window, key, ((lParam & 0x01000000) == 0x01000000), ((lParam & 0x0000FFFF) > 1));
 		if(id == 0)
 			return false;
 

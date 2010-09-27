@@ -13,6 +13,9 @@ namespace EACRipper
 	MainWindow::MainWindow()
 		: Dialog(nullptr), iconSmall(nullptr), iconBig(nullptr), shortcut(&ShortcutKey::instance()), baseUnitX(1), baseUnitY(1)
 	{
+		shortcut->addShortcut(this, IDM_FILE_OPEN, ShortcutKey::makeKey(ShortcutKey::Ctrl, 'O'), true, false);
+		shortcut->addShortcut(this, IDM_INCUE_OPEN, ShortcutKey::makeKey(ShortcutKey::Ctrl, 'I'), true, false);
+		shortcut->addShortcut(this, IDM_ARCHIVE_OPEN, ShortcutKey::makeKey(ShortcutKey::Ctrl, 'P'), true, false);
 	}
 
 	MainWindow::~MainWindow()
@@ -175,14 +178,12 @@ namespace EACRipper
 				if(!self.runEventListener(L"close", e))
 					break;
 
-				EndDialog(window, 0);
+				self.endDialog(0);
 
 				self.uninit();
 
 				DestroyIcon(self.iconSmall);
 				DestroyIcon(self.iconBig);
-
-				self.setWindow(nullptr);
 			}
 			return 1;
 		}
@@ -229,7 +230,7 @@ namespace EACRipper
 
 	bool MainWindow::show()
 	{
-		return Dialog::show(procMessage);
+		return showModal(procMessage) == IDOK;
 	}
 
 	void MainWindow::resizeLayout(int width, int height)

@@ -34,18 +34,17 @@ namespace EACRipper
 			}
 		} Key;
 
-		private:
+	private:
 		typedef struct _ConfigureData
 		{
 			typedef struct _ConfigureField
 			{
 			} ConfigureField;
 
-			uint32_t size;
+			uint32_t len;
 			ConfigureField f[1];
 		} ConfigureData;
 
-	private:
 		typedef struct _Command
 		{
 			bool canExtended;
@@ -61,7 +60,10 @@ namespace EACRipper
 		~ShortcutKey();
 
 	public:
-		Modifier getModifier(bool, bool, bool) const;
+		static Modifier getModifier(bool, bool, bool);
+		static Key makeKey(Modifier, uint32_t);
+
+	public:
 		bool addShortcut(const Window *, uint32_t, Key, bool, bool);
 		bool modifyShortcut(const Window *, uint32_t, Key, bool, bool);
 		bool removeShortcut(const Window *, uint32_t);

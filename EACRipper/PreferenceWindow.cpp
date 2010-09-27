@@ -71,8 +71,7 @@ namespace EACRipper
 
 			case IDCANCEL:
 				{
-					EndDialog(window, LOWORD(wParam));
-					self.setWindow(nullptr);
+					self.endDialog(LOWORD(wParam));
 				}
 				return 1;
 			}
@@ -80,8 +79,7 @@ namespace EACRipper
 
 		case WM_CLOSE:
 			{
-				EndDialog(window, IDCANCEL);
-				self.setWindow(nullptr);
+				self.endDialog(IDCANCEL);
 			}
 			return 1;
 		}
@@ -108,7 +106,7 @@ namespace EACRipper
 
 	bool PreferenceWindow::show()
 	{
-		return Dialog::show(procMessage);
+		return showModal(procMessage) == IDOK;
 	}
 
 	wstring PreferenceWindow::getValue(const wstring &item)

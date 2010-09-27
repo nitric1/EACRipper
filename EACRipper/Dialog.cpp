@@ -2,6 +2,7 @@
 
 #include "MainController.h"
 #include "Dialog.h"
+#include "ShortcutKey.h"
 
 using namespace std;
 
@@ -98,17 +99,92 @@ namespace EACRipper
 		return &*dlgData.begin();
 	}
 
-	bool Dialog::show(DLGPROC procMessage)
-	{
-		HWND parentWin = nullptr;
-		if(getParent() != nullptr)
-			parentWin = getParent()->getWindow();
-		return DialogBoxIndirectParamW(MainController::instance().getInstance(),
-			static_cast<const DLGTEMPLATE *>(getDialogTemplateWithSystemFont()), parentWin, procMessage, 0) == IDOK;
-	}
-
 	HWND Dialog::getItemWindow(int32_t id)
 	{
 		return GetDlgItem(getWindow(), id);
+	}
+
+	intptr_t Dialog::showModal(DLGPROC procMessage, int showCommand)
+	{
+		// From CDialog::DoModal in MFC.
+
+		HWND parentWin = nullptr;
+		if(getParent() != nullptr)
+			parentWin = getParent()->getWindow();
+
+		const DLGTEMPLATE *tpl = static_cast<const DLGTEMPLATE *>(getDialogTemplateWithSystemFont());
+		bool parentEnabled = false;
+		if(parentWin != nullptr && IsWindowEnabled(parentWin))
+		{
+			EnableWindow(parentWin, FALSE);
+			parentEnabled = true;
+		}
+
+		intptr_t res = -1;
+		HWND window = CreateDialogIndirectParamW(MainController::instance().getInstance(), tpl, parentWin, procMessage, 0);
+		if(window != nullptr)
+		{
+			setWindow(window);
+
+			MSG msg;
+			bool isEndDialogCalled = false;
+			while(GetMessage(&msg, nullptr, 0, 0))
+			{
+				if(msg.message == WM_APP_ENDDIALOG)
+				{
+					isEndDialogCalled = true;
+					res = msg.wParam;
+					break;
+				}
+
+				if(showCommand)
+				{
+					ShowWindow(window, showCommand);
+					UpdateWindow(window);
+					showCommand = 0;
+				}
+
+				if(msg.message == WM_KEYDOWN && ShortcutKey::instance().processKeydownMessage(this, msg.wParam, msg.lParam))
+				{
+					continue;
+				}
+
+				if(!IsDialogMessage(window, &msg))
+				{
+					TranslateMessage(&msg);
+					DispatchMessageW(&msg);
+				}
+			}
+
+			if(!isEndDialogCalled)
+			{
+				PostQuitMessage(0);
+				return -1;
+			}
+
+			SetWindowPos(window, nullptr, 0, 0, 0, 0, SWP_HIDEWINDOW | SWP_NOSIZE | SWP_NOMOVE | SWP_NOACTIVATE | SWP_NOZORDER);
+		}
+
+		if(parentEnabled)
+			EnableWindow(parentWin, TRUE);
+		if(parentWin != nullptr && GetActiveWindow() == window)
+			SetActiveWindow(parentWin);
+
+		DestroyWindow(window);
+
+		setWindow(nullptr);
+
+		return res;
+
+		// return DialogBoxIndirectParamW(MainController::instance().getInstance(), tpl, parentWin, procMessage, 0);
+	}
+
+	bool Dialog::endDialog(intptr_t res)
+	{
+		if(!PostMessageW(getWindow(), WM_APP_ENDDIALOG, static_cast<WPARAM>(res), 0))
+			return false;
+
+		EndDialog(getWindow(), res);
+		return true;
 	}
 }

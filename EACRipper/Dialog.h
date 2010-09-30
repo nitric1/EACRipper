@@ -11,6 +11,8 @@ namespace EACRipper
 
 	private:
 		std::vector<uint8_t> dlgData;
+		bool isDialogEnded;
+		intptr_t endDialogResult;
 
 	protected:
 		explicit Dialog(HWND = nullptr);

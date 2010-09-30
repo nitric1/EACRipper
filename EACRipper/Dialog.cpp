@@ -9,7 +9,7 @@ using namespace std;
 namespace EACRipper
 {
 	Dialog::Dialog(HWND window)
-		: Window(window), dlgData()
+		: Window(window), dlgData(), isDialogEnded(false), endDialogResult(0)
 	{
 	}
 
@@ -121,19 +121,19 @@ namespace EACRipper
 		}
 
 		intptr_t res = -1;
+		isDialogEnded = false;
+		endDialogResult = -1;
 		HWND window = CreateDialogIndirectParamW(MainController::instance().getInstance(), tpl, parentWin, procMessage, 0);
 		if(window != nullptr)
 		{
 			setWindow(window);
 
 			MSG msg;
-			bool isEndDialogCalled = false;
-			while(GetMessage(&msg, nullptr, 0, 0))
+			while(GetMessageW(&msg, nullptr, 0, 0))
 			{
-				if(msg.message == WM_APP_ENDDIALOG)
+				if(isDialogEnded)
 				{
-					isEndDialogCalled = true;
-					res = msg.wParam;
+					res = endDialogResult;
 					break;
 				}
 
@@ -156,7 +156,7 @@ namespace EACRipper
 				}
 			}
 
-			if(!isEndDialogCalled)
+			if(!isDialogEnded)
 			{
 				PostQuitMessage(0);
 				return -1;
@@ -181,9 +181,8 @@ namespace EACRipper
 
 	bool Dialog::endDialog(intptr_t res)
 	{
-		if(!PostMessageW(getWindow(), WM_APP_ENDDIALOG, static_cast<WPARAM>(res), 0))
-			return false;
-
+		isDialogEnded = true;
+		endDialogResult = res;
 		EndDialog(getWindow(), res);
 		return true;
 	}

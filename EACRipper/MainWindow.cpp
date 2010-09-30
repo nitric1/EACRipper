@@ -66,13 +66,6 @@ namespace EACRipper
 			}
 			return 1;
 
-		case WM_KEYDOWN:
-			if(self.shortcut->processKeydownMessage(&self, wParam, lParam))
-			{
-				return 1;
-			}
-			break;
-
 		case WM_GETMINMAXINFO:
 			{
 				MINMAXINFO *mmi = reinterpret_cast<MINMAXINFO *>(lParam);

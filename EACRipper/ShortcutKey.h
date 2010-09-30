@@ -68,7 +68,7 @@ namespace EACRipper
 		bool modifyShortcut(const Window *, uint32_t, Key, bool, bool);
 		bool removeShortcut(const Window *, uint32_t);
 		uint32_t processShortcut(const Window *, Key, bool, bool) const;
-		bool processKeydownMessage(const Window *, WPARAM, LPARAM) const;
+		bool processKey(const Window *, bool, bool, bool, uint32_t, bool, uint32_t) const;
 
 		friend class Singleton<ShortcutKey>;
 	};

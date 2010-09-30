@@ -88,18 +88,13 @@ namespace EACRipper
 		return it->second.id;
 	}
 
-	bool ShortcutKey::processKeydownMessage(const Window *window, WPARAM wParam, LPARAM lParam) const
+	bool ShortcutKey::processKey(const Window *window, bool ctrl, bool alt, bool shift, uint32_t keycode, bool extended, uint32_t repeat) const
 	{
-		bool ctrl, alt, shift;
-		ctrl = (GetKeyState(VK_CONTROL) < 0);
-		alt = (GetKeyState(VK_MENU) < 0);
-		shift = (GetKeyState(VK_SHIFT) < 0);
-
 		Key key;
 		key.modifier = getModifier(ctrl, alt, shift);
-		key.key = static_cast<uint32_t>(wParam);
+		key.key = keycode;
 
-		uint32_t id = processShortcut(window, key, ((lParam & 0x01000000) == 0x01000000), ((lParam & 0x0000FFFF) > 1));
+		uint32_t id = processShortcut(window, key, extended, repeat > 1);
 		if(id == 0)
 			return false;
 

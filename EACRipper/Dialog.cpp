@@ -144,7 +144,10 @@ namespace EACRipper
 					showCommand = 0;
 				}
 
-				if(msg.message == WM_KEYDOWN && ShortcutKey::instance().processKeydownMessage(this, msg.wParam, msg.lParam))
+				if(msg.message == WM_KEYDOWN && ShortcutKey::instance().processKey(this,
+					GetKeyState(VK_CONTROL) < 0, GetKeyState(VK_MENU) < 0, GetKeyState(VK_SHIFT) < 0,
+					static_cast<uint32_t>(msg.wParam), (msg.lParam & 0x01000000 == 0x01000000),
+					static_cast<uint32_t>(msg.lParam & 0x0000FFFF)))
 				{
 					continue;
 				}

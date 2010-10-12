@@ -2,6 +2,7 @@
 
 #include "MainController.h"
 #include "MainWindow.h"
+#include "Info.h"
 
 using namespace std;
 using namespace Gdiplus;
@@ -45,7 +46,7 @@ namespace EACRipper
 
 				self.initList();
 
-				SetWindowTextW(window, EACRIPPER_TITLE L" " EACRIPPER_VERSION);
+				SetWindowTextW(window, Information::fullName);
 
 				self.coverArtOldProc = reinterpret_cast<WNDPROC>(SetWindowLongPtrW(GetDlgItem(window, IDC_COVER_ART), GWLP_WNDPROC, reinterpret_cast<intptr_t>(procCoverArt)));
 

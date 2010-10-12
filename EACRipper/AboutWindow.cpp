@@ -2,6 +2,7 @@
 
 #include "MainController.h"
 #include "AboutWindow.h"
+#include "Info.h"
 
 using namespace std;
 
@@ -26,7 +27,7 @@ namespace EACRipper
 			{
 				self.setWindow(window);
 
-				SetDlgItemTextW(window, IDC_EACRIPPER_TEXT, EACRIPPER_TITLE L" " EACRIPPER_VERSION);
+				SetDlgItemTextW(window, IDC_EACRIPPER_TEXT, Information::fullName);
 
 				HWND link = GetDlgItem(window, IDC_WEBSITE_LINK);
 

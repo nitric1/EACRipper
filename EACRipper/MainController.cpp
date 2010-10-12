@@ -388,10 +388,6 @@ namespace EACRipper
 		prefWin->setValue(L"BasePath", c.get(L"BasePath"));
 		prefWin->setValue(L"NameFormat", c.get(L"NameFormat"));
 
-		/*const vector<wstring> &list = StringCharsetConverter::getCharsetList();
-		for_each(list.begin(), list.end(), [&prefWin](const wstring &name) { prefWin->addCharsetName(name); });
-		prefWin->setValue(L"DetectPriority", c.get(L"DetectPriority", L"UTF-8"));*/
-
 		return true;
 	}
 
@@ -403,7 +399,6 @@ namespace EACRipper
 			return false;
 		c.set(L"BasePath", prefWin->getValue(L"BasePath"));
 		c.set(L"NameFormat", prefWin->getValue(L"NameFormat"));
-		//c.set(L"DetectPriority", prefWin->getValue(L"DetectPriority"));
 		return true;
 	}
 }

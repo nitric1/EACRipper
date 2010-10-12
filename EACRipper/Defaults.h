@@ -5,11 +5,7 @@
 #define _WIN32_WINNT 0x0700
 #define _WIN32_IE 0x0700
 
-#define EACRIPPER_TITLE L"EACRipper"
-#define EACRIPPER_VERSION L"0.4.0\x03B2"
-
 namespace EACRipper {}
-
 namespace ER = EACRipper;
 
 #define WIN32_LEAN_AND_MEAN

@@ -196,6 +196,7 @@
     <ClCompile Include="Dialog.cpp" />
     <ClCompile Include="FileDialog.cpp" />
     <ClCompile Include="FileStream.cpp" />
+    <ClCompile Include="Info.cpp" />
     <ClCompile Include="MainController.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="PreferenceWindow.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="Dialog.h" />
     <ClInclude Include="FileDialog.h" />
     <ClInclude Include="FileStream.h" />
+    <ClInclude Include="Info.h" />
     <ClInclude Include="MainController.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="PreferenceWindow.h" />

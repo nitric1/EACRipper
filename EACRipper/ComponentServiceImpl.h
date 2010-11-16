@@ -33,12 +33,12 @@ namespace EACRipper
 	class ServicePointerImpl : public ServicePointer
 	{
 	private:
-		std::tr1::shared_ptr<T> ptr;
+		std::shared_ptr<T> ptr;
 
 	public:
 		ServicePointerImpl(T *iptr) : ptr(iptr) {}
 		template<typename Other>
-		ServicePointerImpl(const std::tr1::shared_ptr<Other> &iptr) : ptr(iptr) {}
+		ServicePointerImpl(const std::shared_ptr<Other> &iptr) : ptr(iptr) {}
 		virtual ~ServicePointerImpl() {}
 
 	public:
@@ -48,7 +48,7 @@ namespace EACRipper
 	class ServicePointerManager : public Singleton<ServicePointerManager>
 	{
 	private:
-		std::list<std::tr1::shared_ptr<ServicePointer>> ptrPool;
+		std::list<std::shared_ptr<ServicePointer>> ptrPool;
 
 	private:
 		virtual ~ServicePointerManager();
@@ -58,7 +58,7 @@ namespace EACRipper
 		T *append(T *ptr)
 		{
 			ServicePointerImpl<T> *sptr = new ServicePointerImpl<T>(ptr);
-			ptrPool.push_back(std::tr1::shared_ptr<ServicePointer>(sptr));
+			ptrPool.push_back(std::shared_ptr<ServicePointer>(sptr));
 			return ptr;
 		}
 		void remove(void *);

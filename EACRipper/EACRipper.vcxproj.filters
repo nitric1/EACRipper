@@ -105,6 +105,9 @@
     <ClCompile Include="Info.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="OptionDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -258,6 +261,12 @@
       <Filter>Common Files</Filter>
     </ClInclude>
     <ClInclude Include="Info.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Delegate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

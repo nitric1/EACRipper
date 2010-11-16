@@ -13,7 +13,6 @@
 
 using namespace Gdiplus;
 using namespace std;
-using namespace std::tr1;
 
 namespace EACRipper
 {
@@ -65,21 +64,21 @@ namespace EACRipper
 
 	void MainController::registerEvents()
 	{
-		mainWin->addEventListener(L"init", delegateEvent(this, &MainController::onInit));
-		mainWin->addEventListener(L"close", delegateEvent(this, &MainController::onClose));
-		mainWin->addEventListener(L"openCuesheet", delegateEvent(this, &MainController::onOpenCuesheet));
-		mainWin->addEventListener(L"openInCue", delegateEvent(this, &MainController::onOpenInCue));
-		mainWin->addEventListener(L"openArchive", delegateEvent(this, &MainController::onOpenArchive));
-		mainWin->addEventListener(L"option", delegateEvent(this, &MainController::onOption));
-		mainWin->addEventListener(L"setCoverArt", delegateEvent(this, &MainController::onSetCoverArt));
-		mainWin->addEventListener(L"cancelCoverArt", delegateEvent(this, &MainController::onCancelCoverArt));
-		mainWin->addEventListener(L"rip", delegateEvent(this, &MainController::onRip));
-		mainWin->addEventListener(L"about", delegateEvent(this, &MainController::onAbout));
+		mainWin->addEventListener(L"init", delegateWindowEvent(this, &MainController::onInit));
+		mainWin->addEventListener(L"close", delegateWindowEvent(this, &MainController::onClose));
+		mainWin->addEventListener(L"openCuesheet", delegateWindowEvent(this, &MainController::onOpenCuesheet));
+		mainWin->addEventListener(L"openInCue", delegateWindowEvent(this, &MainController::onOpenInCue));
+		mainWin->addEventListener(L"openArchive", delegateWindowEvent(this, &MainController::onOpenArchive));
+		mainWin->addEventListener(L"option", delegateWindowEvent(this, &MainController::onOption));
+		mainWin->addEventListener(L"setCoverArt", delegateWindowEvent(this, &MainController::onSetCoverArt));
+		mainWin->addEventListener(L"cancelCoverArt", delegateWindowEvent(this, &MainController::onCancelCoverArt));
+		mainWin->addEventListener(L"rip", delegateWindowEvent(this, &MainController::onRip));
+		mainWin->addEventListener(L"about", delegateWindowEvent(this, &MainController::onAbout));
 
 		PreferenceWindow *prefWin = &PreferenceWindow::instance();
 
-		prefWin->addEventListener(L"prefInit", delegateEvent(this, &MainController::onPrefInit));
-		prefWin->addEventListener(L"prefOK", delegateEvent(this, &MainController::onPrefOK));
+		prefWin->addEventListener(L"prefInit", delegateWindowEvent(this, &MainController::onPrefInit));
+		prefWin->addEventListener(L"prefOK", delegateWindowEvent(this, &MainController::onPrefOK));
 	}
 
 	wstring MainController::findLinkedMusicFile(const wstring &ifile, bool last) const

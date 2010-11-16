@@ -1,5 +1,12 @@
 - 0.4.0β
+   * Cataclysm on EACRipper!
+   * Added editing-tags-in-the-list feature.
+   * Added opening inCue music.
+   * Added opening archive file.
+   * Added resizing of main window.
+   * Added multi-core support so you can rip each track on a core.
    * Added MP3 VBR mode.
+   * Added so many SDK features to make a component. You cannot use old version of components.
 - 0.3.0β
    * Added preference(Bitrate, Compression rate, ...) support for each component.
    * Added memorization support of last selected format and preference.

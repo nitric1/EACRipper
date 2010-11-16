@@ -34,6 +34,7 @@ namespace ER = EACRipper;
 #include <map>
 #include <vector>
 #include <string>
+#include <queue>
 
 #include <iostream>
 #include <sstream>

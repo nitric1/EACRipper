@@ -6,7 +6,6 @@
 #include "FileStream.h"
 
 using namespace std;
-using namespace std::tr1;
 
 namespace EACRipper
 {

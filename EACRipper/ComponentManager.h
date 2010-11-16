@@ -8,7 +8,7 @@ namespace EACRipper
 	class ComponentManager : public Singleton<ComponentManager>
 	{
 	private:
-		std::map<std::wstring, std::tr1::shared_ptr<Component> > compMap;
+		std::map<std::wstring, std::shared_ptr<Component> > compMap;
 
 	private:
 		ComponentManager();
@@ -16,7 +16,7 @@ namespace EACRipper
 
 	public:
 		const std::vector<std::wstring> components() const;
-		std::tr1::shared_ptr<Component> getComponent(const std::wstring &);
+		std::shared_ptr<Component> getComponent(const std::wstring &);
 
 		friend class Singleton<ComponentManager>;
 	};

@@ -37,7 +37,7 @@ namespace EACRipper
 
 		dlgData.assign(ptr, ptr + prev); // dlgVer to cy in DLGTEMPLATEEX: 26 bytes
 
-		auto szOrOrd = [&ptr, &prev, &next, this]()
+		auto szOrOrd = [&ptr, &prev, &next, this]() -> void
 		{
 			prev = next;
 			uint16_t *tmp = reinterpret_cast<uint16_t *>(ptr + prev);
@@ -62,19 +62,24 @@ namespace EACRipper
 
 		dlgData.insert(dlgData.end(), ptr + prev, ptr + next);
 
+		auto lfHeightToPoint = [](int32_t height) -> uint16_t
+		{
+			if(height >= 0)
+				return height;
+
+			HWND desktop = GetDesktopWindow();
+			HDC hdc = GetDC(desktop);
+			uint16_t ret = static_cast<uint16_t>(static_cast<double>(-height * 72) / GetDeviceCaps(hdc, LOGPIXELSY) + 0.5);
+			ReleaseDC(desktop, hdc);
+
+			return ret;
+		};
+
 		prev = next;
 		style = *reinterpret_cast<uint32_t *>(ptr + 12);
 		if((style & DS_SETFONT) || (style & DS_SHELLFONT))
 		{
-			if(ncm.lfMessageFont.lfHeight >= 0)
-				data16 = static_cast<uint16_t>(ncm.lfMessageFont.lfHeight);
-			else
-			{
-				HWND desktop = GetDesktopWindow();
-				HDC hdc = GetDC(desktop);
-				data16 = static_cast<uint16_t>(static_cast<double>(-ncm.lfMessageFont.lfHeight * 72) / GetDeviceCaps(hdc, LOGPIXELSY));
-				ReleaseDC(desktop, hdc);
-			}
+			data16 = lfHeightToPoint(ncm.lfMessageFont.lfHeight);
 			if(data16 < 9)
 				data16 = 9; // XXX: Dialog's font size must be least 9pt.
 			dlgData.insert(dlgData.end(), reinterpret_cast<uint8_t *>(&data16), reinterpret_cast<uint8_t *>(&data16 + 1));

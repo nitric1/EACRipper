@@ -13,7 +13,7 @@ namespace EACRipper
 		LPARAM lParam;
 	};
 
-	class EventDelegate
+	class WindowEventDelegate
 	{
 	public:
 		virtual bool run(WindowEventArgs e) = 0;
@@ -21,58 +21,56 @@ namespace EACRipper
 	};
 
 	template<typename Func>
-	class EventDelegateToFunction : public EventDelegate
+	class WindowEventFunctionDelegate : public WindowEventDelegate
 	{
 	private:
 		Func fn;
 
 	private:
-		explicit EventDelegateToFunction(Func ifn) : fn(ifn) {}
-		EventDelegateToFunction(const EventDelegateToFunction<Func> &dg) : fn(dg.fn) {}
+		explicit WindowEventFunctionDelegate(Func ifn) : fn(ifn) {}
 
 	public:
 		virtual bool run(WindowEventArgs e) { return fn(e); }
 
 		template<typename Func>
-		friend std::tr1::shared_ptr<EventDelegateToFunction<Func>> delegateEvent(Func);
+		friend std::shared_ptr<WindowEventFunctionDelegate<Func>> delegateWindowEvent(Func);
 	};
 
 	template<typename Class, typename Func>
-	class EventDelegateToMemberFunction : public EventDelegate
+	class WindowEventMemberFunctionDelegate : public WindowEventDelegate
 	{
 	private:
 		Class *p;
 		Func fn;
 
 	private:
-		explicit EventDelegateToMemberFunction(Class *ip, Func ifn) : p(ip), fn(ifn) {}
-		EventDelegateToMemberFunction(const EventDelegateToMemberFunction<Class, Func> &dg) : p(dg.p), fn(dg.fn) {}
+		explicit WindowEventMemberFunctionDelegate(Class *ip, Func ifn) : p(ip), fn(ifn) {}
 
 	public:
 		virtual bool run(WindowEventArgs e) { return (p->*fn)(e); }
 
 		template<typename Class, typename Func>
-		friend std::tr1::shared_ptr<EventDelegateToMemberFunction<Class, Func>> delegateEvent(Class *, Func);
+		friend std::shared_ptr<WindowEventMemberFunctionDelegate<Class, Func>> delegateWindowEvent(Class *, Func);
 	};
 
 	template<typename Func>
-	std::tr1::shared_ptr<EventDelegateToFunction<Func>> delegateEvent(Func fn)
+	std::shared_ptr<WindowEventFunctionDelegate<Func>> delegateWindowEvent(Func fn)
 	{
-		typedef decltype(delegateEvent(fn)) returnType;
-		return returnType(new EventDelegateToFunction<Func>(fn));
+		typedef decltype(delegateWindowEvent(fn)) returnType;
+		return returnType(new WindowEventFunctionDelegate<Func>(fn));
 	}
 
 	template<typename Class, typename Func>
-	std::tr1::shared_ptr<EventDelegateToMemberFunction<Class, Func>> delegateEvent(Class *p, Func fn)
+	std::shared_ptr<WindowEventMemberFunctionDelegate<Class, Func>> delegateWindowEvent(Class *p, Func fn)
 	{
-		typedef decltype(delegateEvent(p, fn)) returnType;
-		return returnType(new EventDelegateToMemberFunction<Class, Func>(p, fn));
+		typedef decltype(delegateWindowEvent(p, fn)) returnType;
+		return returnType(new WindowEventMemberFunctionDelegate<Class, Func>(p, fn));
 	}
 
 	class Window
 	{
 	private:
-		std::map<std::wstring, std::vector<std::tr1::shared_ptr<EventDelegate>>> eventMap;
+		std::map<std::wstring, std::vector<std::shared_ptr<WindowEventDelegate>>> eventMap;
 
 	private:
 		HWND window;
@@ -127,7 +125,7 @@ namespace EACRipper
 			return show();
 		}
 
-		virtual bool addEventListener(const std::wstring &name, std::tr1::shared_ptr<EventDelegate> listener)
+		virtual bool addEventListener(const std::wstring &name, std::shared_ptr<WindowEventDelegate> listener)
 		{
 			eventMap[name].push_back(listener);
 			return true;

@@ -83,6 +83,7 @@ namespace EACRipper
 		std::vector<HANDLE> threads;
 		std::vector<ThreadData> threadData;
 		volatile uint32_t runningThreads;
+		HANDLE mutex;
 		volatile bool stop;
 		
 	private:

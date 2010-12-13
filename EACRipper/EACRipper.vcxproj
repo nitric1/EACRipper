@@ -199,6 +199,7 @@
     <ClCompile Include="Info.cpp" />
     <ClCompile Include="MainController.cpp" />
     <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="MemoryStream.cpp" />
     <ClCompile Include="OptionDialog.cpp" />
     <ClCompile Include="PreferenceWindow.cpp" />
     <ClCompile Include="RipManager.cpp" />
@@ -230,6 +231,7 @@
     <ClInclude Include="Info.h" />
     <ClInclude Include="MainController.h" />
     <ClInclude Include="MainWindow.h" />
+    <ClInclude Include="MemoryStream.h" />
     <ClInclude Include="OptionDialog.h" />
     <ClInclude Include="PreferenceWindow.h" />
     <ClInclude Include="resource.h" />

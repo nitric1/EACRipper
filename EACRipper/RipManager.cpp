@@ -1,5 +1,8 @@
 #include "Defaults.h"
+
 #include "RipManager.h"
+
+#include "FileStream.h"
 
 using namespace std;
 
@@ -19,7 +22,7 @@ namespace EACRipper
 		stopRip();
 	}
 
-	bool RipManager::startRip(const TrackList &ilist, std::shared_ptr<RipCallbackDelegate> progressCallback)
+	bool RipManager::startRip(const TrackList &ilist, shared_ptr<RipCallbackDelegate> iprogressCallback)
 	{
 		tracks.clear();
 		threads.clear();
@@ -33,10 +36,14 @@ namespace EACRipper
 		list = shared_ptr<TrackList>(ilist.clone());
 		size_t len = ilist.getTrackCount();
 
+		progressCallback = shared_ptr<RipCallbackDelegate>(iprogressCallback);
+
 		for(size_t i = 1; i <= len; ++ i)
 			tracks.push_back(i);
 
 		mutex = CreateMutexW(NULL, FALSE, NULL);
+		
+		// TODO: Read whole file?
 
 		for(uint32_t i = 0; i < processorCount; ++ i)
 		{
@@ -63,6 +70,7 @@ namespace EACRipper
 			CloseHandle(mutex);
 			mutex = nullptr;
 		}
+		progressCallback.reset();
 		return true;
 	}
 
@@ -124,6 +132,8 @@ namespace EACRipper
 		RipManager &self = instance();
 		size_t track;
 
+		FileStreamReader fsr(static_cast<wstring>((*self.list)[L"SourcePath"]).c_str());
+
 		while(!self.stop)
 		{
 			{
@@ -133,6 +143,8 @@ namespace EACRipper
 				track = self.tracks.front();
 				self.tracks.pop_front();
 			}
+
+			// TODO: Open writing file stream
 		}
 
 		InterlockedDecrement(&self.runningThreads);

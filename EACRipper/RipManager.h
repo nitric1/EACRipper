@@ -74,6 +74,7 @@ namespace EACRipper
 		struct ThreadData
 		{
 			uint32_t threadId;
+			std::shared_ptr<RipCallbackDelegate> callback;
 		};
 
 	private:
@@ -95,5 +96,7 @@ namespace EACRipper
 		bool isRipping();
 
 		static ulong32_t __stdcall ripThread(void *);
+
+		friend class Singleton<RipManager>;
 	};
 }

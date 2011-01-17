@@ -19,7 +19,7 @@ namespace EACRipper
 		stopRip();
 	}
 
-	bool RipManager::startRip(const TrackList &ilist, std::shared_ptr<RipCallbackDelegate> progressCallback)
+	bool RipManager::startRip(const TrackList &ilist, shared_ptr<RipCallbackDelegate> progressCallback)
 	{
 		tracks.clear();
 		threads.clear();
@@ -40,6 +40,7 @@ namespace EACRipper
 		{
 			InterlockedIncrement(&runningThreads);
 			threadData[i].threadId = i;
+			threadData[i].callback = progressCallback;
 			threads[i] = CreateThread(NULL, 0, ripThread, &threadData[i], 0, nullptr);
 		}
 

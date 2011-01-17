@@ -126,6 +126,7 @@ namespace EACRipper
 	void MainController::setTrackDetail()
 	{
 		wstring file = findLinkedMusicFile((*list)[L"File"]);
+		(*list)[L"SourcePath"] = file;
 		wstring ext = file.substr(file.find_last_of(L".") + 1);
 		LocalFile lf;
 		lf.open(file.c_str());

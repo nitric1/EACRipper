@@ -125,6 +125,19 @@ public:
 	virtual bool close() = 0;
 };
 
+class IERMemoryStreamReader : public IERStreamReader
+{
+public:
+	/**
+	 * Destructor for safe deriving.
+	 */
+	virtual ~IERMemoryStreamReader() = 0 {}
+
+public:
+	virtual bool open(const void *memory, size_t totalSize) = 0;
+	virtual bool close() = 0;
+};
+
 template<>
 const ERUUID ERServiceUUID<IERFileStreamReader>::uuid
 	= ERUUID(0x14CFC829, 0x7B48, 0x4786, 0xAFB2, 0x01, 0xA2, 0x4E, 0x39, 0xB7, 0x16);
@@ -134,3 +147,8 @@ template<>
 const ERUUID ERServiceUUID<IERFileStreamWriter>::uuid
 	= ERUUID(0x7609A084, 0xABE8, 0x462B, 0x96AB, 0x5F, 0x61, 0x73, 0x03, 0xA6, 0x93);
 // 7609A084-ABE8-462B-96AB-5F617303A693
+
+template<>
+const ERUUID ERServiceUUID<IERMemoryStreamReader>::uuid
+	= ERUUID(0x34AA38C4, 0x9551, 0x44B9, 0x8DA8, 0x26, 0x14, 0x62, 0x93, 0xD5, 0x71);
+// 34AA38C4-9551-44B9-8DA8-26146293D571

@@ -62,7 +62,7 @@ namespace EACRipper
 	bool FileStreamReader::seek(int64_t pos, int32_t mode)
 	{
 		long high = static_cast<long>(pos >> 32);
-		uint32_t res = SetFilePointer(file, static_cast<long>(pos & 0xFFFFFFFFll), &high, static_cast<unsigned>(mode));
+		uint32_t res = SetFilePointer(file, static_cast<long32_t>(pos & 0xFFFFFFFFll), &high, static_cast<ulong32_t>(mode));
 		if(res == INVALID_SET_FILE_POINTER && GetLastError() != ERROR_SUCCESS)
 			return false;
 		return true;

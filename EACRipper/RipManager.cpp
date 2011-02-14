@@ -22,8 +22,11 @@ namespace EACRipper
 		stopRip();
 	}
 
-	bool RipManager::startRip(const TrackList &ilist, shared_ptr<RipCallbackDelegate> iprogressCallback)
+	bool RipManager::startRip(const TrackList &ilist, shared_ptr<RipCallbackDelegate> progressCallback)
 	{
+		if(runningThreads > 0)
+			return false;
+
 		tracks.clear();
 		threads.clear();
 		threadData.clear();
@@ -35,8 +38,6 @@ namespace EACRipper
 
 		list = shared_ptr<TrackList>(ilist.clone());
 		size_t len = ilist.getTrackCount();
-
-		progressCallback = shared_ptr<RipCallbackDelegate>(iprogressCallback);
 
 		for(size_t i = 1; i <= len; ++ i)
 			tracks.push_back(i);
@@ -71,7 +72,8 @@ namespace EACRipper
 			CloseHandle(mutex);
 			mutex = nullptr;
 		}
-		progressCallback.reset();
+		threads.clear();
+		threadData.clear();
 		return true;
 	}
 
@@ -132,6 +134,7 @@ namespace EACRipper
 		ThreadData *data = static_cast<ThreadData *>(param);
 		RipManager &self = instance();
 		size_t track;
+		uint64_t samples;
 
 		FileStreamReader fsr(static_cast<wstring>((*self.list)[L"SourcePath"]).c_str());
 
@@ -144,6 +147,10 @@ namespace EACRipper
 				track = self.tracks.front();
 				self.tracks.pop_front();
 			}
+
+			// TODO: Read track information (samples, ...)
+
+			(*data->callback)(track, 0, 0, 0);
 
 			// TODO: Open writing file stream
 		}

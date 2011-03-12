@@ -133,7 +133,7 @@ namespace EACRipper
 
 		MusicCoderManager &mcm = MusicCoderManager::instance();
 		size_t tracks = list->getTrackCount();
-		IERAllocator *alloc = MusicCoderManager::instance().getCoder(make_pair(mcm.getCoderByExtension(ext, MusicCoderManager::Decoder), MusicCoderManager::Decoder));
+		IERAllocator *alloc = mcm.getCoder(make_pair(mcm.getCoderByExtension(ext, MusicCoderManager::Decoder), MusicCoderManager::Decoder));
 		if(alloc == nullptr)
 		{
 			throw(runtime_error("Cannot get a coder of a linked music file."));

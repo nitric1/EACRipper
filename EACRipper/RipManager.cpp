@@ -42,15 +42,24 @@ namespace EACRipper
 		for(size_t i = 1; i <= len; ++ i)
 			tracks.push_back(i);
 
-		mutex = CreateMutexW(NULL, FALSE, NULL);
-		
 		// TODO: Read whole file?
+		wstring file = static_cast<wstring>(list[L"SourcePath"]);
+		wstring ext = file.substr(file.find_last_of(L".") + 1);
+		MusicCoderManager &mcm = MusicCoderManager::instance();
+		IERAllocator *alloc = mcm.getCoder(make_pair(mcm.getCoderByExtension(ext, MusicCoderManager::Decoder), MusicCoderManager::Decoder));
+		if(alloc == nullptr)
+		{
+			return false;
+		}
+
+		mutex = CreateMutexW(NULL, FALSE, NULL);
 
 		for(uint32_t i = 0; i < processorCount; ++ i)
 		{
 			InterlockedIncrement(&runningThreads);
 			threadData[i].threadId = i;
 			threadData[i].callback = progressCallback;
+			threadData[i].decAlloc = alloc;
 			threads[i] = CreateThread(NULL, 0, ripThread, &threadData[i], 0, nullptr);
 			if(threads[i] == nullptr)
 				InterlockedDecrement(&runningThreads);

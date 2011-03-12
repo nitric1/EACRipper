@@ -1,7 +1,10 @@
 #pragma once
 
+#include "IERComponentMusic.h"
+
 #include "Singleton.h"
 #include "TrackList.h"
+#include "CoderManager.h"
 
 namespace EACRipper
 {
@@ -75,6 +78,7 @@ namespace EACRipper
 		{
 			uint32_t threadId;
 			std::shared_ptr<RipCallbackDelegate> callback;
+			IERAllocator *decAlloc;
 		};
 
 	private:

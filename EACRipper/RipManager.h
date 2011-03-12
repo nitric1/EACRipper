@@ -81,7 +81,6 @@ namespace EACRipper
 		uint32_t processorCount;
 		std::deque<size_t> tracks;
 		std::shared_ptr<TrackList> list;
-		std::shared_ptr<RipCallbackDelegate> progressCallback;
 		std::vector<HANDLE> threads;
 		std::vector<ThreadData> threadData;
 		volatile uint32_t runningThreads;

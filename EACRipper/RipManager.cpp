@@ -145,7 +145,10 @@ namespace EACRipper
 				self.tracks.pop_front();
 			}
 
-			// TODO: Open writing file stream
+			while(!self.stop)
+			{
+				// TODO: Open writing file stream
+			}
 		}
 
 		InterlockedDecrement(&self.runningThreads);

@@ -146,6 +146,7 @@ namespace EACRipper
 		uint64_t samples;
 
 		FileStreamReader fsr(static_cast<wstring>((*self.list)[L"SourcePath"]).c_str());
+		IERComponentMusicDecoder *dec = static_cast<IERComponentMusicDecoder *>(data->decAlloc->alloc());
 
 		while(!self.stop)
 		{
@@ -166,6 +167,8 @@ namespace EACRipper
 				// TODO: Open writing file stream
 			}
 		}
+
+		data->decAlloc->free(dec);
 
 		InterlockedDecrement(&self.runningThreads);
 		

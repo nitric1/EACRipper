@@ -151,6 +151,8 @@ namespace EACRipper
 		dec->setStream(&fsr);
 
 		uint32_t start, end;
+		size_t bufferSize = 65536, readSize;
+		uint8_t *buffer = new uint8_t[bufferSize];
 		while(!self.stop)
 		{
 			{
@@ -172,9 +174,11 @@ namespace EACRipper
 
 			(*data->callback)(track, 0, 0, 0);
 
+			uint64_t section = 0;
 			while(!self.stop)
 			{
-				// TODO: Open writing file stream
+				if(!dec->readSplit(start, end, buffer, bufferSize, &readSize, &section))
+					break;
 			}
 		}
 

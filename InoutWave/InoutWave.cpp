@@ -200,7 +200,10 @@ size_t InWave::read(uint32_t start, uint32_t end, void *buffer, size_t bufferSiz
 	if(bufferSize > dataSize)
 		bufferSize = dataSize;
 
-	return seek(start) && reader->read(buffer, bufferSize);
+	if(!seek(start))
+		return numeric_limits<size_t>::max();
+
+	return reader->read(buffer, bufferSize);
 }
 
 bool InWave::readSplit(uint32_t start, uint32_t end, void *buffer, size_t bufferSize, size_t *readSize, uint64_t *section)

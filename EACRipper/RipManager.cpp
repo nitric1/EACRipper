@@ -3,6 +3,7 @@
 #include "RipManager.h"
 
 #include "FileStream.h"
+#include "Utility.h"
 
 using namespace std;
 
@@ -43,7 +44,7 @@ namespace EACRipper
 			tracks.push_back(i);
 
 		// TODO: Read whole file?
-		wstring file = static_cast<wstring>(list[L"SourcePath"]);
+		wstring file = static_cast<wstring>((*list)[L"SourcePath"]);
 		wstring ext = file.substr(file.find_last_of(L".") + 1);
 		MusicCoderManager &mcm = MusicCoderManager::instance();
 		IERAllocator *alloc = mcm.getCoder(make_pair(mcm.getCoderByExtension(ext, MusicCoderManager::Decoder), MusicCoderManager::Decoder));
@@ -147,7 +148,9 @@ namespace EACRipper
 
 		FileStreamReader fsr(static_cast<wstring>((*self.list)[L"SourcePath"]).c_str());
 		IERComponentMusicDecoder *dec = static_cast<IERComponentMusicDecoder *>(data->decAlloc->alloc());
+		dec->setStream(&fsr);
 
+		uint32_t start, end;
 		while(!self.stop)
 		{
 			{
@@ -159,6 +162,13 @@ namespace EACRipper
 			}
 
 			// TODO: Read track information (samples, ...)
+			start = static_cast<uint32_t>(getTimestamp((*self.list)[track][L"Start Time"]));
+			end = static_cast<uint32_t>(getTimestamp((*self.list)[track][L"End Time"]));
+			if(start == numeric_limits<int32_t>::max() || end == numeric_limits<int32_t>::max())
+			{
+				// TODO: Error
+				continue;
+			}
 
 			(*data->callback)(track, 0, 0, 0);
 

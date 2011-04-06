@@ -174,11 +174,15 @@ namespace EACRipper
 
 			(*data->callback)(track, 0, 0, 0);
 
+			// TODO: Open written file
+
 			uint64_t section = 0;
 			while(!self.stop)
 			{
 				if(!dec->readSplit(start, end, buffer, bufferSize, &readSize, &section))
 					break;
+
+				// TODO: Write
 			}
 		}
 

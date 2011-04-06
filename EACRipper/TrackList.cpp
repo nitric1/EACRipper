@@ -187,17 +187,23 @@ namespace EACRipper
 					cur[L"Composer"] = value;
 				else if(command == L"ISRC")
 					cur[L"ISRC"] = value;
+				else if(command == L"UPC_EAN")
+					cur[L"UPCEAN"] = value;
 				else if(command == L"INDEX")
 				{
 					index = wcstoul(value.c_str(), &end, 10);
 					for(; *end == L' '; ++ end);
 					temp = value.substr(end - value.c_str());
 
-					if(index == 0 && prevTrack > 0)
-						tracks[prevTrack][L"End Time"] = temp;
+					if(index == 0)
+						cur[L"Index Pregap"] = temp;
 					else if(index == 1)
-						cur[L"Start Time"] = temp;
+						cur[L"Index Start"] = temp;
 				}
+				else if(command == L"PREGAP")
+					cur[L"Pregap"] = value;
+				else if(command == L"POSTGAP")
+					cur[L"Postgap"] = value;
 				else if(command == L"TRACK") // New Track
 				{
 					prevTrack = track;
@@ -215,6 +221,8 @@ namespace EACRipper
 					albumFields[L"Album Title"] = value;
 				else if(command == L"DISCID")
 					albumFields[L"DiscID"] = value;
+				else if(command == L"CATALOG")
+					albumFields[L"UPCEAN"] = value;
 				else if(command == L"GENRE")
 					albumFields[L"Genre"] = value;
 				else if(command == L"DATE")
@@ -228,7 +236,7 @@ namespace EACRipper
 			}
 		}
 
-		map<size_t, map<wstring, wstring>>::iterator be, ed, i, tmp;
+		/*map<size_t, map<wstring, wstring>>::iterator be, ed, i, tmp;
 		for(be = i = tracks.begin(), ed = tracks.end(); i != ed; ++ i)
 		{
 			if(i->second.find(L"Start Time") == i->second.end())
@@ -246,7 +254,7 @@ namespace EACRipper
 				else
 					i->second[L"End Time"] = (++ (tmp = i))->second[L"Start Time"];
 			}
-		}
+		}*/
 
 		return true;
 	}

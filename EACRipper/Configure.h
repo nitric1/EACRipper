@@ -28,7 +28,7 @@ namespace EACRipper
 		bool exists(const std::wstring &) const;
 		std::wstring get(const std::wstring &, const std::wstring & = std::wstring()) const;
 		std::vector<uint8_t> getBinary(const std::wstring &) const;
-		void set(const std::wstring &, const std::wstring &);
+		void set(const std::wstring &, const std::wstring &, bool = true);
 		template<typename Alloc>
 		void setBinary(const std::wstring &name, const std::vector<uint8_t, Alloc> &ve)
 		{

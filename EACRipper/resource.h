@@ -33,6 +33,9 @@
 #define IDC_GROUP_COVER_ART             1023
 #define IDC_EACRIPPER_TEXT              1024
 #define IDC_WEBSITE_LINK                1025
+#define IDC_RIP_GAP                     1026
+#define IDC_RIP_GAP_NEXT                1027
+#define IDC_RIP_IGNORE_PREGAP_POSTGAP   1028
 #define IDM_FILE_OPEN                   40001
 #define IDM_INCUE_OPEN                  40002
 #define IDM_ARCHIVE_OPEN                40003
@@ -46,7 +49,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        107
 #define _APS_NEXT_COMMAND_VALUE         40007
-#define _APS_NEXT_CONTROL_VALUE         1026
+#define _APS_NEXT_CONTROL_VALUE         1029
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

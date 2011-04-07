@@ -42,7 +42,7 @@ namespace EACRipper
 			trim(name);
 			trim(value);
 
-			set(name, value);
+			set(name, value, false);
 		}
 	}
 
@@ -140,10 +140,10 @@ namespace EACRipper
 		return ve;
 	}
 
-	void Configure::set(const wstring &name, const wstring &value)
+	void Configure::set(const wstring &name, const wstring &value, bool setChanged)
 	{
 		confMap[name] = value;
-		changed = true;
+		changed = setChanged;
 	}
 
 	void Configure::remove(const wstring &name)

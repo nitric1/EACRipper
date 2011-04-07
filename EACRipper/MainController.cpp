@@ -385,8 +385,12 @@ namespace EACRipper
 		PreferenceWindow *prefWin = dynamic_cast<PreferenceWindow *>(e.window);
 		if(prefWin == nullptr)
 			return false;
+
 		prefWin->setValue(L"BasePath", c.get(L"BasePath"));
 		prefWin->setValue(L"NameFormat", c.get(L"NameFormat"));
+		prefWin->setValue(L"RipGap", c.get(L"RipGap", L"No"));
+		prefWin->setValue(L"AttachGapNextTrack", c.get(L"AttachGapNextTrack", L"No"));
+		prefWin->setValue(L"IgnorePregapPostgap", c.get(L"IgnorePregapPostgap", L"No"));
 
 		return true;
 	}
@@ -397,8 +401,13 @@ namespace EACRipper
 		PreferenceWindow *prefWin = dynamic_cast<PreferenceWindow *>(e.window);
 		if(prefWin == nullptr)
 			return false;
+
 		c.set(L"BasePath", prefWin->getValue(L"BasePath"));
 		c.set(L"NameFormat", prefWin->getValue(L"NameFormat"));
+		c.set(L"RipGap", prefWin->getValue(L"RipGap"));
+		c.set(L"AttachGapNextTrack", prefWin->getValue(L"AttachGapNextTrack"));
+		c.set(L"IgnorePregapPostgap", prefWin->getValue(L"IgnorePregapPostgap"));
+
 		return true;
 	}
 }

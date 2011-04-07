@@ -22,6 +22,7 @@ namespace EACRipper
 	std::wstring makeTimeString(int32_t);
 	std::wstring getTimeStringIncr(const std::wstring &, const std::wstring &);
 	std::wstring getTimeStringDiff(const std::wstring &, const std::wstring &);
+	std::wstring getReadableTimeString(const std::wstring &);
 	std::wstring getDirectoryPath(const std::wstring &);
 	std::wstring getFileName(const std::wstring &);
 	std::wstring getCurrentDirectoryPath();

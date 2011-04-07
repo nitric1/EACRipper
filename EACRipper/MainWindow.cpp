@@ -271,7 +271,7 @@ namespace EACRipper
 		trackList.addColumn(L"Artist", 120, EditListControl::ALIGN_LEFT);
 		trackList.addColumn(L"Title", 210, EditListControl::ALIGN_LEFT);
 		trackList.addColumn(L"Composer", 100, EditListControl::ALIGN_LEFT);
-		trackList.addColumn(L"Length (M:S:MS)", 180, EditListControl::ALIGN_LEFT);
+		trackList.addColumn(L"Length (M:S.MS)", 180, EditListControl::ALIGN_LEFT);
 		trackList.addColumn(L"Progress", 60, EditListControl::ALIGN_RIGHT);
 	}
 

@@ -168,6 +168,22 @@ namespace EACRipper
 		return ss.str();
 	}
 
+	wstring getReadableTimeString(const wstring &time)
+	{
+		int32_t timestamp = getTimestamp(time);
+
+		bool minus = timestamp < 0;
+		timestamp = abs(timestamp);
+
+		wstringstream ss;
+		ss << setfill(L'0')
+			<< (minus ? L"-" : L"")
+			<< setw(2) << (timestamp / 60000)
+			<< L':' << setw(2) << ((timestamp / 1000) % 60)
+			<< L'.' << setw(3) << (timestamp % 1000);
+		return ss.str();
+	}
+
 	wstring getDirectoryPath(const wstring &ipath)
 	{
 		wstring path = ipath;

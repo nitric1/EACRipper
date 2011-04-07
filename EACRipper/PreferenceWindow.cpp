@@ -63,6 +63,16 @@ namespace EACRipper
 				}
 				return 1;
 
+			case IDC_RIP_GAP:
+				if(HIWORD(wParam) == BN_CLICKED)
+				{
+					HWND control = reinterpret_cast<HWND>(lParam);
+					bool checked = (Button_GetCheck(control) == BST_CHECKED);
+					EnableWindow(GetDlgItem(window, IDC_RIP_GAP_NEXT), checked);
+					EnableWindow(GetDlgItem(window, IDC_RIP_IGNORE_PREGAP_POSTGAP), checked);
+				}
+				return 1;
+
 			case IDOK:
 				{
 					if(!self.runEventListener(L"prefOK", e))
@@ -112,18 +122,43 @@ namespace EACRipper
 	wstring PreferenceWindow::getValue(const wstring &item)
 	{
 		HWND itemWin;
+		bool checkbox = false;
 		if(item == L"BasePath")
 			itemWin = GetDlgItem(getWindow(), IDC_PATH);
 		else if(item == L"NameFormat")
 			itemWin = GetDlgItem(getWindow(), IDC_NAME_FORMAT);
+		else if(item == L"RipGap")
+		{
+			itemWin = GetDlgItem(getWindow(), IDC_RIP_GAP);
+			checkbox = true;
+		}
+		else if(item == L"AttachGapNextTrack")
+		{
+			itemWin = GetDlgItem(getWindow(), IDC_RIP_GAP_NEXT);
+			checkbox = true;
+		}
+		else if(item == L"IgnorePregapPostgap")
+		{
+			itemWin = GetDlgItem(getWindow(), IDC_RIP_IGNORE_PREGAP_POSTGAP);
+			checkbox = true;
+		}
 		else
 			return wstring();
 
-		int len = static_cast<size_t>(GetWindowTextLengthW(itemWin));
-		vector<wchar_t> buf(static_cast<size_t>(len) + 1);
-		GetWindowTextW(itemWin, &*buf.begin(), len + 1);
+		if(checkbox)
+		{
+			return (Button_GetCheck(itemWin) == BST_CHECKED) ? L"Yes" : L"No";
+		}
+		else
+		{
+			int len = static_cast<size_t>(GetWindowTextLengthW(itemWin));
+			vector<wchar_t> buf(static_cast<size_t>(len) + 1);
+			GetWindowTextW(itemWin, &*buf.begin(), len + 1);
 
-		return wstring(&*buf.begin());
+			return wstring(&*buf.begin());
+		}
+
+		return wstring();
 	}
 
 	bool PreferenceWindow::setValue(const wstring &item, const wstring &value)
@@ -132,6 +167,27 @@ namespace EACRipper
 			return SetDlgItemTextW(getWindow(), IDC_PATH, value.c_str()) != FALSE;
 		else if(item == L"NameFormat")
 			return SetDlgItemTextW(getWindow(), IDC_NAME_FORMAT, value.c_str()) != FALSE;
+		else if(item == L"RipGap")
+		{
+			HWND control = GetDlgItem(getWindow(), IDC_RIP_GAP);
+			bool check = (value == L"Yes");
+			Button_SetCheck(control, check ? BST_CHECKED : BST_UNCHECKED);
+			EnableWindow(GetDlgItem(getWindow(), IDC_RIP_GAP_NEXT), check);
+			EnableWindow(GetDlgItem(getWindow(), IDC_RIP_IGNORE_PREGAP_POSTGAP), check);
+			return true;
+		}
+		else if(item == L"AttachGapNextTrack")
+		{
+			HWND control = GetDlgItem(getWindow(), IDC_RIP_GAP_NEXT);
+			Button_SetCheck(control, (value == L"Yes" ? BST_CHECKED : BST_UNCHECKED));
+			return true;
+		}
+		else if(item == L"IgnorePregapPostgap")
+		{
+			HWND control = GetDlgItem(getWindow(), IDC_RIP_IGNORE_PREGAP_POSTGAP);
+			Button_SetCheck(control, (value == L"Yes" ? BST_CHECKED : BST_UNCHECKED));
+			return true;
+		}
 		return false;
 	}
 }

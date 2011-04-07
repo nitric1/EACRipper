@@ -4,6 +4,7 @@
 
 #include "FileStream.h"
 #include "Utility.h"
+#include "Configure.h"
 
 using namespace std;
 
@@ -145,6 +146,8 @@ namespace EACRipper
 		RipManager &self = instance();
 		size_t track;
 		uint64_t samples;
+
+		Configure &conf = Configure::instance();
 
 		FileStreamReader fsr(static_cast<wstring>((*self.list)[L"SourcePath"]).c_str());
 		IERComponentMusicDecoder *dec = static_cast<IERComponentMusicDecoder *>(data->decAlloc->alloc());

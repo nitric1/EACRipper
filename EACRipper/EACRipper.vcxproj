@@ -206,6 +206,7 @@
     <ClCompile Include="ShortcutKey.cpp" />
     <ClCompile Include="TrackList.cpp" />
     <ClCompile Include="EditListControl.cpp" />
+    <ClCompile Include="TrackListControl.cpp" />
     <ClCompile Include="Utility.cpp" />
     <ClCompile Include="Version.cpp" />
   </ItemGroup>
@@ -240,6 +241,7 @@
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="TrackList.h" />
     <ClInclude Include="EditListControl.h" />
+    <ClInclude Include="TrackListControl.h" />
     <ClInclude Include="Utility.h" />
     <ClInclude Include="Version.h" />
     <ClInclude Include="Window.h" />

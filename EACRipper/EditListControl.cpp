@@ -31,12 +31,12 @@ namespace EACRipper
 		return CallWindowProcW(self.getOldProc(), window, message, wParam, lParam);
 	}
 
-	int32_t EditListControl::addColumn(const wstring &value, int32_t width, int32_t align, const wstring &defVal)
+	int32_t EditListControl::addColumn(const wstring &value, int32_t width, int32_t align, bool readonly, const wstring &defVal)
 	{
-		return insertColumn(columns, value, width, align, defVal);
+		return insertColumn(columns, value, width, align, readonly, defVal);
 	}
 
-	int32_t EditListControl::insertColumn(int32_t pos, const wstring &value, int32_t width, int32_t align, const wstring &defVal)
+	int32_t EditListControl::insertColumn(int32_t pos, const wstring &value, int32_t width, int32_t align, bool readonly, const wstring &defVal)
 	{
 		LVCOLUMNW lvc = {0, };
 		lvc.cx = width;

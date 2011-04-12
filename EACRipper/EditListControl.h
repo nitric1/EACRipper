@@ -28,11 +28,11 @@ namespace EACRipper
 		static longptr_t __stdcall windowProc(HWND, unsigned, WPARAM, LPARAM);
 
 	public:
-		int32_t addColumn(const std::wstring &, int32_t, int32_t = ALIGN_LEFT, const std::wstring & = std::wstring());
-		int32_t insertColumn(int32_t, const std::wstring &, int32_t, int32_t = ALIGN_LEFT, const std::wstring & = std::wstring());
-		int32_t addItem(const std::vector<std::wstring> &);
-		int32_t insertItem(int32_t, const std::vector<std::wstring> &);
-		void clear();
+		virtual int32_t addColumn(const std::wstring &, int32_t, int32_t = ALIGN_LEFT, bool = false, const std::wstring & = std::wstring());
+		virtual int32_t insertColumn(int32_t, const std::wstring &, int32_t, int32_t = ALIGN_LEFT, bool = false, const std::wstring & = std::wstring());
+		virtual int32_t addItem(const std::vector<std::wstring> &);
+		virtual int32_t insertItem(int32_t, const std::vector<std::wstring> &);
+		virtual void clear();
 
 	public:
 		virtual bool attach(HWND);

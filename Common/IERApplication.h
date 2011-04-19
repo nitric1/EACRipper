@@ -4,7 +4,7 @@
 #include "IERComponentInfo.h"
 
 #ifndef _INC_WINDOWS
-#error Include <windows.h> before include this header!
+#error Include <windows.h> before this header!
 #endif
 
 class IERApplication

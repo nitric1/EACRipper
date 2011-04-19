@@ -1,5 +1,7 @@
 #pragma once
 
+// NOTE: Deprecated
+
 class IERMusicComponent;
 
 #if defined(_WINDOWS) && defined(_USRDLL)

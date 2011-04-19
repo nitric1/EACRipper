@@ -4,8 +4,8 @@
 #include "Singleton.h"
 #include "ShortcutKey.h"
 #include "ComponentManager.h"
-#include "EditListControl.h"
 #include "TrackList.h"
+#include "TrackListControl.h"
 
 namespace EACRipper
 {

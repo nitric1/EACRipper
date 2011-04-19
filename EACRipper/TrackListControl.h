@@ -26,10 +26,18 @@ namespace EACRipper
 		{
 		public:
 			PlainFormatter();
+
+		private:
+			static std::wstring format(const std::wstring &);
 		};
 
 		class TimeStringFormatter : public Formatter
 		{
+		public:
+			TimeStringFormatter();
+
+		private:
+			static std::wstring format(const std::wstring &);
 		};
 	}
 

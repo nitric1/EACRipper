@@ -228,6 +228,7 @@
     <ClInclude Include="Delegate.h" />
     <ClInclude Include="DelegateDefinition.h" />
     <ClInclude Include="DelegateStub.h" />
+    <ClInclude Include="DelegateTemplates.h" />
     <ClInclude Include="Dialog.h" />
     <ClInclude Include="FileDialog.h" />
     <ClInclude Include="FileStream.h" />

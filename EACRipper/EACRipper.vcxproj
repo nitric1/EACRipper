@@ -226,6 +226,8 @@
     <ClInclude Include="Control.h" />
     <ClInclude Include="Defaults.h" />
     <ClInclude Include="Delegate.h" />
+    <ClInclude Include="DelegateDefinition.h" />
+    <ClInclude Include="DelegateStub.h" />
     <ClInclude Include="Dialog.h" />
     <ClInclude Include="FileDialog.h" />
     <ClInclude Include="FileStream.h" />

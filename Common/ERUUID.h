@@ -34,27 +34,27 @@ union ERUUIDData
 		{
 			struct
 			{
-				uint8_t val5_1;
-				uint8_t val5_2;
-				uint8_t val5_3;
-				uint8_t val5_4;
-				uint8_t val5_5;
-				uint8_t val5_6;
-			};
-			uint8_t val5[6];
+				uint8_t v1;
+				uint8_t v2;
+				uint8_t v3;
+				uint8_t v4;
+				uint8_t v5;
+				uint8_t v6;
+			} unpacked;
+			uint8_t raw[6];
 			struct
 			{
-				uint32_t packedVal5_1;
-				uint16_t packedVal5_2;
-			};
-		};
-	};
-	uint8_t unpacked[16];
+				uint32_t v1;
+				uint16_t v2;
+			} packed;
+		} val5;
+	} unpacked;
+	uint8_t raw[16];
 	struct
 	{
-		uint64_t packed1;
-		uint64_t packed2;
-	};
+		uint64_t v1;
+		uint64_t v2;
+	} packed;
 };
 #pragma pack(pop)
 
@@ -74,32 +74,32 @@ public:
 	ERUUID(const ERServiceUUID<T> &preset) : data(preset.uuid.data) {}
 	explicit ERUUID(const uint8_t *idata) : data()
 	{
-		data.packed1 = *reinterpret_cast<const uint64_t *>(idata);
-		data.packed2 = *reinterpret_cast<const uint64_t *>(idata + 8);
+		data.packed.v1 = *reinterpret_cast<const uint64_t *>(idata);
+		data.packed.v2 = *reinterpret_cast<const uint64_t *>(idata + 8);
 	}
 	explicit ERUUID(uint32_t ival1, uint16_t ival2, uint16_t ival3, uint16_t ival4,
 		uint8_t ival5_1, uint8_t ival5_2, uint8_t ival5_3, uint8_t ival5_4, uint8_t ival5_5, uint8_t ival5_6)
 		: data()
 	{
-		data.val1 = ival1;
-		data.val2 = ival2;
-		data.val3 = ival3;
-		data.val4 = ival4;
-		data.val5_1 = ival5_1;
-		data.val5_2 = ival5_2;
-		data.val5_3 = ival5_3;
-		data.val5_4 = ival5_4;
-		data.val5_5 = ival5_5;
-		data.val5_6 = ival5_6;
+		data.unpacked.val1 = ival1;
+		data.unpacked.val2 = ival2;
+		data.unpacked.val3 = ival3;
+		data.unpacked.val4 = ival4;
+		data.unpacked.val5.unpacked.v1 = ival5_1;
+		data.unpacked.val5.unpacked.v2 = ival5_2;
+		data.unpacked.val5.unpacked.v3 = ival5_3;
+		data.unpacked.val5.unpacked.v4 = ival5_4;
+		data.unpacked.val5.unpacked.v5 = ival5_5;
+		data.unpacked.val5.unpacked.v6 = ival5_6;
 	}
 	explicit ERUUID(uint32_t ival1, uint16_t ival2, uint16_t ival3, uint16_t ival4, const uint8_t *ival5) : data()
 	{
-		data.val1 = ival1;
-		data.val2 = ival2;
-		data.val3 = ival3;
-		data.val4 = ival4;
-		data.packedVal5_1 = *reinterpret_cast<const uint32_t *>(ival5);
-		data.packedVal5_2 = *reinterpret_cast<const uint16_t *>(ival5 + 4);
+		data.unpacked.val1 = ival1;
+		data.unpacked.val2 = ival2;
+		data.unpacked.val3 = ival3;
+		data.unpacked.val4 = ival4;
+		data.unpacked.val5.packed.v1 = *reinterpret_cast<const uint32_t *>(ival5);
+		data.unpacked.val5.packed.v2 = *reinterpret_cast<const uint16_t *>(ival5 + 4);
 	}
 	ERUUID(const char *str) : data() { parseString(str); }
 	ERUUID(const wchar_t *str) : data() { parseString(str); }
@@ -107,8 +107,7 @@ public:
 public:
 	ERUUID &operator =(const ERUUID &uuid)
 	{
-		data.packed1 = uuid.data.packed1;
-		data.packed2 = uuid.data.packed2;
+		data.packed = uuid.data.packed;
 		return *this;
 	}
 	ERUUID &operator =(const ERUUIDData &idata)
@@ -135,7 +134,7 @@ public:
 
 	bool operator ==(const ERUUID &uuid) const
 	{
-		return data.packed1 == uuid.data.packed1 && data.packed2 == uuid.data.packed2;
+		return data.packed.v1 == uuid.data.packed.v1 && data.packed.v2 == uuid.data.packed.v2;
 	}
 
 	bool operator !=(const ERUUID &uuid) const
@@ -180,7 +179,7 @@ private:
 			{
 				if(next)
 				{
-					data.unpacked[i ++] = (ndata << 4) | hexDigit(*str);
+					data.raw[i ++] = (ndata << 4) | hexDigit(*str);
 					next = false;
 				}
 				else
@@ -191,10 +190,10 @@ private:
 			}
 		}
 
-		EREndian::B2N(data.val1);
-		EREndian::B2N(data.val2);
-		EREndian::B2N(data.val3);
-		EREndian::B2N(data.val4);
+		EREndian::B2N(data.unpacked.val1);
+		EREndian::B2N(data.unpacked.val2);
+		EREndian::B2N(data.unpacked.val3);
+		EREndian::B2N(data.unpacked.val4);
 
 		return true;
 	}
@@ -209,7 +208,7 @@ private:
 			{
 				if(next)
 				{
-					data.unpacked[i ++] = (ndata << 4) | hexDigit(*str);
+					data.raw[i ++] = (ndata << 4) | hexDigit(*str);
 					next = false;
 				}
 				else
@@ -220,10 +219,10 @@ private:
 			}
 		}
 
-		EREndian::B2N(data.val1);
-		EREndian::B2N(data.val2);
-		EREndian::B2N(data.val3);
-		EREndian::B2N(data.val4);
+		EREndian::B2N(data.unpacked.val1);
+		EREndian::B2N(data.unpacked.val2);
+		EREndian::B2N(data.unpacked.val3);
+		EREndian::B2N(data.unpacked.val4);
 
 		return true;
 	}
@@ -248,16 +247,16 @@ public:
 	{
 		std::basic_ostringstream<T, Traits, Alloc> s;
 		s << std::hex << std::uppercase << std::setfill(T('0'))
-		  << std::setw(8) << data.val1
-		  << T('-') << std::setw(4) << data.val2
-		  << T('-') << std::setw(4) << data.val3
-		  << T('-') << std::setw(4) << data.val4
-		  << T('-') << std::setw(2) << static_cast<uint16_t>(data.val5_1)
-		  << std::setw(2) << static_cast<uint16_t>(data.val5_2)
-		  << std::setw(2) << static_cast<uint16_t>(data.val5_3)
-		  << std::setw(2) << static_cast<uint16_t>(data.val5_4)
-		  << std::setw(2) << static_cast<uint16_t>(data.val5_5)
-		  << std::setw(2) << static_cast<uint16_t>(data.val5_6);
+		  << std::setw(8) << data.unpacked.val1
+		  << T('-') << std::setw(4) << data.unpacked.val2
+		  << T('-') << std::setw(4) << data.unpacked.val3
+		  << T('-') << std::setw(4) << data.unpacked.val4
+		  << T('-') << std::setw(2) << static_cast<uint16_t>(data.unpacked.val5.unpacked.v1)
+		  << std::setw(2) << static_cast<uint16_t>(data.unpacked.val5.unpacked.v2)
+		  << std::setw(2) << static_cast<uint16_t>(data.unpacked.val5.unpacked.v3)
+		  << std::setw(2) << static_cast<uint16_t>(data.unpacked.val5.unpacked.v4)
+		  << std::setw(2) << static_cast<uint16_t>(data.unpacked.val5.unpacked.v5)
+		  << std::setw(2) << static_cast<uint16_t>(data.unpacked.val5.unpacked.v6);
 		str = s.str();
 	}
 
@@ -275,13 +274,13 @@ public:
 
 	const uint8_t *unpackedData() const
 	{
-		return data.unpacked;
+		return data.raw;
 	}
 
 	void getPackedData(uint64_t &outPacked1, uint64_t &outPacked2)
 	{
-		outPacked1 = data.packed1;
-		outPacked2 = data.packed2;
+		outPacked1 = data.packed.v1;
+		outPacked2 = data.packed.v2;
 	}
 
 	template<typename T, typename Traits>

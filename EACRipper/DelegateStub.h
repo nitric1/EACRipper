@@ -1,73 +1,75 @@
 // XXX: No include guard
 
-#define DELEGATE_CLASS_NAME DelegateImpl##DELEGATE_NUM_ARG
+#define DELEGATE_CLASS_NAME ERDelegate##DELEGATE_NUM_ARG
+#define DELEGATE_IMPL_CLASS_NAME ERDelegateImpl##DELEGATE_NUM_ARG
 #define DELEGATE_TEMPLATE_LIST DELEGATE_TEMPLATE_LIST_##DELEGATE_NUM_ARG
 #define DELEGATE_ARG_LIST DELEGATE_ARG_LIST_##DELEGATE_NUM_ARG
+#define DELEGATE_ARG_DETAIL DELEGATE_ARG_DETAIL_##DELEGATE_NUM_ARG
+#define DELEGATE_ARG_CALL DELEGATE_ARG_CALL_##DELEGATE_NUM_ARG
 #define DELEGATE_TEMPLATE_ARG DELEGATE_TEMPLATE_ARG_##DELEGATE_NUM_ARG
 
-namespace EACRipper
+template<DELEGATE_TEMPLATE_LIST>
+class DELEGATE_CLASS_NAME
 {
-	namespace Delegate
-	{
-		template<DELEGATE_TEMPLATE_LIST>
-		class DelegateImpl<DELEGATE_TEMPLATE_ARG> : public Delegate
-#if DELEGATE_NUM_ARG == 1
-			, public unary_function<Return, Arg0>
-#elif DELEGATE_NUM_ARG == 2
-			, public binary_function<Return, Arg0, Arg1>
-#endif
-		{
-		public:
-#if DELEGATE_NUM_ARG != 1 && DELEGATE_NUM_ARG != 2
-			typedef Return result_type;
-#endif
+public:
+	virtual Return run(DELEGATE_ARG_LIST) = 0;
+};
 
-		public:
-			DelegateImpl();
-			DelegateImpl(std::nullptr_t);
-			DelegateImpl(const DelegateImpl<DELEGATE_TEMPLATE_ARG> &);
-			DelegateImpl(DelegateImpl<DELEGATE_TEMPLATE_ARG> &&);
-			DelegateImpl(Return (*)(DELEGATE_ARG_LIST));
-			template<typename FunctionClass>
-			DelegateImpl(Return (Class::*)(DELEGATE_ARG_LIST));
-			template<typename FunctionClass>
-			DelegateImpl(Return (Class::*)(DELEGATE_ARG_LIST) const);
-			template<typename FunctionClass>
-			DelegateImpl(Return (Class::*)(DELEGATE_ARG_LIST) volatile);
-			template<typename FunctionClass, typename InstanceClass>
-			DelegateImpl(Return (Class::*)(DELEGATE_ARG_LIST), InstanceClass *);
-			template<typename FunctionClass, typename InstanceClass>
-			DelegateImpl(Return (Class::*)(DELEGATE_ARG_LIST) const, const InstanceClass *);
-			template<typename FunctionClass, typename InstanceClass>
-			DelegateImpl(Return (Class::*)(DELEGATE_ARG_LIST) volatile, volatile InstanceClass *);
-			// DelegateImpl(const std::function<DELEGATE_TEMPLATE_ARG> &);
-			typename<typename Functor>
-			DelegateImpl(Functor fn);
-			virtual ~DelegateImpl();
+template<DELEGATE_TEMPLATE_LIST>
+class DELEGATE_IMPL_CLASS_NAME : public DELEGATE_CLASS_NAME<DELEGATE_ARG_LIST>
+{
+public:
+	DELEGATE_IMPL_CLASS_NAME();
+	DELEGATE_IMPL_CLASS_NAME(std::nullptr_t);
+	DELEGATE_IMPL_CLASS_NAME(const DELEGATE_IMPL_CLASS_NAME<DELEGATE_TEMPLATE_ARG> &);
+	DELEGATE_IMPL_CLASS_NAME(DelegateImpl<DELEGATE_TEMPLATE_ARG> &&);
+	DELEGATE_IMPL_CLASS_NAME(Return (*)(DELEGATE_ARG_LIST));
+	/*template<typename FunctionClass>
+	DELEGATE_IMPL_CLASS_NAME(Return (Class::*)(DELEGATE_ARG_LIST));
+	template<typename FunctionClass>
+	DELEGATE_IMPL_CLASS_NAME(Return (Class::*)(DELEGATE_ARG_LIST) const);
+	template<typename FunctionClass>
+	DELEGATE_IMPL_CLASS_NAME(Return (Class::*)(DELEGATE_ARG_LIST) volatile);*/
+	template<typename FunctionClass, typename InstanceClass>
+	DELEGATE_IMPL_CLASS_NAME(Return (Class::*)(DELEGATE_ARG_LIST), InstanceClass *);
+	template<typename FunctionClass, typename InstanceClass>
+	DELEGATE_IMPL_CLASS_NAME(Return (Class::*)(DELEGATE_ARG_LIST) const, const InstanceClass *);
+	template<typename FunctionClass, typename InstanceClass>
+	DELEGATE_IMPL_CLASS_NAME(Return (Class::*)(DELEGATE_ARG_LIST) volatile, volatile InstanceClass *);
+	// DELEGATE_IMPL_CLASS_NAME(const std::function<DELEGATE_TEMPLATE_ARG> &);
+	typename<typename Functor>
+	DELEGATE_IMPL_CLASS_NAME(Functor fn);
+	virtual ~DELEGATE_IMPL_CLASS_NAME();
 
-		public:
-			DelegateImpl &operator =(std::nullptr_t);
-			DelegateImpl &operator =(const DelegateImpl<DELEGATE_TEMPLATE_ARG> &);
-			DelegateImpl &operator =(DelegateImpl<DELEGATE_TEMPLATE_ARG> &&);
-			DelegateImpl &operator =(Return (*)(DELEGATE_ARG_LIST));
-			template<typename FunctionClass>
-			DelegateImpl &operator =(Return (Class::*)(DELEGATE_ARG_LIST));
-			template<typename FunctionClass>
-			DelegateImpl &operator =(Return (Class::*)(DELEGATE_ARG_LIST) const);
-			template<typename FunctionClass>
-			DelegateImpl &operator =(Return (Class::*)(DELEGATE_ARG_LIST) volatile);
-			template<typename FunctionClass, typename InstanceClass>
-			DelegateImpl &operator =(Return (Class::*)(DELEGATE_ARG_LIST), InstanceClass *);
-			template<typename FunctionClass, typename InstanceClass>
-			DelegateImpl &operator =(Return (Class::*)(DELEGATE_ARG_LIST) const, const InstanceClass *);
-			template<typename FunctionClass, typename InstanceClass>
-			DelegateImpl &operator =(Return (Class::*)(DELEGATE_ARG_LIST) volatile, volatile InstanceClass *);
-			// DelegateImpl(const std::function<DELEGATE_TEMPLATE_ARG> &);
-			typename<typename Functor>
-			DelegateImpl &operator =(Functor fn);
-		};
-	}
-}
+public:
+	DELEGATE_IMPL_CLASS_NAME &operator =(std::nullptr_t);
+	DELEGATE_IMPL_CLASS_NAME &operator =(const DELEGATE_IMPL_CLASS_NAME<DELEGATE_TEMPLATE_ARG> &);
+	DELEGATE_IMPL_CLASS_NAME &operator =(DELEGATE_IMPL_CLASS_NAME<DELEGATE_TEMPLATE_ARG> &&);
+	DELEGATE_IMPL_CLASS_NAME &operator =(Return (*)(DELEGATE_ARG_LIST));
+	/*template<typename FunctionClass>
+	DELEGATE_IMPL_CLASS_NAME &operator =(Return (Class::*)(DELEGATE_ARG_LIST));
+	template<typename FunctionClass>
+	DELEGATE_IMPL_CLASS_NAME &operator =(Return (Class::*)(DELEGATE_ARG_LIST) const);
+	template<typename FunctionClass>
+	DELEGATE_IMPL_CLASS_NAME &operator =(Return (Class::*)(DELEGATE_ARG_LIST) volatile);*/
+	template<typename FunctionClass, typename InstanceClass>
+	DELEGATE_IMPL_CLASS_NAME &operator =(Return (Class::*)(DELEGATE_ARG_LIST), InstanceClass *);
+	template<typename FunctionClass, typename InstanceClass>
+	DELEGATE_IMPL_CLASS_NAME &operator =(Return (Class::*)(DELEGATE_ARG_LIST) const, const InstanceClass *);
+	template<typename FunctionClass, typename InstanceClass>
+	DELEGATE_IMPL_CLASS_NAME &operator =(Return (Class::*)(DELEGATE_ARG_LIST) volatile, volatile InstanceClass *);
+	// DELEGATE_IMPL_CLASS_NAME(const std::function<DELEGATE_TEMPLATE_ARG> &);
+	typename<typename Functor>
+	DELEGATE_IMPL_CLASS_NAME &operator =(Functor fn);
+
+public:
+	virtual Return run(DELEGATE_ARG_DETAIL);
+};
+
+template<DELEGATE_TEMPLATE_LIST>
+class ERDelegate<DELEGATE_TEMPLATE_ARG> : public DELEGATE_CLASS_NAME
+{
+};
 
 #undef DELEGATE_TEMPLATE_ARG
 #undef DELEGATE_ARG_LIST

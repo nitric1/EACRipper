@@ -66,7 +66,7 @@ namespace EACRipper
 		vector<wstring> StringCharsetConverter::makeCharsetList()
 		{
 			vector<wstring> list;
-			uint16_t n = ucnv_countAvailable();
+			uint16_t n = static_cast<uint16_t>(ucnv_countAvailable());
 			UErrorCode err = U_ZERO_ERROR;
 			const char *name;
 			wchar_t buf[48];

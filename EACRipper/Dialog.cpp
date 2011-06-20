@@ -65,7 +65,7 @@ namespace EACRipper
 		auto lfHeightToPoint = [](int32_t height) -> uint16_t
 		{
 			if(height >= 0)
-				return height;
+				return static_cast<uint16_t>(height);
 
 			HWND desktop = GetDesktopWindow();
 			HDC hdc = GetDC(desktop);

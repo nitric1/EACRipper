@@ -1,6 +1,6 @@
 - 0.4.0β
    * Cataclysm on EACRipper!
-   * Added editing-tags-in-the-list feature.
+   * Added spreadsheet-tagging feature.
    * Added opening inCue music.
    * Added opening archive file.
    * Added resizing of main window.
@@ -14,7 +14,7 @@
 - 0.2.2α
    * Added UTF-8 cuesheet support.
 - 0.2.1α
-   * Added BIN Component (Readonly).
-   * Modified width of the format selection combobox wider.
+   * Added BIN Component (Read-only).
+   * Made the format selection combo box wider.
 - 0.2.0α
    * First Release.

@@ -131,7 +131,7 @@ namespace EACRipper
 			if(err != U_ZERO_ERROR && err != U_BUFFER_OVERFLOW_ERROR && err != U_STRING_NOT_TERMINATED_WARNING)
 				return static_cast<size_t>(-1);
 			if(length == numeric_limits<size_t>::max())
-				++ size;
+				++ size; // Size must includes null character.
 			return static_cast<size_t>(size);
 		}
 
@@ -142,7 +142,7 @@ namespace EACRipper
 			if(err != U_ZERO_ERROR && err != U_BUFFER_OVERFLOW_ERROR && err != U_STRING_NOT_TERMINATED_WARNING)
 				return static_cast<size_t>(-1);
 			if(length == numeric_limits<size_t>::max())
-				++ size;
+				++ size; // Size must includes null character.
 			return static_cast<size_t>(size);
 		}
 
@@ -153,7 +153,7 @@ namespace EACRipper
 			if(err != U_ZERO_ERROR && err != U_BUFFER_OVERFLOW_ERROR && err != U_STRING_NOT_TERMINATED_WARNING)
 				return static_cast<size_t>(-1);
 			if(fromLength == numeric_limits<size_t>::max())
-				++ size;
+				++ size; // Size must includes null character.
 			if(size > 0 && toString[0] == L'\uFEFF') // remove byte order mark
 				memmove(toString, toString + 1, (-- size) * sizeof(wchar_t));
 			return static_cast<size_t>(size);
@@ -166,7 +166,7 @@ namespace EACRipper
 			if(err != U_ZERO_ERROR && err != U_BUFFER_OVERFLOW_ERROR && err != U_STRING_NOT_TERMINATED_WARNING)
 				return static_cast<size_t>(-1);
 			if(fromLength == numeric_limits<size_t>::max())
-				++ size;
+				++ size; // Size must includes null character.
 			return static_cast<size_t>(size);
 		}
 

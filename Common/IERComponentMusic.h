@@ -26,7 +26,7 @@ class IERComponentMusicDecoder
 {
 public:
 	/**
-	 * Destructor for safe deriving.
+	 * Destructor for safe destruction.
 	 */
 	virtual ~IERComponentMusicDecoder() = 0 {}
 
@@ -98,7 +98,7 @@ class IERComponentInCueMusicDecoder : public IERComponentMusicDecoder
 {
 public:
 	/**
-	 * Destructor for safe deriving.
+	 * Destructor for safe destruction.
 	 */
 	virtual ~IERComponentInCueMusicDecoder() = 0 {}
 
@@ -124,7 +124,7 @@ class IERComponentMusicEncoder
 {
 public:
 	/**
-	 * Destructor for safe deriving.
+	 * Destructor for safe destruction.
 	 */
 	virtual ~IERComponentMusicEncoder() = 0 {}
 

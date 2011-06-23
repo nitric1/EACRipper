@@ -28,7 +28,7 @@ public:
 
 public:
 	/**
-	 * Destructor for safe deriving.
+	 * Destructor for safe destruction.
 	 */
 	virtual __stdcall ~IERArchiveComponent() = 0 {}
 

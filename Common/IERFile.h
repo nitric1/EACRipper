@@ -8,7 +8,7 @@ class IERFile
 {
 public:
 	/**
-	 * Destructor for safe deriving.
+	 * Destructor for safe destruction.
 	 */
 	virtual ~IERFile() = 0 {}
 
@@ -25,7 +25,7 @@ class IERLocalFile : public IERFile
 {
 public:
 	/**
-	 * Destructor for safe deriving.
+	 * Destructor for safe destruction.
 	 */
 	virtual ~IERLocalFile() = 0 {}
 
@@ -38,7 +38,7 @@ class IERDirectory
 {
 public:
 	/**
-	 * Destructor for safe deriving.
+	 * Destructor for safe destruction.
 	 */
 	virtual ~IERDirectory() = 0 {}
 
@@ -50,7 +50,7 @@ class IERLocalDirectory : public IERDirectory
 {
 public:
 	/**
-	 * Destructor for safe deriving.
+	 * Destructor for safe destruction.
 	 */
 	virtual ~IERLocalDirectory() = 0 {}
 

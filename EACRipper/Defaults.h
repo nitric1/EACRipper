@@ -52,7 +52,7 @@ using std::max; using std::min;
 #include <unicode/ucnv.h>
 #include <unicode/ucsdet.h>
 
-// Windows API Library Inclusion
+// Windows API Inclusion
 
 #include <windows.h>
 #include <windowsx.h>

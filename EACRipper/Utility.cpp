@@ -213,20 +213,23 @@ namespace EACRipper
 		return getDirectoryPath(path);
 	}
 
-	class OSVersion : public Singleton<OSVersion>
+	namespace
 	{
-	private:
-		OSVERSIONINFOW osi;
+		class OSVersion : public Singleton<OSVersion>
+		{
+		private:
+			OSVERSIONINFOW osi;
 
-	private:
-		OSVersion() { osi.dwOSVersionInfoSize = sizeof(osi); GetVersionExW(&osi); }
-		~OSVersion() {}
+		private:
+			OSVersion() { osi.dwOSVersionInfoSize = sizeof(osi); GetVersionExW(&osi); }
+			~OSVersion() {}
 
-	public:
-		const OSVERSIONINFOW &getOSI() { return osi; }
+		public:
+			const OSVERSIONINFOW &getOSI() { return osi; }
 
-		friend class Singleton<OSVersion>;
-	};
+			friend class Singleton<OSVersion>;
+		};
+	}
 
 	bool overOSVersion(OSVERSION ver)
 	{

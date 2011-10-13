@@ -11,9 +11,6 @@
 #include "TrackList.h"
 #include "Utility.h"
 
-using namespace Gdiplus;
-using namespace std;
-
 namespace EACRipper
 {
 	using namespace ServiceImpl;
@@ -35,9 +32,9 @@ namespace EACRipper
 
 	void MainController::initializeApp()
 	{
-		GdiplusStartupInput gsi;
+		Gdiplus::GdiplusStartupInput gsi;
 
-		GdiplusStartup(&gpToken, &gsi, nullptr);
+		Gdiplus::GdiplusStartup(&gpToken, &gsi, nullptr);
 
 		OleInitialize(nullptr);
 
@@ -59,7 +56,7 @@ namespace EACRipper
 	{
 		OleUninitialize();
 
-		GdiplusShutdown(gpToken);
+		Gdiplus::GdiplusShutdown(gpToken);
 	}
 
 	void MainController::registerEvents()
@@ -81,20 +78,20 @@ namespace EACRipper
 		prefWin->addEventListener(L"prefOK", delegateWindowEvent(this, &MainController::onPrefOK));
 	}
 
-	wstring MainController::findLinkedMusicFile(const wstring &ifile, bool last) const
+	std::wstring MainController::findLinkedMusicFile(const std::wstring &ifile, bool last) const
 	{
 		MusicCoderManager &mcm = MusicCoderManager::instance();
-		wstring file = ifile;
+		std::wstring file = ifile;
 		size_t dotp = file.find_last_of(L".");
-		wstring path = getDirectoryPath(static_cast<wstring>((*list)[L"CuesheetPath"]));
-		wstring base = path + file.substr(0, dotp), ext;
-		if(dotp != wstring::npos)
+		std::wstring path = getDirectoryPath(static_cast<std::wstring>((*list)[L"CuesheetPath"]));
+		std::wstring base = path + file.substr(0, dotp), ext;
+		if(dotp != std::wstring::npos)
 			ext = file.substr(++ dotp);
 		LocalFile lf;
 		lf.open(file.c_str());
 		if(!lf.exists() || mcm.getCoderByExtension(ext, MusicCoderManager::Decoder).empty())
 		{
-			vector<pair<wstring, int_fast32_t>> exts = mcm.extensions();
+			std::vector<std::pair<std::wstring, int_fast32_t>> exts = mcm.extensions();
 			auto it = exts.begin();
 			for(; it != exts.end(); ++ it)
 			{
@@ -114,9 +111,9 @@ namespace EACRipper
 			if(it == exts.end())
 			{
 				if(last)
-					throw(runtime_error("Cannot find a linked music file."));
+					throw(std::runtime_error("Cannot find a linked music file."));
 				else
-					return findLinkedMusicFile(getFileName(static_cast<wstring>((*list)[L"CuesheetPath"])), true);
+					return findLinkedMusicFile(getFileName(static_cast<std::wstring>((*list)[L"CuesheetPath"])), true);
 			}
 		}
 
@@ -125,9 +122,9 @@ namespace EACRipper
 
 	void MainController::setTrackDetail()
 	{
-		wstring file = findLinkedMusicFile((*list)[L"File"]);
+		std::wstring file = findLinkedMusicFile((*list)[L"File"]);
 		(*list)[L"SourcePath"] = file;
-		wstring ext = file.substr(file.find_last_of(L".") + 1);
+		std::wstring ext = file.substr(file.find_last_of(L".") + 1);
 		LocalFile lf;
 		lf.open(file.c_str());
 
@@ -136,22 +133,22 @@ namespace EACRipper
 		IERAllocator *alloc = mcm.getCoder(make_pair(mcm.getCoderByExtension(ext, MusicCoderManager::Decoder), MusicCoderManager::Decoder));
 		if(alloc == nullptr)
 		{
-			throw(runtime_error("Cannot get a coder of a linked music file."));
+			throw(std::runtime_error("Cannot get a coder of a linked music file."));
 		}
 		IERComponentMusicDecoder *dec = static_cast<IERComponentMusicDecoder *>(alloc->alloc());
 		IERStreamReader *r = lf.getStreamReader();
 		if(r == nullptr || !dec->setStream(r))
 		{
-			throw(runtime_error("Cannot open a linked music file."));
+			throw(std::runtime_error("Cannot open a linked music file."));
 		}
 
-		wstring eof = makeTimeString(static_cast<int32_t>(dec->getLength()));
+		std::wstring eof = makeTimeString(static_cast<int32_t>(dec->getLength()));
 
 		dec->close();
 		alloc->free(dec);
 		ServicePointerManager::instance().remove(r);
 
-		wstring tmp, start, end;
+		std::wstring tmp, start, end;
 
 		for(size_t i = 1; i <= tracks; ++ i)
 		{
@@ -170,7 +167,7 @@ namespace EACRipper
 		}
 	}
 
-	bool MainController::run(HINSTANCE instHandle, const wstring &commandLine, int showCommand)
+	bool MainController::run(HINSTANCE instHandle, const std::wstring &commandLine, int showCommand)
 	{
 		__try
 		{
@@ -182,7 +179,7 @@ namespace EACRipper
 		}
 	}
 
-	bool MainController::runImpl(HINSTANCE instHandle, const wstring &commandLine, int showCommand)
+	bool MainController::runImpl(HINSTANCE instHandle, const std::wstring &commandLine, int showCommand)
 	{
 		try
 		{
@@ -193,9 +190,11 @@ namespace EACRipper
 			mainWin->setShowStatus(showCommand);
 			return mainWin->show();
 		}
-		catch(exception &e)
+		catch(std::exception &e)
 		{
-			string str = string("Unexpected exception occured: ") + e.what() + string("\nThe program will be terminated.");
+			std::string str = "Unexpected exception occured: ";
+			str += e.what();
+			str += "\nThe program will be terminated.";
 			MessageBoxA(nullptr, str.c_str(), "Error occured", MB_ICONSTOP | MB_OK);
 			return false;
 		}
@@ -238,18 +237,18 @@ namespace EACRipper
 			FileStreamReader f;
 			if(!f.open(fd.getPath().c_str()))
 				return false;
-			vector<char> ve(static_cast<size_t>(f.size()) + 2);
+			std::vector<char> ve(static_cast<size_t>(f.size()) + 2);
 			f.read(&*ve.begin(), ve.size());
 			f.close();
 
-			string cs = fd.getCharset();
-			vector<wchar_t> doc;
+			std::string cs = fd.getCharset();
+			std::vector<wchar_t> doc;
 			if(cs == "Auto")
 			{
 				CharsetDetector &cd = CharsetDetector::instance();
 				IERServiceStringConverter *cv = cd.detect(&*ve.begin());
 				size_t len = cv->getConvertedLengthToUTF16(&*ve.begin());
-				if(len == numeric_limits<size_t>::max())
+				if(len == std::numeric_limits<size_t>::max())
 				{
 					// TODO: Cannot convert the string
 				}
@@ -262,7 +261,7 @@ namespace EACRipper
 				StringCharsetConverter cv;
 				cv.setCharset(cs.c_str());
 				size_t len = cv.getConvertedLengthToUTF16(&*ve.begin());
-				if(len == numeric_limits<size_t>::max())
+				if(len == std::numeric_limits<size_t>::max())
 				{
 					// TODO: Cannot convert the string
 				}
@@ -270,8 +269,8 @@ namespace EACRipper
 				cv.convertToUTF16(&*doc.begin(), doc.size(), &*ve.begin());
 			}
 
-			CuesheetTrackList *plist = new CuesheetTrackList(wstring(&*doc.begin()));
-			list = shared_ptr<TrackList>(plist);
+			CuesheetTrackList *plist = new CuesheetTrackList(std::wstring(&*doc.begin()));
+			list = std::shared_ptr<TrackList>(plist);
 
 			(*list)[L"CuesheetPath"] = fd.getPath();
 
@@ -292,9 +291,9 @@ namespace EACRipper
 
 		mcm = &MusicCoderManager::instance();
 		auto cd = mcm->coders();
-		wstring ext;
-		vector<wstring> ve, allExt;
-		vector<pair<wstring, wstring>> fiVec;
+		std::wstring ext;
+		std::vector<std::wstring> ve, allExt;
+		std::vector<std::pair<std::wstring, std::wstring>> fiVec;
 		IERComponentInCueMusicDecoder *dec;
 		for(auto it = cd.begin(); it != cd.end(); ++ it)
 		{
@@ -306,7 +305,7 @@ namespace EACRipper
 				ve = move(split(info.extension, L";"));
 				alloc->free(dec);
 
-				for_each(ve.begin(), ve.end(), [](wstring &str) { str = L"*." + str; });
+				std::for_each(ve.begin(), ve.end(), [](std::wstring &str) { str = L"*." + str; });
 				ext = join(ve, L";");
 				fiVec.push_back(make_pair(it->first, ext));
 				allExt.push_back(ext);

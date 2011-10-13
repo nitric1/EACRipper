@@ -4,7 +4,6 @@
 #include "Singleton.h"
 
 using namespace std;
-using namespace boost;
 
 namespace EACRipper
 {
@@ -81,9 +80,9 @@ namespace EACRipper
 		if(times.size() != 3)
 			return numeric_limits<int32_t>::max();
 
-		return lexical_cast<int32_t>(times[0]) * 60000
-			+ lexical_cast<int32_t>(times[1]) * 1000
-			+ (lexical_cast<int32_t>(times[2]) * 40 / 3);
+		return boost::lexical_cast<int32_t>(times[0]) * 60000
+			+ boost::lexical_cast<int32_t>(times[1]) * 1000
+			+ (boost::lexical_cast<int32_t>(times[2]) * 40 / 3);
 	}
 
 	wstring makeTimeString(int32_t millisec)
@@ -106,8 +105,8 @@ namespace EACRipper
 		if(times.size() != 3 || amounts.size() != 3)
 			return wstring();
 
-		transform(times.begin(), times.end(), timesInt.begin(), lexical_cast<int32_t, wstring>);
-		transform(amounts.begin(), amounts.end(), amountsInt.begin(), lexical_cast<int32_t, wstring>);
+		transform(times.begin(), times.end(), timesInt.begin(), boost::lexical_cast<int32_t, wstring>);
+		transform(amounts.begin(), amounts.end(), amountsInt.begin(), boost::lexical_cast<int32_t, wstring>);
 
 		timesInt[2] += amountsInt[2];
 		if(timesInt[2] >= 75)
@@ -138,8 +137,8 @@ namespace EACRipper
 		if(starts.size() != 3 || ends.size() != 3)
 			return wstring();
 
-		transform(starts.begin(), starts.end(), startsInt.begin(), lexical_cast<int32_t, wstring>);
-		transform(ends.begin(), ends.end(), endsInt.begin(), lexical_cast<int32_t, wstring>);
+		transform(starts.begin(), starts.end(), startsInt.begin(), boost::lexical_cast<int32_t, wstring>);
+		transform(ends.begin(), ends.end(), endsInt.begin(), boost::lexical_cast<int32_t, wstring>);
 
 		endsInt[2] -= startsInt[2];
 		while(endsInt[2] < 0)

@@ -272,20 +272,17 @@
     <ClInclude Include="OptionDialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Delegate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MemoryStream.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TrackListControl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DelegateStub.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\Common\Delegate.h">
+      <Filter>Common Files</Filter>
     </ClInclude>
-    <ClInclude Include="DelegateTemplates.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\Common\DelegateStub.h">
+      <Filter>Common Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

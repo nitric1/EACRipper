@@ -4,6 +4,8 @@
 #include "MainWindow.h"
 #include "Info.h"
 
+#include "Delegate.h"
+
 using namespace std;
 using namespace Gdiplus;
 
@@ -17,6 +19,8 @@ namespace EACRipper
 		shortcut->addShortcut(this, IDM_FILE_OPEN, ShortcutKey::makeKey(ShortcutKey::Ctrl, 'O'), true, false);
 		shortcut->addShortcut(this, IDM_INCUE_OPEN, ShortcutKey::makeKey(ShortcutKey::Ctrl, 'I'), true, false);
 		shortcut->addShortcut(this, IDM_ARCHIVE_OPEN, ShortcutKey::makeKey(ShortcutKey::Ctrl, 'P'), true, false);
+
+		shared_ptr<ERDelegate<void (int, int)>> sp(new ERDelegateImpl<void (int, int)>(&MainWindow::resizeLayout, this));
 	}
 
 	MainWindow::~MainWindow()

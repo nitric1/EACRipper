@@ -66,7 +66,7 @@ namespace EACRipper
 		vector<wstring> StringCharsetConverter::makeCharsetList()
 		{
 			vector<wstring> list;
-			uint16_t n = ucnv_countAvailable();
+			uint16_t n = static_cast<uint16_t>(ucnv_countAvailable());
 			UErrorCode err = U_ZERO_ERROR;
 			const char *name;
 			wchar_t buf[48];
@@ -131,7 +131,7 @@ namespace EACRipper
 			if(err != U_ZERO_ERROR && err != U_BUFFER_OVERFLOW_ERROR && err != U_STRING_NOT_TERMINATED_WARNING)
 				return static_cast<size_t>(-1);
 			if(length == numeric_limits<size_t>::max())
-				++ size;
+				++ size; // Size must includes null character.
 			return static_cast<size_t>(size);
 		}
 
@@ -142,7 +142,7 @@ namespace EACRipper
 			if(err != U_ZERO_ERROR && err != U_BUFFER_OVERFLOW_ERROR && err != U_STRING_NOT_TERMINATED_WARNING)
 				return static_cast<size_t>(-1);
 			if(length == numeric_limits<size_t>::max())
-				++ size;
+				++ size; // Size must includes null character.
 			return static_cast<size_t>(size);
 		}
 
@@ -153,7 +153,7 @@ namespace EACRipper
 			if(err != U_ZERO_ERROR && err != U_BUFFER_OVERFLOW_ERROR && err != U_STRING_NOT_TERMINATED_WARNING)
 				return static_cast<size_t>(-1);
 			if(fromLength == numeric_limits<size_t>::max())
-				++ size;
+				++ size; // Size must includes null character.
 			if(size > 0 && toString[0] == L'\uFEFF') // remove byte order mark
 				memmove(toString, toString + 1, (-- size) * sizeof(wchar_t));
 			return static_cast<size_t>(size);
@@ -166,7 +166,7 @@ namespace EACRipper
 			if(err != U_ZERO_ERROR && err != U_BUFFER_OVERFLOW_ERROR && err != U_STRING_NOT_TERMINATED_WARNING)
 				return static_cast<size_t>(-1);
 			if(fromLength == numeric_limits<size_t>::max())
-				++ size;
+				++ size; // Size must includes null character.
 			return static_cast<size_t>(size);
 		}
 

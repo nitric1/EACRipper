@@ -284,9 +284,6 @@
     <ClInclude Include="DelegateStub.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DelegateDefinition.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DelegateTemplates.h">
       <Filter>Header Files</Filter>
     </ClInclude>

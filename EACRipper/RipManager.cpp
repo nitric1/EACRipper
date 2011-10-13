@@ -169,7 +169,7 @@ namespace EACRipper
 			// TODO: Read track information (samples, ...)
 			start = static_cast<uint32_t>(getTimestamp((*self.list)[track][L"Start Time"]));
 			end = static_cast<uint32_t>(getTimestamp((*self.list)[track][L"End Time"]));
-			if(start == numeric_limits<int32_t>::max() || end == numeric_limits<int32_t>::max())
+			if(start == static_cast<uint32_t>(numeric_limits<int32_t>::max()) || end == static_cast<uint32_t>(numeric_limits<int32_t>::max()))
 			{
 				// TODO: Error
 				continue;

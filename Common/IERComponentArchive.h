@@ -18,7 +18,7 @@ class IERComponentArchiveExtractor
 {
 public:
 	/**
-	 * Destructor for safe deriving.
+	 * Destructor for safe destruction.
 	 */
 	virtual ~IERComponentArchiveExtractor() = 0 {}
 

@@ -5,7 +5,7 @@
 #include <climits>
 
 #ifndef LONG32_T_DEFINED
-#  if LONG_MAX == 2147483647 // 32-bit long type
+#  if LONG_MAX == 2147483647l // 32-bit long type
 typedef signed long long32_t;
 typedef int64_t long64_t;
 

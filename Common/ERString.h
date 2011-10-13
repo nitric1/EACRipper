@@ -4,7 +4,7 @@ class ERString
 {
 public:
 	/**
-	 * Destructor for safe deriving.
+	 * Destructor for safe destruction.
 	 */
 	virtual ~ERString() = 0 {}
 

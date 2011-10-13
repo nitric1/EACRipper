@@ -57,7 +57,7 @@ namespace EACRipper
 				ve.push_back(str.substr(ppos, pos - ppos));
 		}
 
-		return move(ve);
+		return ve;
 	}
 
 	wstring join(const vector<wstring> &ve, const wstring &sep)
@@ -72,7 +72,7 @@ namespace EACRipper
 			str += *it;
 		}
 
-		return move(str);
+		return str;
 	}
 
 	int32_t getTimestamp(const wstring &time)

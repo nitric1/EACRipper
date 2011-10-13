@@ -278,10 +278,10 @@
     <ClInclude Include="TrackListControl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Common\Delegate.h">
+    <ClInclude Include="..\Common\ERDelegate.h">
       <Filter>Common Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Common\DelegateStub.h">
+    <ClInclude Include="..\Common\ERDelegateStub.h">
       <Filter>Common Files</Filter>
     </ClInclude>
   </ItemGroup>

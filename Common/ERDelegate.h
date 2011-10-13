@@ -1,7 +1,5 @@
 #pragma once
 
-#include "DelegateTemplates.h"
-
 #define _DELEGATE_COMMA ,
 
 #define DELEGATE_REPEAT_0(b, s)
@@ -37,44 +35,44 @@ class ERDelegateImpl;
 #define DELEGATE_TEMPLATE_COMMA
 
 #define DELEGATE_NUM_ARG 0
-#include "DelegateStub.h"
+#include "ERDelegateStub.h"
 #undef DELEGATE_NUM_ARG
 
 #undef DELEGATE_TEMPLATE_COMMA
 #define DELEGATE_TEMPLATE_COMMA ,
 
 #define DELEGATE_NUM_ARG 1
-#include "DelegateStub.h"
+#include "ERDelegateStub.h"
 #undef DELEGATE_NUM_ARG
 
 #define DELEGATE_NUM_ARG 2
-#include "DelegateStub.h"
+#include "ERDelegateStub.h"
 #undef DELEGATE_NUM_ARG
 
 #define DELEGATE_NUM_ARG 3
-#include "DelegateStub.h"
+#include "ERDelegateStub.h"
 #undef DELEGATE_NUM_ARG
 
 #define DELEGATE_NUM_ARG 4
-#include "DelegateStub.h"
+#include "ERDelegateStub.h"
 #undef DELEGATE_NUM_ARG
 
 #define DELEGATE_NUM_ARG 5
-#include "DelegateStub.h"
+#include "ERDelegateStub.h"
 #undef DELEGATE_NUM_ARG
 
 #define DELEGATE_NUM_ARG 6
-#include "DelegateStub.h"
+#include "ERDelegateStub.h"
 #undef DELEGATE_NUM_ARG
 
 #define DELEGATE_NUM_ARG 7
-#include "DelegateStub.h"
+#include "ERDelegateStub.h"
 #undef DELEGATE_NUM_ARG
 
 #define DELEGATE_NUM_ARG 8
-#include "DelegateStub.h"
+#include "ERDelegateStub.h"
 #undef DELEGATE_NUM_ARG
 
 #define DELEGATE_NUM_ARG 9
-#include "DelegateStub.h"
+#include "ERDelegateStub.h"
 #undef DELEGATE_NUM_ARG

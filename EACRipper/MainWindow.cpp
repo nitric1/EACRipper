@@ -4,9 +4,6 @@
 #include "MainWindow.h"
 #include "Info.h"
 
-using namespace std;
-using namespace Gdiplus;
-
 namespace EACRipper
 {
 	// TODO: Implementaion of to load/save the window size and list columns' size.
@@ -205,7 +202,7 @@ namespace EACRipper
 
 				if(self.coverArtThumbnail != nullptr)
 				{
-					Graphics g(hdc);
+					Gdiplus::Graphics g(hdc);
 					g.DrawImage(self.coverArtThumbnail, self.coverArtLeft, self.coverArtTop, self.coverArtWidth, self.coverArtHeight);
 				}
 
@@ -279,14 +276,14 @@ namespace EACRipper
 	{
 	}
 
-	void MainWindow::addFormat(const wstring &name)
+	void MainWindow::addFormat(const std::wstring &name)
 	{
 		HWND formatList = GetDlgItem(getWindow(), IDC_FORMAT);
 
 		ComboBox_AddString(formatList, name.c_str());
 	}
 
-	void MainWindow::selectFormat(const wstring &name)
+	void MainWindow::selectFormat(const std::wstring &name)
 	{
 		HWND formatList = GetDlgItem(getWindow(), IDC_FORMAT);
 		int idx = ComboBox_FindStringExact(formatList, -1, name.c_str());
@@ -295,7 +292,7 @@ namespace EACRipper
 		ComboBox_SetCurSel(formatList, idx);
 	}
 
-	void MainWindow::setCoverArt(const wstring &path)
+	void MainWindow::setCoverArt(const std::wstring &path)
 	{
 		HWND coverArt = GetDlgItem(getWindow(), IDC_COVER_ART);
 		RECT rc;
@@ -310,7 +307,7 @@ namespace EACRipper
 		++ rc.left; ++ rc.top;
 		-- rc.right; -- rc.bottom;
 
-		Image img(path.c_str());
+		Gdiplus::Image img(path.c_str());
 
 		unsigned iw = img.GetWidth(), ih = img.GetHeight();
 
@@ -352,7 +349,7 @@ namespace EACRipper
 
 	void MainWindow::setTrackList(const TrackList &list)
 	{
-		static wstring fields[] =
+		static std::wstring fields[] =
 		{
 			L"Track",
 			L"Artist",
@@ -364,7 +361,7 @@ namespace EACRipper
 		clearTrackList();
 		clearAlbumFields();
 		size_t len = list.getTrackCount();
-		vector<wstring> item(6);
+		std::vector<std::wstring> item(6);
 		for(size_t i = 1; i <= len; ++ i)
 		{
 			for(size_t j = 0; j < (sizeof(fields) / sizeof(*fields)); ++ j)
@@ -372,10 +369,10 @@ namespace EACRipper
 			trackList.addItem(item);
 		}
 
-		setAlbumField(L"Album Title", static_cast<wstring>(list[L"Album Title"]));
-		setAlbumField(L"Album Artist", static_cast<wstring>(list[L"Album Artist"]));
-		setAlbumField(L"Date", static_cast<wstring>(list[L"Date"]));
-		setAlbumField(L"Genre", static_cast<wstring>(list[L"Genre"]));
+		setAlbumField(L"Album Title", static_cast<std::wstring>(list[L"Album Title"]));
+		setAlbumField(L"Album Artist", static_cast<std::wstring>(list[L"Album Artist"]));
+		setAlbumField(L"Date", static_cast<std::wstring>(list[L"Date"]));
+		setAlbumField(L"Genre", static_cast<std::wstring>(list[L"Genre"]));
 	}
 
 	void MainWindow::clearTrackList()
@@ -388,14 +385,14 @@ namespace EACRipper
 		class Fields : public Singleton<Fields>
 		{
 		private:
-			map<wstring, int32_t> fieldMap;
+			std::map<std::wstring, int32_t> fieldMap;
 
 		private:
 			Fields();
 
 		public:
-			int32_t getFieldID(const wstring &) const;
-			const map<wstring, int32_t> &getMap() const;
+			int32_t getFieldID(const std::wstring &) const;
+			const std::map<std::wstring, int32_t> &getMap() const;
 
 			friend class Singleton<Fields>;
 		};
@@ -410,7 +407,7 @@ namespace EACRipper
 			fieldMap[L"Genre"] = IDC_GENRE;
 		}
 
-		int32_t Fields::getFieldID(const wstring &field) const
+		int32_t Fields::getFieldID(const std::wstring &field) const
 		{
 			auto it = fieldMap.find(field);
 			if(it == fieldMap.end())
@@ -418,13 +415,13 @@ namespace EACRipper
 			return it->second;
 		}
 
-		const map<wstring, int32_t> &Fields::getMap() const
+		const std::map<std::wstring, int32_t> &Fields::getMap() const
 		{
 			return fieldMap;
 		}
 	}
 
-	void MainWindow::setAlbumField(const wstring &field, const wstring &value)
+	void MainWindow::setAlbumField(const std::wstring &field, const std::wstring &value)
 	{
 		int32_t id = Fields::instance().getFieldID(field);
 		if(id != 0)
@@ -433,8 +430,8 @@ namespace EACRipper
 
 	void MainWindow::clearAlbumFields()
 	{
-		const map<wstring, int32_t> &map = Fields::instance().getMap();
-		for_each(map.begin(), map.end(), [this](const pair<wstring, int32_t> &item)
+		const std::map<std::wstring, int32_t> &map = Fields::instance().getMap();
+		std::for_each(map.begin(), map.end(), [this](const std::pair<std::wstring, int32_t> &item)
 		{
 			SendMessageW(getItemWindow(item.second), WM_SETTEXT, 0, reinterpret_cast<LPARAM>(L""));
 		});

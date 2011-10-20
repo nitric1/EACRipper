@@ -44,15 +44,15 @@ using std::max; using std::min;
 
 // Boost Library Inclusion
 
-#include <boost/lexical_cast.hpp>
 #include <boost/cast.hpp>
+#include <boost/lexical_cast.hpp>
 
 // ICU Library Inclusion
 
 #include <unicode/ucnv.h>
 #include <unicode/ucsdet.h>
 
-// Windows API Library Inclusion
+// Windows API Inclusion
 
 #include <windows.h>
 #include <windowsx.h>

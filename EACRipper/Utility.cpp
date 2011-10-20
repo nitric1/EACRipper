@@ -3,30 +3,27 @@
 #include "Utility.h"
 #include "Singleton.h"
 
-using namespace std;
-using namespace boost;
-
 namespace EACRipper
 {
-	wstring &trim(wstring &str)
+	std::wstring &trim(std::wstring &str)
 	{
 		static auto fn = [](wchar_t ch) { return ch != L' ' && ch != L'¡¡' && ch != L'\t' && ch != L'\n' && ch != L'\r'; };
-		str.erase(str.begin(), find_if(str.begin(), str.end(), fn));
-		str.erase(find_if(str.rbegin(), str.rend(), fn).base(), str.end());
+		str.erase(str.begin(), std::find_if(str.begin(), str.end(), fn));
+		str.erase(std::find_if(str.rbegin(), str.rend(), fn).base(), str.end());
 		return str;
 	}
 
-	vector<wstring> split(const wstring &str, const wstring &sep)
+	std::vector<std::wstring> split(const std::wstring &str, const std::wstring &sep)
 	{
 		size_t ppos, pos = static_cast<size_t>(-static_cast<ptrdiff_t>(sep.size()));
-		vector<wstring> ve;
+		std::vector<std::wstring> ve;
 
 		while(true)
 		{
 			ppos = pos + sep.size();
 			pos = str.find(sep, ppos);
 
-			if(pos == wstring::npos)
+			if(pos == std::wstring::npos)
 			{
 				ve.push_back(str.substr(ppos));
 				break;
@@ -38,17 +35,17 @@ namespace EACRipper
 		return ve;
 	}
 
-	vector<wstring> splitAnyOf(const wstring &str, const wstring &sep)
+	std::vector<std::wstring> splitAnyOf(const std::wstring &str, const std::wstring &sep)
 	{
 		size_t ppos, pos = static_cast<size_t>(-1);
-		vector<wstring> ve;
+		std::vector<std::wstring> ve;
 
 		while(true)
 		{
 			ppos = pos;
 			pos = str.find_first_of(sep, ++ ppos);
 
-			if(pos == wstring::npos)
+			if(pos == std::wstring::npos)
 			{
 				ve.push_back(str.substr(ppos));
 				break;
@@ -60,12 +57,12 @@ namespace EACRipper
 		return ve;
 	}
 
-	wstring join(const vector<wstring> &ve, const wstring &sep)
+	std::wstring join(const std::vector<std::wstring> &ve, const std::wstring &sep)
 	{
 		if(ve.empty())
-			return wstring();
+			return std::wstring();
 
-		wstring str = ve.front();
+		std::wstring str = ve.front();
 		for(auto it = ++ ve.begin(); it != ve.end(); ++ it)
 		{
 			str += sep;
@@ -75,39 +72,39 @@ namespace EACRipper
 		return str;
 	}
 
-	int32_t getTimestamp(const wstring &time)
+	int32_t getTimestamp(const std::wstring &time)
 	{
-		vector<wstring> times(split(time, L":"));
+		std::vector<std::wstring> times(split(time, L":"));
 		if(times.size() != 3)
-			return numeric_limits<int32_t>::max();
+			return std::numeric_limits<int32_t>::max();
 
-		return lexical_cast<int32_t>(times[0]) * 60000
-			+ lexical_cast<int32_t>(times[1]) * 1000
-			+ (lexical_cast<int32_t>(times[2]) * 40 / 3);
+		return boost::lexical_cast<int32_t>(times[0]) * 60000
+			+ boost::lexical_cast<int32_t>(times[1]) * 1000
+			+ (boost::lexical_cast<int32_t>(times[2]) * 40 / 3);
 	}
 
-	wstring makeTimeString(int32_t millisec)
+	std::wstring makeTimeString(int32_t millisec)
 	{
-		wstringstream ss;
+		std::wstringstream ss;
 		bool minus = millisec < 0;
 		millisec = abs(millisec);
-		ss << setfill(L'0')
+		ss << std::setfill(L'0')
 			<< (minus ? L"-" : L"")
-			<< setw(2) << (millisec / 60000)
-			<< L':' << setw(2) << ((millisec / 1000) % 60)
-			<< L':' << setw(2) << ((millisec % 1000) * 3 / 40);
+			<< std::setw(2) << (millisec / 60000)
+			<< L':' << std::setw(2) << ((millisec / 1000) % 60)
+			<< L':' << std::setw(2) << ((millisec % 1000) * 3 / 40);
 		return ss.str();
 	}
 
-	wstring getTimeStringIncr(const wstring &time, const wstring &amount)
+	std::wstring getTimeStringIncr(const std::wstring &time, const std::wstring &amount)
 	{
-		vector<wstring> times(split(time, L":")), amounts(split(amount, L":"));
-		vector<int32_t> timesInt(3), amountsInt(3);
+		std::vector<std::wstring> times(split(time, L":")), amounts(split(amount, L":"));
+		std::vector<int32_t> timesInt(3), amountsInt(3);
 		if(times.size() != 3 || amounts.size() != 3)
-			return wstring();
+			return std::wstring();
 
-		transform(times.begin(), times.end(), timesInt.begin(), lexical_cast<int32_t, wstring>);
-		transform(amounts.begin(), amounts.end(), amountsInt.begin(), lexical_cast<int32_t, wstring>);
+		std::transform(times.begin(), times.end(), timesInt.begin(), boost::lexical_cast<int32_t, std::wstring>);
+		std::transform(amounts.begin(), amounts.end(), amountsInt.begin(), boost::lexical_cast<int32_t, std::wstring>);
 
 		timesInt[2] += amountsInt[2];
 		if(timesInt[2] >= 75)
@@ -123,23 +120,23 @@ namespace EACRipper
 			timesInt[1] %= 60;
 		}
 
-		wstringstream ss;
-		ss << setfill(L'0')
-			<< setw(2) << timesInt[0]
-			<< L':' << setw(2) << timesInt[1]
-			<< L':' << setw(2) << timesInt[2];
+		std::wstringstream ss;
+		ss << std::setfill(L'0')
+			<< std::setw(2) << timesInt[0]
+			<< L':' << std::setw(2) << timesInt[1]
+			<< L':' << std::setw(2) << timesInt[2];
 		return ss.str();
 	}
 
-	wstring getTimeStringDiff(const wstring &start, const wstring &end)
+	std::wstring getTimeStringDiff(const std::wstring &start, const std::wstring &end)
 	{
-		vector<wstring> starts(split(start, L":")), ends(split(end, L":"));
-		vector<int32_t> startsInt(3), endsInt(3);
+		std::vector<std::wstring> starts(split(start, L":")), ends(split(end, L":"));
+		std::vector<int32_t> startsInt(3), endsInt(3);
 		if(starts.size() != 3 || ends.size() != 3)
-			return wstring();
+			return std::wstring();
 
-		transform(starts.begin(), starts.end(), startsInt.begin(), lexical_cast<int32_t, wstring>);
-		transform(ends.begin(), ends.end(), endsInt.begin(), lexical_cast<int32_t, wstring>);
+		std::transform(starts.begin(), starts.end(), startsInt.begin(), boost::lexical_cast<int32_t, std::wstring>);
+		std::transform(ends.begin(), ends.end(), endsInt.begin(), boost::lexical_cast<int32_t, std::wstring>);
 
 		endsInt[2] -= startsInt[2];
 		while(endsInt[2] < 0)
@@ -159,74 +156,77 @@ namespace EACRipper
 
 		bool minus = endsInt[0] < 0;
 		endsInt[0] = abs(endsInt[0]);
-		wstringstream ss;
-		ss << setfill(L'0')
+		std::wstringstream ss;
+		ss << std::setfill(L'0')
 			<< (minus ? L"-" : L"")
-			<< setw(2) << endsInt[0]
-			<< L':' << setw(2) << endsInt[1]
-			<< L':' << setw(2) << endsInt[2];
+			<< std::setw(2) << endsInt[0]
+			<< L':' << std::setw(2) << endsInt[1]
+			<< L':' << std::setw(2) << endsInt[2];
 		return ss.str();
 	}
 
-	wstring getReadableTimeString(const wstring &time)
+	std::wstring getReadableTimeString(const std::wstring &time)
 	{
 		int32_t timestamp = getTimestamp(time);
 
 		bool minus = timestamp < 0;
 		timestamp = abs(timestamp);
 
-		wstringstream ss;
-		ss << setfill(L'0')
+		std::wstringstream ss;
+		ss << std::setfill(L'0')
 			<< (minus ? L"-" : L"")
-			<< setw(2) << (timestamp / 60000)
-			<< L':' << setw(2) << ((timestamp / 1000) % 60)
-			<< L'.' << setw(3) << (timestamp % 1000);
+			<< std::setw(2) << (timestamp / 60000)
+			<< L':' << std::setw(2) << ((timestamp / 1000) % 60)
+			<< L'.' << std::setw(3) << (timestamp % 1000);
 		return ss.str();
 	}
 
-	wstring getDirectoryPath(const wstring &ipath)
+	std::wstring getDirectoryPath(const std::wstring &ipath)
 	{
-		wstring path = ipath;
+		std::wstring path = ipath;
 		size_t pos = path.rfind(L'\\');
-		if(pos != wstring::npos)
+		if(pos != std::wstring::npos)
 			path.erase(++ pos);
 		return path;
 	}
 
-	wstring getFileName(const wstring &ipath)
+	std::wstring getFileName(const std::wstring &ipath)
 	{
-		wstring path = ipath;
+		std::wstring path = ipath;
 		size_t pos = path.rfind(L'\\');
-		if(pos != wstring::npos)
+		if(pos != std::wstring::npos)
 			path.erase(0, ++ pos);
 		return path;
 	}
 
-	wstring getCurrentDirectoryPath()
+	std::wstring getCurrentDirectoryPath()
 	{
-		vector<wchar_t> buffer(512);
+		std::vector<wchar_t> buffer(512);
 		size_t pathlen;
 
 		pathlen = GetModuleFileNameW(nullptr, &*buffer.begin(), static_cast<DWORD>(buffer.size()));
 
-		wstring path(buffer.begin(), buffer.begin() + pathlen);
+		std::wstring path(buffer.begin(), buffer.begin() + pathlen);
 		return getDirectoryPath(path);
 	}
 
-	class OSVersion : public Singleton<OSVersion>
+	namespace
 	{
-	private:
-		OSVERSIONINFOW osi;
+		class OSVersion : public Singleton<OSVersion>
+		{
+		private:
+			OSVERSIONINFOW osi;
 
-	private:
-		OSVersion() { osi.dwOSVersionInfoSize = sizeof(osi); GetVersionExW(&osi); }
-		~OSVersion() {}
+		private:
+			OSVersion() { osi.dwOSVersionInfoSize = sizeof(osi); GetVersionExW(&osi); }
+			~OSVersion() {}
 
-	public:
-		const OSVERSIONINFOW &getOSI() { return osi; }
+		public:
+			const OSVERSIONINFOW &getOSI() { return osi; }
 
-		friend class Singleton<OSVersion>;
-	};
+			friend class Singleton<OSVersion>;
+		};
+	}
 
 	bool overOSVersion(OSVERSION ver)
 	{

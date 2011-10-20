@@ -85,7 +85,12 @@ namespace EACRipper
 
 	wchar_t Configure::digitHex(uint8_t low)
 	{
-		static wchar_t digits[16] = {L'0', L'1', L'2', L'3', L'4', L'5', L'6', L'7', L'8', L'9', L'A', L'B', L'C', L'D', L'E', L'F'};
+		static wchar_t digits[16] =
+		{
+			L'0', L'1', L'2', L'3', L'4', L'5',
+			L'6', L'7', L'8', L'9', L'A', L'B',
+			L'C', L'D', L'E', L'F'
+		};
 		return digits[low];
 	}
 

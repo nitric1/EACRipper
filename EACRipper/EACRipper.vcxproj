@@ -212,6 +212,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Common\Component\Definition.h" />
+    <ClInclude Include="..\Common\ERDelegate.h" />
+    <ClInclude Include="..\Common\ERDelegateStub.h" />
     <ClInclude Include="..\Common\EREndian.h" />
     <ClInclude Include="..\Common\ERString.h" />
     <ClInclude Include="..\Common\ERTypes.h" />
@@ -225,9 +227,6 @@
     <ClInclude Include="Configure.h" />
     <ClInclude Include="Control.h" />
     <ClInclude Include="Defaults.h" />
-    <ClInclude Include="Delegate.h" />
-    <ClInclude Include="DelegateStub.h" />
-    <ClInclude Include="DelegateTemplates.h" />
     <ClInclude Include="Dialog.h" />
     <ClInclude Include="FileDialog.h" />
     <ClInclude Include="FileStream.h" />

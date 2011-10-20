@@ -5,6 +5,8 @@
 
 #include <cinttypes>
 
+#include <limits>
+
 #include <windows.h>
 
 #include "ERTypes.h"

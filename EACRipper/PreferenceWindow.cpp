@@ -49,7 +49,7 @@ namespace EACRipper
 					bi.hwndOwner = window;
 					bi.pidlRoot = NULL;
 					bi.pszDisplayName = &*buf.begin();
-					bi.lpszTitle = L"Select the target path in which music is ripped.";
+					bi.lpszTitle = L"Select the target path in which music will be ripped.";
 					bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_STATUSTEXT | BIF_USENEWUI;
 					bi.lpfn = procBrowsePath;
 					bi.lParam = reinterpret_cast<LPARAM>(&*buf.begin());

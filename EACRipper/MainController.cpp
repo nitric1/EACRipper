@@ -217,11 +217,35 @@ namespace EACRipper
 	bool MainController::onInit(WindowEventArgs e)
 	{
 		initializeApp();
+
+		Configure &conf = Configure::instance();
+		int64_t x, y, width, height;
+		x = conf.getInt(L"WindowPosX", std::numeric_limits<int64_t>::min());
+		y = conf.getInt(L"WindowPosY", std::numeric_limits<int64_t>::min());
+		width = conf.getInt(L"WindowWidth", std::numeric_limits<int64_t>::min());
+		height = conf.getInt(L"WindowHeight", std::numeric_limits<int64_t>::min());
+
+		if(!(x == std::numeric_limits<int64_t>::min() || y == std::numeric_limits<int64_t>::min() || width == std::numeric_limits<int64_t>::min() || height == std::numeric_limits<int64_t>::min()))
+		{
+			MoveWindow(mainWin->getWindow(), static_cast<int32_t>(x), static_cast<int32_t>(y), static_cast<int32_t>(width), static_cast<int32_t>(height), TRUE);
+		}
+
 		return true;
 	}
 
 	bool MainController::onClose(WindowEventArgs e)
 	{
+		WINDOWPLACEMENT wp;
+
+		wp.length = sizeof(wp);
+		GetWindowPlacement(mainWin->getWindow(), &wp);
+
+		Configure &conf = Configure::instance();
+		conf.setInt(L"WindowPosX", wp.rcNormalPosition.left);
+		conf.setInt(L"WindowPosY", wp.rcNormalPosition.top);
+		conf.setInt(L"WindowWidth", wp.rcNormalPosition.right - wp.rcNormalPosition.left);
+		conf.setInt(L"WindowHeight", wp.rcNormalPosition.bottom - wp.rcNormalPosition.top);
+
 		uninitializeApp();
 		return true;
 	}

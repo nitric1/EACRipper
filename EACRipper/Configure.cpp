@@ -117,6 +117,14 @@ namespace EACRipper
 		return it->second;
 	}
 
+	int64_t Configure::getInt(const wstring &name, int64_t def) const
+	{
+		auto it = find(name);
+		if(it == confMap.end())
+			return def;
+		return boost::lexical_cast<int64_t>(it->second);
+	}
+
 	vector<uint8_t> Configure::getBinary(const wstring &name) const
 	{
 		wstring str = get(name);
@@ -148,6 +156,12 @@ namespace EACRipper
 	void Configure::set(const wstring &name, const wstring &value, bool setChanged)
 	{
 		confMap[name] = value;
+		changed = setChanged;
+	}
+
+	void Configure::setInt(const wstring &name, int64_t value, bool setChanged)
+	{
+		confMap[name] = boost::lexical_cast<std::wstring>(value);
 		changed = setChanged;
 	}
 

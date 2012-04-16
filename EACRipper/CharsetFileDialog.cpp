@@ -4,13 +4,16 @@
 #include "CharsetFileDialog.h"
 #include "ComponentServiceImpl.h"
 
-using namespace std;
-
 namespace EACRipper
 {
 	using namespace ServiceImpl;
 
-	// TODO: Implementation of to load/save the last-selected charset.
+	// TODO: Implementation of loading/saving the last-selected charset.
+
+	namespace
+	{
+		;
+	}
 
 	CharsetFileDialog::CharsetFileDialog(bool isOpen, Window *owner, const std::wstring &title, const FileDialogFilter &filter, const std::wstring &defExt)
 		: FileDialog(isOpen, owner, title, filter, defExt), charsetIdx(0)
@@ -30,29 +33,13 @@ namespace EACRipper
 			if(FAILED(hr))
 				return;
 
-			vector<wstring> list = StringCharsetConverter::getCharsetList();
-			sort(list.begin(), list.end());
-
-			auto addCharsetText = [&cust, &idx, this](const wstring &charset)->void
+			doCharsetList([&cust, &idx, this](const std::wstring &charset) -> void
 			{
 				HRESULT hr = cust->AddControlItem(IDC_ENCODING, idx ++, charset.c_str());
 				if(SUCCEEDED(hr))
 					charsetList.push_back(charset);
-			};
-
-			addCharsetText(L"Auto-detect");
-			addCharsetText(L"UTF-8");
-			addCharsetText(L"Shift_JIS");
-			addCharsetText(L"ISO-8859-1");
-			addCharsetText(L"UTF-16");
-			addCharsetText(L"UTF-16LE");
-			addCharsetText(L"UTF-16BE");
-
-			for_each(list.begin(), list.end(), [&cust, &idx, addCharsetText](const wstring &name)
-			{
-				if(name != L"UTF-8" && name != L"UTF-16" && name != L"UTF-16LE" && name != L"UTF-16BE" && name != L"Shift_JIS" && name != L"ISO-8859-1")
-					addCharsetText(name);
 			});
+
 			cust->SetSelectedControlItem(IDC_ENCODING, 0);
 
 			cust->EndVisualGroup();
@@ -98,29 +85,13 @@ namespace EACRipper
 				SendMessageW(combo, WM_SETFONT, reinterpret_cast<WPARAM>(font), TRUE);
 				SendMessageW(label, WM_SETFONT, reinterpret_cast<WPARAM>(font), TRUE);
 
-				vector<wstring> list = StringCharsetConverter::getCharsetList();
-				sort(list.begin(), list.end());
+				std::vector<std::wstring> &charsetList = inst->charsetList;
 
-				vector<wstring> &charsetList = inst->charsetList;
-
-				auto addCharsetText = [&combo, &charsetList](const wstring &charset)->void
+				doCharsetList([&combo, &charsetList](const std::wstring &charset) -> void
 				{
 					int res = static_cast<int>(SendMessageW(combo, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(charset.c_str())));
 					if(res != CB_ERR && res != CB_ERRSPACE)
 						charsetList.push_back(charset);
-				};
-
-				addCharsetText(L"Auto-detect");
-				addCharsetText(L"UTF-8");
-				addCharsetText(L"Shift_JIS");
-				addCharsetText(L"ISO-8859-1");
-				addCharsetText(L"UTF-16");
-				addCharsetText(L"UTF-16LE");
-				addCharsetText(L"UTF-16BE");
-				for_each(list.begin(), list.end(), [&combo, addCharsetText](const wstring &name)
-				{
-					if(name != L"UTF-8" && name != L"UTF-16" && name != L"UTF-16LE" && name != L"UTF-16BE" && name != L"Shift_JIS" && name != L"ISO-8859-1")
-						addCharsetText(name);
 				});
 
 				SendMessageW(combo, CB_SETCURSEL, 0, 0);
@@ -190,6 +161,26 @@ namespace EACRipper
 		p->bottom = pt.y;
 	}
 
+	void CharsetFileDialog::doCharsetList(std::function<void (const std::wstring &)> fn)
+	{
+		std::vector<std::wstring> list = StringCharsetConverter::getCharsetList();
+		std::sort(list.begin(), list.end());
+
+		fn(L"Auto-detect");
+		fn(L"UTF-8");
+		fn(L"Shift_JIS");
+		fn(L"ISO-8859-1");
+		fn(L"UTF-16");
+		fn(L"UTF-16LE");
+		fn(L"UTF-16BE");
+
+		std::for_each(list.begin(), list.end(), [fn](const std::wstring &name)
+		{
+			if(name != L"UTF-8" && name != L"UTF-16" && name != L"UTF-16LE" && name != L"UTF-16BE" && name != L"Shift_JIS" && name != L"ISO-8859-1")
+				fn(name);
+		});
+	}
+
 	bool CharsetFileDialog::show()
 	{
 		if(!FileDialog::show())
@@ -221,9 +212,9 @@ namespace EACRipper
 		}
 		else
 		{
-			wstring &cs = charsetList[charsetIdx];
+			std::wstring &cs = charsetList[charsetIdx];
 
-			vector<char> charsetBuf;
+			std::vector<char> charsetBuf;
 			StringCharsetConverter cv;
 
 			size_t len = cv.getConvertedLengthFromUTF16(cs.c_str());
@@ -236,7 +227,7 @@ namespace EACRipper
 		return true;
 	}
 
-	const string &CharsetFileDialog::getCharset() const
+	const std::string &CharsetFileDialog::getCharset() const
 	{
 		return charset;
 	}

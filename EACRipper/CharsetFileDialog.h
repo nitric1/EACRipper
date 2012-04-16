@@ -20,6 +20,7 @@ namespace EACRipper
 
 	private:
 		static void convertRectToClient(HWND, RECT *);
+		static void doCharsetList(std::function<void (const std::wstring &)>);
 
 	public:
 		virtual bool show();

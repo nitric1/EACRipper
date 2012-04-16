@@ -15,30 +15,23 @@ namespace ER = EACRipper;
 
 #include <cstdio>
 #include <cstdlib>
-
 #include <cstdint>
 #include <cinttypes>
 
-#include "ERTypes.h"
-
-#include <exception>
-#include <stdexcept>
-
 #include <algorithm>
+#include <exception>
 #include <functional>
-#include <memory>
-
+#include <iomanip>
+#include <iostream>
 #include <limits>
-
 #include <list>
 #include <map>
-#include <vector>
-#include <string>
-#include <queue>
-
-#include <iostream>
+#include <memory>
 #include <sstream>
-#include <iomanip>
+#include <stdexcept>
+#include <string>
+#include <vector>
+#include <queue>
 
 using std::max; using std::min;
 
@@ -57,19 +50,17 @@ using std::max; using std::min;
 #include <windows.h>
 #include <windowsx.h>
 
-#include <tchar.h>
-
-#include <commdlg.h>
 #include <commctrl.h>
+#include <commdlg.h>
 #include <dlgs.h>
-
-#include <shlwapi.h>
-#include <shlobj.h>
-
 #include <shellapi.h>
+#include <shlobj.h>
+#include <shlwapi.h>
 
 #include <gdiplus.h>
 
 // Other Common Inclusion
+
+#include "ERTypes.h"
 
 #include "resource.h"

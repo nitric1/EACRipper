@@ -9,7 +9,8 @@ public:
 	}
 
 public:
-	virtual Return run(DELEGATE_TEMPLATE_ARG(DELEGATE_NUM_ARG)) = 0;
+	virtual Return invoke(DELEGATE_TEMPLATE_ARG(DELEGATE_NUM_ARG)) = 0;
+	virtual Return operator ()(DELEGATE_TEMPLATE_ARG(DELEGATE_NUM_ARG)) = 0;
 	virtual operator bool() = 0;
 };
 
@@ -140,9 +141,14 @@ public:
 	}
 
 public:
-	virtual Return run(DELEGATE_FUNCTION_PARAM(DELEGATE_NUM_ARG))
+	virtual Return invoke(DELEGATE_FUNCTION_PARAM(DELEGATE_NUM_ARG))
 	{
 		return fn(DELEGATE_FUNCTION_ARG(DELEGATE_NUM_ARG));
+	}
+
+	virtual Return operator ()(DELEGATE_FUNCTION_PARAM(DELEGATE_NUM_ARG))
+	{
+		return invoke(DELEGATE_FUNCTION_ARG(DELEGATE_NUM_ARG));
 	}
 
 	virtual operator bool()

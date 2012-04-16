@@ -18,19 +18,17 @@ namespace EACRipper
 	{
 	}
 
-	intptr_t __stdcall PreferenceWindow::procMessage(HWND window, unsigned message, WPARAM wParam, LPARAM lParam)
+	intptr_t PreferenceWindow::procMessageImpl(HWND window, uint32_t message, uintptr_t wParam, longptr_t lParam)
 	{
-		PreferenceWindow &self = instance();
-
-		WindowEventArgs e = {&self, window, message, wParam, lParam};
+		WindowEventArgs e = {&instance(), window, message, wParam, lParam};
 
 		switch(message)
 		{
 		case WM_INITDIALOG:
 			{
-				self.setWindow(window);
+				setWindow(window);
 
-				if(!self.runEventListener(L"prefInit", e))
+				if(!runEventListener(L"prefInit", e))
 					break;
 			}
 			return 1;
@@ -52,13 +50,13 @@ namespace EACRipper
 					bi.lpszTitle = L"Select the target path in which music will be ripped.";
 					bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_STATUSTEXT | BIF_USENEWUI;
 					bi.lpfn = procBrowsePath;
-					bi.lParam = reinterpret_cast<LPARAM>(&*buf.begin());
+					bi.lParam = reinterpret_cast<longptr_t>(&*buf.begin());
 
 					idl = SHBrowseForFolderW(&bi);
 
 					if(idl != nullptr && SHGetPathFromIDListW(idl, &*buf.begin()))
 					{
-						self.setValue(L"BasePath", &*buf.begin());
+						setValue(L"BasePath", &*buf.begin());
 					}
 				}
 				return 1;
@@ -75,13 +73,13 @@ namespace EACRipper
 
 			case IDOK:
 				{
-					if(!self.runEventListener(L"prefOK", e))
+					if(!runEventListener(L"prefOK", e))
 						break;
 				}
 
 			case IDCANCEL:
 				{
-					self.endDialog(LOWORD(wParam));
+					endDialog(LOWORD(wParam));
 				}
 				return 1;
 			}
@@ -89,7 +87,7 @@ namespace EACRipper
 
 		case WM_CLOSE:
 			{
-				self.endDialog(IDCANCEL);
+				endDialog(IDCANCEL);
 			}
 			return 1;
 		}
@@ -97,7 +95,12 @@ namespace EACRipper
 		return 0;
 	}
 
-	int __stdcall PreferenceWindow::procBrowsePath(HWND window, unsigned message, LPARAM param, LPARAM data)
+	intptr_t __stdcall PreferenceWindow::procMessage(HWND window, uint32_t message, uintptr_t wParam, longptr_t lParam)
+	{
+		return instance().procMessageImpl(window, message, wParam, lParam);
+	}
+
+	int __stdcall PreferenceWindow::procBrowsePath(HWND window, uint32_t message, longptr_t param, longptr_t data)
 	{
 		switch(message)
 		{

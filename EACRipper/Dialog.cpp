@@ -85,8 +85,13 @@ namespace EACRipper
 			dlgData.insert(dlgData.end(), reinterpret_cast<uint8_t *>(&data16), reinterpret_cast<uint8_t *>(&data16 + 1));
 
 			prev += 2;
-			next = prev + 4;
+			next = prev + 2;
 			dlgData.insert(dlgData.end(), ptr + prev, ptr + next);
+			/*dlgData.insert(dlgData.end(), reinterpret_cast<uint8_t *>(&ncm.lfMessageFont.lfWeight),
+				reinterpret_cast<uint8_t *>(&ncm.lfMessageFont.lfWeight + 1));*/
+			dlgData.push_back(ncm.lfMessageFont.lfItalic);
+			dlgData.push_back(ncm.lfMessageFont.lfCharSet);
+			next += 2;
 
 			stmp = reinterpret_cast<wchar_t *>(ptr + next);
 			prev = next + (wcslen(stmp) + 1) * sizeof(wchar_t);
@@ -96,6 +101,17 @@ namespace EACRipper
 				reinterpret_cast<uint8_t *>(ncm.lfMessageFont.lfFaceName),
 				reinterpret_cast<uint8_t *>(ncm.lfMessageFont.lfFaceName) + tmpsize);
 		}
+
+		size_t rest = 4 - (dlgData.size() % 4);
+		if(rest < 4)
+		{
+			for(; rest > 0; -- rest)
+				dlgData.push_back(0);
+		}
+
+		rest = 4 - (prev % 4);
+		if(rest < 4)
+			prev += rest;
 
 		dlgData.insert(dlgData.end(), ptr + prev, ptr + size);
 

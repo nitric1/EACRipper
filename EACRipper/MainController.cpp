@@ -1,13 +1,15 @@
 #include "Defaults.h"
 
-#include "Configure.h"
-#include "FileStream.h"
-#include "ComponentServiceImpl.h"
 #include "MainController.h"
-#include "MainWindow.h"
-#include "PreferenceWindow.h"
+
 #include "AboutWindow.h"
 #include "CharsetFileDialog.h"
+#include "ComponentServiceImpl.h"
+#include "Configure.h"
+#include "Delegate.h"
+#include "FileStream.h"
+#include "MainWindow.h"
+#include "PreferenceWindow.h"
 #include "TrackList.h"
 #include "Utility.h"
 
@@ -18,7 +20,6 @@ namespace EACRipper
 	MainController::MainController()
 	{
 		mainWin = &MainWindow::instance();
-		/*mainWin->setOwner(this);*/
 	}
 
 	MainController::~MainController()

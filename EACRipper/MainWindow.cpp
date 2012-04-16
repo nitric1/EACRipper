@@ -21,45 +21,44 @@ namespace EACRipper
 		coverArtThumbnail = nullptr;
 	}
 
-	intptr_t __stdcall MainWindow::procMessage(HWND window, unsigned message, WPARAM wParam, LPARAM lParam)
+	intptr_t MainWindow::procMessageImpl(HWND window, unsigned message, uintptr_t wParam, longptr_t lParam)
 	{
-		MainWindow &self = instance();
-
-		WindowEventArgs e = {&self, window, message, wParam, lParam};
+		WindowEventArgs e = {&instance(), window, message, wParam, lParam};
 
 		switch(message)
 		{
 		case WM_INITDIALOG:
 			{
-				self.setWindow(window);
+				setWindow(window);
 
-				self.iconSmall = static_cast<HICON>(LoadImageW(MainController::instance().getInstance(), MAKEINTRESOURCEW(IDI_MAIN_ICON), IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR));
-				self.iconBig = static_cast<HICON>(LoadImageW(MainController::instance().getInstance(), MAKEINTRESOURCEW(IDI_MAIN_ICON), IMAGE_ICON, 32, 32, LR_DEFAULTCOLOR));
+				iconSmall = static_cast<HICON>(LoadImageW(MainController::instance().getInstance(), MAKEINTRESOURCEW(IDI_MAIN_ICON), IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR));
+				iconBig = static_cast<HICON>(LoadImageW(MainController::instance().getInstance(), MAKEINTRESOURCEW(IDI_MAIN_ICON), IMAGE_ICON, 32, 32, LR_DEFAULTCOLOR));
 
-				SendMessageW(window, WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(self.iconSmall));
-				SendMessageW(window, WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(self.iconBig));
+				SendMessageW(window, WM_SETICON, ICON_SMALL, reinterpret_cast<longptr_t>(iconSmall));
+				SendMessageW(window, WM_SETICON, ICON_BIG, reinterpret_cast<longptr_t>(iconBig));
 
-				self.trackList.attach(GetDlgItem(window, IDC_LIST));
+				trackList.attach(GetDlgItem(window, IDC_LIST));
 
-				self.initList();
+				initList();
 
 				SetWindowTextW(window, Information::fullName);
 
-				self.coverArtOldProc = reinterpret_cast<WNDPROC>(SetWindowLongPtrW(GetDlgItem(window, IDC_COVER_ART), GWLP_WNDPROC, reinterpret_cast<intptr_t>(procCoverArt)));
+				coverArtOldProc = reinterpret_cast<WNDPROC>(SetWindowLongPtrW(GetDlgItem(window, IDC_COVER_ART),
+					GWLP_WNDPROC, reinterpret_cast<intptr_t>(procCoverArt)));
 
 				RECT rc = {0, 0, 4, 8};
 				MapDialogRect(window, &rc);
 
-				self.baseUnitX = rc.right;
-				self.baseUnitY = rc.bottom;
+				baseUnitX = rc.right;
+				baseUnitY = rc.bottom;
 
-				ShowWindow(window, self.getShowStatus());
+				ShowWindow(window, getShowStatus());
 
 				GetClientRect(window, &rc);
 
-				self.resizeLayout(rc.right - rc.left, rc.bottom - rc.top);
+				resizeLayout(rc.right - rc.left, rc.bottom - rc.top);
 
-				if(!self.runEventListener(L"init", e))
+				if(!runEventListener(L"init", e))
 					break;
 			}
 			return 1;
@@ -74,7 +73,7 @@ namespace EACRipper
 
 		case WM_SIZE:
 			{
-				self.resizeLayout(LOWORD(lParam), HIWORD(lParam));
+				resizeLayout(LOWORD(lParam), HIWORD(lParam));
 			}
 			return 1;
 
@@ -82,32 +81,32 @@ namespace EACRipper
 			switch(LOWORD(wParam))
 			{
 			case IDM_FILE_OPEN:
-				if(!self.runEventListener(L"openCuesheet", e))
+				if(!runEventListener(L"openCuesheet", e))
 					break;
 				return 1;
 
 			case IDM_INCUE_OPEN:
-				if(!self.runEventListener(L"openInCue", e))
+				if(!runEventListener(L"openInCue", e))
 					break;
 				return 1;
 
 			case IDM_ARCHIVE_OPEN:
-				if(!self.runEventListener(L"openArchive", e))
+				if(!runEventListener(L"openArchive", e))
 					break;
 				return 1;
 
 			case IDM_OPTION:
-				if(!self.runEventListener(L"option", e))
+				if(!runEventListener(L"option", e))
 					break;
 				return 1;
 
 			case IDM_ABOUT:
-				if(!self.runEventListener(L"about", e))
+				if(!runEventListener(L"about", e))
 					break;
 				return 1;
 
 			case IDM_RIP:
-				if(!self.runEventListener(L"rip", e))
+				if(!runEventListener(L"rip", e))
 					break;
 				return 1;
 
@@ -129,12 +128,12 @@ namespace EACRipper
 				break;
 
 			case IDC_SET_COVER_ART:
-				if(!self.runEventListener(L"setCoverArt", e))
+				if(!runEventListener(L"setCoverArt", e))
 					break;
 				return 1;
 
 			case IDC_CANCEL_COVER_ART:
-				if(!self.runEventListener(L"cancelCoverArt", e))
+				if(!runEventListener(L"cancelCoverArt", e))
 					break;
 				return 1;
 
@@ -166,15 +165,15 @@ namespace EACRipper
 
 		case WM_CLOSE:
 			{
-				if(!self.runEventListener(L"close", e))
+				if(!runEventListener(L"close", e))
 					break;
 
-				self.endDialog(0);
+				endDialog(0);
 
-				self.uninit();
+				uninit();
 
-				DestroyIcon(self.iconSmall);
-				DestroyIcon(self.iconBig);
+				DestroyIcon(iconSmall);
+				DestroyIcon(iconBig);
 			}
 			return 1;
 		}
@@ -182,10 +181,8 @@ namespace EACRipper
 		return 0;
 	}
 
-	uintptr_t __stdcall MainWindow::procCoverArt(HWND window, unsigned message, WPARAM wParam, LPARAM lParam)
+	uintptr_t MainWindow::procCoverArtImpl(HWND window, uint32_t message, uintptr_t wParam, longptr_t lParam)
 	{
-		MainWindow &self = instance();
-
 		switch(message)
 		{
 		case WM_PAINT:
@@ -200,10 +197,10 @@ namespace EACRipper
 
 				FillRect(hdc, &rc, GetSysColorBrush(COLOR_BTNFACE));
 
-				if(self.coverArtThumbnail != nullptr)
+				if(coverArtThumbnail != nullptr)
 				{
 					Gdiplus::Graphics g(hdc);
-					g.DrawImage(self.coverArtThumbnail, self.coverArtLeft, self.coverArtTop, self.coverArtWidth, self.coverArtHeight);
+					g.DrawImage(coverArtThumbnail, coverArtLeft, coverArtTop, coverArtWidth, coverArtHeight);
 				}
 
 				EndPaint(window, &ps);
@@ -211,7 +208,17 @@ namespace EACRipper
 			return 0;
 		}
 
-		return CallWindowProcW(self.coverArtOldProc, window, message, wParam, lParam);
+		return CallWindowProcW(coverArtOldProc, window, message, wParam, lParam);
+	}
+
+	intptr_t __stdcall MainWindow::procMessage(HWND window, uint32_t message, uintptr_t wParam, longptr_t lParam)
+	{
+		return instance().procMessageImpl(window, message, wParam, lParam);
+	}
+
+	uintptr_t __stdcall MainWindow::procCoverArt(HWND window, uint32_t message, uintptr_t wParam, longptr_t lParam)
+	{
+		return instance().procCoverArtImpl(window, message, wParam, lParam);
 	}
 
 	const wchar_t *MainWindow::getDialogName()
@@ -425,7 +432,7 @@ namespace EACRipper
 	{
 		int32_t id = Fields::instance().getFieldID(field);
 		if(id != 0)
-			SendMessageW(getItemWindow(id), WM_SETTEXT, 0, reinterpret_cast<LPARAM>(value.c_str()));
+			SendMessageW(getItemWindow(id), WM_SETTEXT, 0, reinterpret_cast<longptr_t>(value.c_str()));
 	}
 
 	void MainWindow::clearAlbumFields()
@@ -433,7 +440,7 @@ namespace EACRipper
 		const std::map<std::wstring, int32_t> &map = Fields::instance().getMap();
 		std::for_each(map.begin(), map.end(), [this](const std::pair<std::wstring, int32_t> &item)
 		{
-			SendMessageW(getItemWindow(item.second), WM_SETTEXT, 0, reinterpret_cast<LPARAM>(L""));
+			SendMessageW(getItemWindow(item.second), WM_SETTEXT, 0, reinterpret_cast<longptr_t>(L""));
 		});
 
 		SendMessageW(getItemWindow(IDC_SAME_ARTIST), BM_SETCHECK, BST_UNCHECKED, 0);

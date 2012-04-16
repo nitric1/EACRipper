@@ -3,6 +3,8 @@
 #include "ComponentServiceImpl.h"
 #include "FileStream.h"
 
+#include <boost/bind.hpp>
+
 namespace EACRipper
 {
 	namespace ServiceImpl

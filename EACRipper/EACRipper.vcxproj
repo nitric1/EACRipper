@@ -227,6 +227,7 @@
     <ClInclude Include="Configure.h" />
     <ClInclude Include="Control.h" />
     <ClInclude Include="Defaults.h" />
+    <ClInclude Include="Delegate.h" />
     <ClInclude Include="Dialog.h" />
     <ClInclude Include="FileDialog.h" />
     <ClInclude Include="FileStream.h" />
@@ -266,7 +267,6 @@
     <ClInclude Include="..\Common\Component\Factory.h" />
     <ClInclude Include="..\Common\Component\Info.h" />
     <ClInclude Include="..\Common\Component\Music.h" />
-    <ClInclude Include="..\Common\boost\detail\endian.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="EACRipper.rc" />

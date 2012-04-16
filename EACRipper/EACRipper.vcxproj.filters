@@ -25,9 +25,6 @@
     <Filter Include="Common Files\Library Files">
       <UniqueIdentifier>{24798359-d3a0-429b-a608-13540a4ef7a3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Common Files\Library Files\Boost">
-      <UniqueIdentifier>{1d25edce-b5f4-4f2f-b5de-7397130fef8b}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -209,9 +206,6 @@
     <ClInclude Include="..\Common\Component\Music.h">
       <Filter>Common Files\Component Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Common\boost\detail\endian.hpp">
-      <Filter>Common Files\Library Files\Boost</Filter>
-    </ClInclude>
     <ClInclude Include="FileDialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -283,6 +277,9 @@
     </ClInclude>
     <ClInclude Include="..\Common\ERDelegateStub.h">
       <Filter>Common Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Delegate.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

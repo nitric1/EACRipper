@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Delegate.h"
+
 namespace EACRipper
 {
 	class Window;
@@ -13,58 +15,16 @@ namespace EACRipper
 		longptr_t lParam;
 	};
 
-	class WindowEventDelegate
-	{
-	public:
-		virtual bool run(WindowEventArgs e) = 0;
-		bool operator ()(WindowEventArgs e) { return run(e); }
-	};
-
 	template<typename Func>
-	class WindowEventFunctionDelegate : public WindowEventDelegate
+	std::shared_ptr<ERDelegate<bool (const WindowEventArgs &)>> delegateWindowEvent(Func fn)
 	{
-	private:
-		Func fn;
-
-	private:
-		explicit WindowEventFunctionDelegate(Func ifn) : fn(ifn) {}
-
-	public:
-		virtual bool run(WindowEventArgs e) { return fn(e); }
-
-		template<typename Func>
-		friend std::shared_ptr<WindowEventFunctionDelegate<Func>> delegateWindowEvent(Func);
-	};
-
-	template<typename Class, typename Func>
-	class WindowEventMemberFunctionDelegate : public WindowEventDelegate
-	{
-	private:
-		Class *p;
-		Func fn;
-
-	private:
-		explicit WindowEventMemberFunctionDelegate(Class *ip, Func ifn) : p(ip), fn(ifn) {}
-
-	public:
-		virtual bool run(WindowEventArgs e) { return (p->*fn)(e); }
-
-		template<typename Class, typename Func>
-		friend std::shared_ptr<WindowEventMemberFunctionDelegate<Class, Func>> delegateWindowEvent(Class *, Func);
-	};
-
-	template<typename Func>
-	std::shared_ptr<WindowEventFunctionDelegate<Func>> delegateWindowEvent(Func fn)
-	{
-		typedef decltype(delegateWindowEvent(fn)) returnType;
-		return returnType(new WindowEventFunctionDelegate<Func>(fn));
+		return delegate<bool (const WindowEventArgs &)>(fn);
 	}
 
 	template<typename Class, typename Func>
 	std::shared_ptr<WindowEventMemberFunctionDelegate<Class, Func>> delegateWindowEvent(Class *p, Func fn)
 	{
-		typedef decltype(delegateWindowEvent(p, fn)) returnType;
-		return returnType(new WindowEventMemberFunctionDelegate<Class, Func>(p, fn));
+		return delegate<bool (const WindowEventArgs &)>(p, fn);
 	}
 
 	class Window

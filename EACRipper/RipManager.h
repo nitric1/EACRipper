@@ -100,6 +100,8 @@ namespace EACRipper
 		bool stopRip();
 		bool isRipping();
 
+		void ripThreadImpl(ThreadData *);
+
 		static ulong32_t __stdcall ripThread(void *);
 
 		friend class Singleton<RipManager>;

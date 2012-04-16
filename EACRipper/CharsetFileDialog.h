@@ -16,7 +16,9 @@ namespace EACRipper
 		virtual ~CharsetFileDialog();
 
 	private:
-		static uintptr_t __stdcall procCharsetFileDialog(HWND, unsigned, WPARAM, LPARAM);
+		uintptr_t procCharsetFileDialogImpl(HWND, uint32_t, uintptr_t, longptr_t);
+
+		static uintptr_t __stdcall procCharsetFileDialog(HWND, uint32_t, uintptr_t, longptr_t);
 
 	private:
 		static void convertRectToClient(HWND, RECT *);

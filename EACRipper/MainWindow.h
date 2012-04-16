@@ -31,8 +31,11 @@ namespace EACRipper
 	private:
 		WNDPROC coverArtOldProc;
 
-		static intptr_t __stdcall procMessage(HWND, unsigned, WPARAM, LPARAM);
-		static uintptr_t __stdcall procCoverArt(HWND, unsigned, WPARAM, LPARAM);
+		intptr_t procMessageImpl(HWND, unsigned, uintptr_t, longptr_t);
+		uintptr_t procCoverArtImpl(HWND, unsigned, uintptr_t, longptr_t);
+
+		static intptr_t __stdcall procMessage(HWND, unsigned, uintptr_t, longptr_t);
+		static uintptr_t __stdcall procCoverArt(HWND, unsigned, uintptr_t, longptr_t);
 
 	public:
 		virtual const wchar_t *getDialogName();

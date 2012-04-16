@@ -140,35 +140,33 @@ namespace EACRipper
 		}
 	}
 
-	ulong32_t __stdcall RipManager::ripThread(void *param)
+	void RipManager::ripThreadImpl(ThreadData *data)
 	{
-		ThreadData *data = static_cast<ThreadData *>(param);
-		RipManager &self = instance();
 		size_t track;
 		uint64_t samples;
 
 		Configure &conf = Configure::instance();
 
-		FileStreamReader fsr(static_cast<wstring>((*self.list)[L"SourcePath"]).c_str());
+		FileStreamReader fsr(static_cast<wstring>((*list)[L"SourcePath"]).c_str());
 		IERComponentMusicDecoder *dec = static_cast<IERComponentMusicDecoder *>(data->decAlloc->alloc());
 		dec->setStream(&fsr);
 
 		uint32_t start, end;
 		size_t bufferSize = 65536, readSize;
 		uint8_t *buffer = new uint8_t[bufferSize];
-		while(!self.stop)
+		while(!stop)
 		{
 			{
-				MutexSession mutex(self.mutex, true);
-				if(self.tracks.empty())
+				MutexSession mutex(mutex, true);
+				if(tracks.empty())
 					break;
-				track = self.tracks.front();
-				self.tracks.pop_front();
+				track = tracks.front();
+				tracks.pop_front();
 			}
 
 			// TODO: Read track information (samples, ...)
-			start = static_cast<uint32_t>(getTimestamp((*self.list)[track][L"Start Time"]));
-			end = static_cast<uint32_t>(getTimestamp((*self.list)[track][L"End Time"]));
+			start = static_cast<uint32_t>(getTimestamp((*list)[track][L"Start Time"]));
+			end = static_cast<uint32_t>(getTimestamp((*list)[track][L"End Time"]));
 			if(start == static_cast<uint32_t>(numeric_limits<int32_t>::max()) || end == static_cast<uint32_t>(numeric_limits<int32_t>::max()))
 			{
 				// TODO: Error
@@ -180,7 +178,7 @@ namespace EACRipper
 			// TODO: Open written file
 
 			uint64_t section = 0;
-			while(!self.stop)
+			while(!stop)
 			{
 				if(!dec->readSplit(start, end, buffer, bufferSize, &readSize, &section))
 					break;
@@ -191,7 +189,13 @@ namespace EACRipper
 
 		data->decAlloc->free(dec);
 
-		InterlockedDecrement(&self.runningThreads);
+		InterlockedDecrement(&runningThreads);
+	}
+
+	ulong32_t __stdcall RipManager::ripThread(void *param)
+	{
+		ThreadData *data = static_cast<ThreadData *>(param);
+		instance().ripThreadImpl(data);
 		
 		return 0;
 	}

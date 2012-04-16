@@ -1,17 +1,19 @@
-EACRipper/EACRipper.vcxproj.user
-EACRipper/EACRipper.aps
+*.vcxproj.user
+*.aps
+*.APS
+*.opensdf
+*.sdf
+*.suo
+LocMetrics*
+
 EACRipper/Debug
 EACRipper/Release
 EACRipper/x64
 
-UUIDGen/UUIDGen.vcxproj.user
-UUIDGen/UUIDGen.aps
 UUIDGen/Debug
 UUIDGen/Release
 UUIDGen/x64
 
-InoutWave/InoutWave.vcxproj.user
-InoutWave/InoutWave.aps
 InoutWave/Debug
 InoutWave/Release
 InoutWave/x64
@@ -20,9 +22,3 @@ Debug
 Release
 x64
 ipch
-
-EACRipper.opensdf
-EACRipper.sdf
-EACRipper.suo
-
-LocMetrics*

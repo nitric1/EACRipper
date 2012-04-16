@@ -8,9 +8,9 @@ namespace EACRipper
 	{
 		Window *window;
 		HWND windowHandle;
-		unsigned message;
-		WPARAM wParam;
-		LPARAM lParam;
+		uint32_t message;
+		uintptr_t wParam;
+		longptr_t lParam;
 	};
 
 	class WindowEventDelegate

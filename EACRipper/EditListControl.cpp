@@ -20,15 +20,18 @@ namespace EACRipper
 		return windowProc;
 	}
 
-	longptr_t __stdcall EditListControl::windowProc(HWND window, unsigned message, WPARAM wParam, LPARAM lParam)
+	longptr_t EditListControl::windowProcImpl(HWND window, uint32_t message, uintptr_t wParam, longptr_t lParam)
+	{
+		return CallWindowProcW(getOldProc(), window, message, wParam, lParam);
+	}
+
+	longptr_t __stdcall EditListControl::windowProc(HWND window, uint32_t message, uintptr_t wParam, longptr_t lParam)
 	{
 		EditListControl *selfptr = dynamic_cast<EditListControl *>(findControl(window));
 		if(selfptr == nullptr)
 			return 0;
 
-		EditListControl &self = *selfptr;
-
-		return CallWindowProcW(self.getOldProc(), window, message, wParam, lParam);
+		return selfptr->windowProcImpl(window, message, wParam, lParam);
 	}
 
 	int32_t EditListControl::addColumn(const wstring &value, int32_t width, int32_t align, bool readonly, const wstring &defVal)
@@ -43,7 +46,7 @@ namespace EACRipper
 		lvc.fmt = align;
 		lvc.pszText = const_cast<wchar_t *>(value.c_str());
 		lvc.mask = LVCF_WIDTH | LVCF_FMT | LVCF_TEXT;
-		int32_t res = static_cast<int32_t>(SendMessageW(getWindow(), LVM_INSERTCOLUMNW, static_cast<WPARAM>(pos), reinterpret_cast<LPARAM>(&lvc)));
+		int32_t res = static_cast<int32_t>(SendMessageW(getWindow(), LVM_INSERTCOLUMNW, static_cast<uintptr_t>(pos), reinterpret_cast<longptr_t>(&lvc)));
 		if(res >= 0)
 			++ columns;
 		return res;
@@ -66,9 +69,9 @@ namespace EACRipper
 			lvi.iSubItem = order ++;
 			lvi.pszText = const_cast<wchar_t *>(str.c_str());
 			if(order == 1)
-				row = static_cast<int32_t>(SendMessageW(list, LVM_INSERTITEMW, 0, reinterpret_cast<LPARAM>(&lvi)));
+				row = static_cast<int32_t>(SendMessageW(list, LVM_INSERTITEMW, 0, reinterpret_cast<longptr_t>(&lvi)));
 			else
-				SendMessageW(list, LVM_SETITEMW, 0, reinterpret_cast<LPARAM>(&lvi));
+				SendMessageW(list, LVM_SETITEMW, 0, reinterpret_cast<longptr_t>(&lvi));
 		});
 		ListView_SetCheckState(list, lvi.iItem, TRUE);
 		return row;

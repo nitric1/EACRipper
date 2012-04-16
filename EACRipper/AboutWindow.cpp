@@ -17,22 +17,21 @@ namespace EACRipper
 	{
 	}
 
-	intptr_t __stdcall AboutWindow::procMessage(HWND window, unsigned message, WPARAM wParam, LPARAM lParam)
+	intptr_t AboutWindow::procMessageImpl(HWND window, uint32_t message, uintptr_t wParam, longptr_t lParam)
 	{
-		AboutWindow &self = instance();
-
 		switch(message)
 		{
 		case WM_INITDIALOG:
 			{
-				self.setWindow(window);
+				setWindow(window);
 
 				SetDlgItemTextW(window, IDC_EACRIPPER_TEXT, Information::fullName);
 
 				HWND link = GetDlgItem(window, IDC_WEBSITE_LINK);
 
-				self.linkOldProc = reinterpret_cast<WNDPROC>(SetWindowLongPtrW(link, GWLP_WNDPROC, reinterpret_cast<intptr_t>(procLink)));
-				self.mouseOver = false;
+				linkOldProc = reinterpret_cast<WNDPROC>(SetWindowLongPtrW(link,
+					GWLP_WNDPROC, reinterpret_cast<intptr_t>(procLink)));
+				mouseOver = false;
 			}
 			return 1;
 
@@ -42,7 +41,7 @@ namespace EACRipper
 			case IDOK:
 			case IDCANCEL:
 				{
-					self.endDialog(LOWORD(wParam));
+					endDialog(LOWORD(wParam));
 				}
 				return 1;
 			}
@@ -50,7 +49,7 @@ namespace EACRipper
 
 		case WM_CLOSE:
 			{
-				self.endDialog(IDOK);
+				endDialog(IDOK);
 			}
 			return 1;
 		}
@@ -58,24 +57,22 @@ namespace EACRipper
 		return 0;
 	}
 
-	uintptr_t __stdcall AboutWindow::procLink(HWND window, unsigned message, WPARAM wParam, LPARAM lParam)
+	uintptr_t AboutWindow::procLinkImpl(HWND window, uint32_t message, uintptr_t wParam, longptr_t lParam)
 	{
-		AboutWindow &self = instance();
-
 		switch(message)
 		{
 		case WM_SETCURSOR:
 			{
-				if(self.mouseOver)
+				if(mouseOver)
 					SetCursor(LoadCursorW(NULL, IDC_HAND));
 			}
 			return 0;
 
 		case WM_MOUSEMOVE:
 			{
-				if(!self.mouseOver)
+				if(!mouseOver)
 				{
-					self.mouseOver = true;
+					mouseOver = true;
 
 					TRACKMOUSEEVENT tme;
 					tme.cbSize = sizeof(tme);
@@ -91,7 +88,7 @@ namespace EACRipper
 
 		case WM_MOUSELEAVE:
 			{
-				self.mouseOver = false;
+				mouseOver = false;
 
 				InvalidateRect(window, NULL, TRUE);
 			}
@@ -103,7 +100,7 @@ namespace EACRipper
 				vector<wchar_t> ve(static_cast<size_t>(len + 1));
 				GetWindowTextW(window, &*ve.begin(), len + 1);
 
-				ShellExecuteW(self.getParent()->getWindow(), L"open", &*ve.begin(), NULL, NULL, SW_SHOW);
+				ShellExecuteW(getParent()->getWindow(), L"open", &*ve.begin(), NULL, NULL, SW_SHOW);
 			}
 			return 0;
 
@@ -137,7 +134,7 @@ namespace EACRipper
 
 				SetBkMode(hdc, TRANSPARENT);
 
-				if(self.mouseOver)
+				if(mouseOver)
 					oldColor = SetTextColor(hdc, RGB(0xFF, 0, 0));
 				else
 					oldColor = SetTextColor(hdc, RGB(0, 0, 0xFC));
@@ -153,7 +150,17 @@ namespace EACRipper
 			return 0;
 		}
 
-		return CallWindowProcW(self.linkOldProc, window, message, wParam, lParam);
+		return CallWindowProcW(linkOldProc, window, message, wParam, lParam);
+	}
+
+	intptr_t __stdcall AboutWindow::procMessage(HWND window, uint32_t message, uintptr_t wParam, longptr_t lParam)
+	{
+		return instance().procMessageImpl(window, message, wParam, lParam);
+	}
+
+	uintptr_t __stdcall AboutWindow::procLink(HWND window, uint32_t message, uintptr_t wParam, longptr_t lParam)
+	{
+		return instance().procLinkImpl(window, message, wParam, lParam);
 	}
 
 	const wchar_t *AboutWindow::getDialogName()

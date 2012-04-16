@@ -19,8 +19,10 @@ namespace EACRipper
 		~PreferenceWindow();
 
 	private:
-		static intptr_t __stdcall procMessage(HWND, unsigned, WPARAM, LPARAM);
-		static int __stdcall procBrowsePath(HWND, unsigned, LPARAM, LPARAM);
+		intptr_t procMessageImpl(HWND, uint32_t, uintptr_t, longptr_t);
+
+		static intptr_t __stdcall procMessage(HWND, uint32_t, uintptr_t, longptr_t);
+		static int __stdcall procBrowsePath(HWND, uint32_t, longptr_t, longptr_t);
 
 	public:
 		virtual const wchar_t *getDialogName();

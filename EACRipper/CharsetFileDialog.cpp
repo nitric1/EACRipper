@@ -64,7 +64,7 @@ namespace EACRipper
 			ofn.hInstance = MainController::instance().getInstance();
 			ofn.lpTemplateName = MAKEINTRESOURCEW(IDD_OPEN_DIALOG);
 			ofn.lpfnHook = procCharsetFileDialog;
-			ofn.lCustData = reinterpret_cast<LPARAM>(this);
+			ofn.lCustData = reinterpret_cast<longptr_t>(this);
 			ofn.Flags |= OFN_ENABLETEMPLATE | OFN_ENABLEHOOK;
 		}
 	}
@@ -73,17 +73,12 @@ namespace EACRipper
 	{
 	}
 
-	uintptr_t __stdcall CharsetFileDialog::procCharsetFileDialog(HWND window, unsigned message, WPARAM wParam, LPARAM lParam)
+	uintptr_t CharsetFileDialog::procCharsetFileDialogImpl(HWND window, uint32_t message, uintptr_t wParam, longptr_t lParam)
 	{
-		static CharsetFileDialog *inst = nullptr;
-
 		switch(message)
 		{
 		case WM_INITDIALOG:
 			{
-				OPENFILENAMEW *ofn = reinterpret_cast<OPENFILENAMEW *>(lParam);
-				inst = reinterpret_cast<CharsetFileDialog *>(ofn->lCustData);
-
 				HWND parent, combo, label;
 				HFONT font;
 
@@ -95,17 +90,15 @@ namespace EACRipper
 				combo = GetDlgItem(window, IDC_ENCODING);
 				label = GetDlgItem(window, IDC_ENCODING_LABEL);
 
-				SendMessageW(combo, WM_SETFONT, reinterpret_cast<WPARAM>(font), TRUE);
-				SendMessageW(label, WM_SETFONT, reinterpret_cast<WPARAM>(font), TRUE);
+				SendMessageW(combo, WM_SETFONT, reinterpret_cast<uintptr_t>(font), TRUE);
+				SendMessageW(label, WM_SETFONT, reinterpret_cast<uintptr_t>(font), TRUE);
 
 				vector<wstring> list = StringCharsetConverter::getCharsetList();
 				sort(list.begin(), list.end());
 
-				vector<wstring> &charsetList = inst->charsetList;
-
-				auto addCharsetText = [&combo, &charsetList](const wstring &charset)->void
+				auto addCharsetText = [&combo, this](const wstring &charset) -> void
 				{
-					int res = static_cast<int>(SendMessageW(combo, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(charset.c_str())));
+					int res = static_cast<int>(SendMessageW(combo, CB_ADDSTRING, 0, reinterpret_cast<longptr_t>(charset.c_str())));
 					if(res != CB_ERR && res != CB_ERRSPACE)
 						charsetList.push_back(charset);
 				};
@@ -117,7 +110,7 @@ namespace EACRipper
 				addCharsetText(L"UTF-16");
 				addCharsetText(L"UTF-16LE");
 				addCharsetText(L"UTF-16BE");
-				for_each(list.begin(), list.end(), [&combo, addCharsetText](const wstring &name)
+				for_each(list.begin(), list.end(), [&combo, addCharsetText](const wstring &name) -> void
 				{
 					if(name != L"UTF-8" && name != L"UTF-16" && name != L"UTF-16LE" && name != L"UTF-16BE" && name != L"Shift_JIS" && name != L"ISO-8859-1")
 						addCharsetText(name);
@@ -164,13 +157,32 @@ namespace EACRipper
 				if(HIWORD(wParam) == CBN_SELCHANGE)
 				{
 					HWND combo = GetDlgItem(window, IDC_ENCODING);
-					inst->charsetIdx = SendMessageW(combo, CB_GETCURSEL, 0, 0);
+					charsetIdx = SendMessageW(combo, CB_GETCURSEL, 0, 0);
 				}
 				break;
 			}
 			break;
 		}
 
+		return 0;
+	}
+
+	uintptr_t __stdcall CharsetFileDialog::procCharsetFileDialog(HWND window, uint32_t message, uintptr_t wParam, longptr_t lParam)
+	{
+		static CharsetFileDialog *inst = nullptr;
+
+		switch(message)
+		{
+		case WM_INITDIALOG:
+			{
+				OPENFILENAMEW *ofn = reinterpret_cast<OPENFILENAMEW *>(lParam);
+				inst = reinterpret_cast<CharsetFileDialog *>(ofn->lCustData);
+			}
+			break;
+		}
+
+		if(inst != nullptr)
+			return inst->procCharsetFileDialogImpl(window, message, wParam, lParam);
 		return 0;
 	}
 

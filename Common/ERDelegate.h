@@ -1,5 +1,163 @@
 #pragma once
 
+template<typename FunctionType>
+class ERDelegate;
+
+template<typename FunctionType>
+class ERDelegateImpl;
+
+#if 1
+
+template<template Return, template ...Args>
+class ERDelegate<Return (Args...)>
+{
+public:
+	virtual ~ERDelegate()
+	{
+	}
+
+public:
+	virtual Return invoke(Args...) = 0;
+	virtual operator bool() = 0;
+};
+
+template<template Return, template ...Args>
+class ERDelegateImpl<Return (Args...)>
+{
+private:
+	std::function<Return (Args...)> fn;
+
+public:
+	ERDelegateImpl()
+	{
+	}
+
+	ERDelegateImpl(const ERDelegateImpl<Return (Args...)> &obj)
+		: fn(obj.fn)
+	{
+	}
+
+	ERDelegateImpl(ERDelegateImpl<Return (Args...)> &&obj)
+		: fn(std::move(obj.fn))
+	{
+	}
+
+	ERDelegateImpl(Return (*ifn)(Args...))
+		: fn(ifn)
+	{
+	}
+
+	template<typename FunctionClass, typename InstanceClass>
+	ERDelegateImpl(Return (FunctionClass::*ifn)(Args...), InstanceClass *ic)
+		: fn(std::bind(ifn, ic, 0)) // TODO: http://boost.2283326.n4.nabble.com/bind-Possible-to-use-variadic-templates-with-bind-td2557818.html
+	{
+	}
+
+	template<typename FunctionClass, typename InstanceClass>
+	ERDelegateImpl(Return (FunctionClass::*ifn)(DELEGATE_TEMPLATE_ARG(DELEGATE_NUM_ARG)) const, const InstanceClass *ic)
+		: fn(std::bind(ifn, ic DELEGATE_TEMPLATE_COMMA DELEGATE_BIND_ARG(DELEGATE_NUM_ARG)))
+	{
+	}
+
+	template<typename FunctionClass, typename InstanceClass>
+	ERDelegateImpl(Return (FunctionClass::*ifn)(DELEGATE_TEMPLATE_ARG(DELEGATE_NUM_ARG)) volatile, volatile InstanceClass *ic)
+		: fn(std::bind(ifn, ic DELEGATE_TEMPLATE_COMMA DELEGATE_BIND_ARG(DELEGATE_NUM_ARG)))
+	{
+	}
+
+	template<typename FunctionClass, typename InstanceClass>
+	ERDelegateImpl(Return (FunctionClass::*ifn)(DELEGATE_TEMPLATE_ARG(DELEGATE_NUM_ARG)) const volatile, const volatile InstanceClass *ic)
+		: fn(std::bind(ifn, ic DELEGATE_TEMPLATE_COMMA DELEGATE_BIND_ARG(DELEGATE_NUM_ARG)))
+	{
+	}
+
+	template<typename Functor>
+	ERDelegateImpl(Functor ifn)
+		: fn(ifn)
+	{
+	}
+
+	virtual ~ERDelegateImpl()
+	{
+	}
+
+public:
+	ERDelegateImpl<Return (DELEGATE_TEMPLATE_ARG(DELEGATE_NUM_ARG))> &operator =(std::nullptr_t)
+	{
+		fn.clear();
+		return *this;
+	}
+
+	ERDelegateImpl<Return (DELEGATE_TEMPLATE_ARG(DELEGATE_NUM_ARG))> &operator =(const ERDelegateImpl<Return (DELEGATE_TEMPLATE_ARG(DELEGATE_NUM_ARG))> &obj)
+	{
+		fn = obj.fn;
+		return *this;
+	}
+
+	ERDelegateImpl<Return (DELEGATE_TEMPLATE_ARG(DELEGATE_NUM_ARG))> &operator =(ERDelegateImpl<Return (DELEGATE_TEMPLATE_ARG(DELEGATE_NUM_ARG))> &&obj)
+	{
+		fn = std::move(obj.fn);
+		return *this;
+	}
+
+	ERDelegateImpl<Return (DELEGATE_TEMPLATE_ARG(DELEGATE_NUM_ARG))> &operator =(Return (*ifn)(DELEGATE_TEMPLATE_ARG(DELEGATE_NUM_ARG)))
+	{
+		fn = ifn;
+		return *this;
+	}
+
+	template<typename FunctionClass, typename InstanceClass>
+	ERDelegateImpl<Return (DELEGATE_TEMPLATE_ARG(DELEGATE_NUM_ARG))> &operator =(std::pair<Return (FunctionClass::*)(DELEGATE_TEMPLATE_ARG(DELEGATE_NUM_ARG)), InstanceClass *> ifn)
+	{
+		fn = std::bind(ifn.first, ifn.second DELEGATE_TEMPLATE_COMMA DELEGATE_BIND_ARG(DELEGATE_NUM_ARG));
+		return *this;
+	}
+
+	template<typename FunctionClass, typename InstanceClass>
+	ERDelegateImpl<Return (DELEGATE_TEMPLATE_ARG(DELEGATE_NUM_ARG))> &operator =(std::pair<Return (FunctionClass::*)(DELEGATE_TEMPLATE_ARG(DELEGATE_NUM_ARG)) const, const InstanceClass *> ifn)
+	{
+		fn = std::bind(ifn.first, ifn.second DELEGATE_TEMPLATE_COMMA DELEGATE_BIND_ARG(DELEGATE_NUM_ARG));
+		return *this;
+	}
+
+	template<typename FunctionClass, typename InstanceClass>
+	ERDelegateImpl<Return (DELEGATE_TEMPLATE_ARG(DELEGATE_NUM_ARG))> &operator =(std::pair<Return (FunctionClass::*)(DELEGATE_TEMPLATE_ARG(DELEGATE_NUM_ARG)) volatile, volatile InstanceClass *> ifn)
+	{
+		fn = std::bind(ifn.first, ifn.second DELEGATE_TEMPLATE_COMMA DELEGATE_BIND_ARG(DELEGATE_NUM_ARG));
+		return *this;
+	}
+
+	template<typename FunctionClass, typename InstanceClass>
+	ERDelegateImpl<Return (DELEGATE_TEMPLATE_ARG(DELEGATE_NUM_ARG))> &operator =(std::pair<Return (FunctionClass::*)(DELEGATE_TEMPLATE_ARG(DELEGATE_NUM_ARG)) const volatile, const volatile InstanceClass *> ifn)
+	{
+		fn = std::bind(ifn.first, ifn.second DELEGATE_TEMPLATE_COMMA DELEGATE_BIND_ARG(DELEGATE_NUM_ARG));
+		return *this;
+	}
+
+#undef DELEGATE_BIND_ARG_ELEMENT
+#undef DELEGATE_BIND_ARG
+
+	template<typename Functor>
+	ERDelegateImpl<Return (DELEGATE_TEMPLATE_ARG(DELEGATE_NUM_ARG))> &operator =(Functor ifn)
+	{
+		fn = ifn;
+		return *this;
+	}
+
+public:
+	virtual Return invoke(DELEGATE_FUNCTION_PARAM(DELEGATE_NUM_ARG))
+	{
+		return fn(DELEGATE_FUNCTION_ARG(DELEGATE_NUM_ARG));
+	}
+
+	virtual operator bool()
+	{
+		return static_cast<bool>(fn);
+	}
+};
+
+#else
+
 #define _DELEGATE_COMMA ,
 
 #define DELEGATE_REPEAT_0(b, s)
@@ -25,12 +183,6 @@
 
 #define DELEGATE_FUNCTION_ARG_ELEMENT(n) arg##n
 #define DELEGATE_FUNCTION_ARG(n) DELEGATE_REPEAT(n, DELEGATE_FUNCTION_ARG_ELEMENT, DELEGATE_COMMA)
-
-template<typename FunctionType>
-class ERDelegate;
-
-template<typename FunctionType>
-class ERDelegateImpl;
 
 #define DELEGATE_TEMPLATE_COMMA
 
@@ -76,3 +228,5 @@ class ERDelegateImpl;
 #define DELEGATE_NUM_ARG 9
 #include "ERDelegateStub.h"
 #undef DELEGATE_NUM_ARG
+
+#endif

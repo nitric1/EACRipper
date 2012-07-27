@@ -1,9 +1,10 @@
 #pragma once
 
-#include "Singleton.h"
-#include "MainWindow.h"
-#include "ComponentManager.h"
 #include "CoderManager.h"
+#include "ComponentManager.h"
+#include "Delegate.h"
+#include "MainWindow.h"
+#include "Singleton.h"
 
 namespace EACRipper
 {
@@ -40,6 +41,7 @@ namespace EACRipper
 		bool runImpl(HINSTANCE, const std::wstring &, int);
 		int filterOSException(unsigned, EXCEPTION_POINTERS *);
 		bool showOSException();
+		void invoke(std::shared_ptr<ERDelegate<void ()>>);
 
 	public:
 		bool onInit(WindowEventArgs);
@@ -55,6 +57,8 @@ namespace EACRipper
 
 		bool onPrefInit(WindowEventArgs);
 		bool onPrefOK(WindowEventArgs);
+
+		bool ripCallback(size_t, uint64_t, uint64_t, int32_t);
 
 		friend class Singleton<MainController>;
 	};

@@ -10,6 +10,7 @@
 #include "FileStream.h"
 #include "MainWindow.h"
 #include "PreferenceWindow.h"
+#include "RipManager.h"
 #include "TrackList.h"
 #include "Utility.h"
 
@@ -170,13 +171,13 @@ namespace EACRipper
 
 	bool MainController::run(HINSTANCE instHandle, const std::wstring &commandLine, int showCommand)
 	{
-		__try
+		//__try
 		{
 			return runImpl(instHandle, commandLine, showCommand);
 		}
-		__except(filterOSException(GetExceptionCode(), GetExceptionInformation()))
+		//__except(filterOSException(GetExceptionCode(), GetExceptionInformation()))
 		{
-			return false;
+		//	return false;
 		}
 	}
 
@@ -184,6 +185,13 @@ namespace EACRipper
 	{
 		try
 		{
+#ifdef _WIN64
+			HMODULE inoutWave = LoadLibraryW(L"J:\\App\\VC++\\EACRipper\\x64\\Debug\\Components\\InoutWave.dll");
+			void (*occur)() = reinterpret_cast<void (*)()>(GetProcAddress(inoutWave, "occur"));
+			occur();
+			FreeLibrary(inoutWave);
+#endif
+
 			inst = instHandle;
 
 			registerEvents();
@@ -212,7 +220,12 @@ namespace EACRipper
 	bool MainController::showOSException()
 	{
 		// TODO: Implementaion exception showing
-		return false;
+		return true;
+	}
+
+	void MainController::invoke(std::shared_ptr<ERDelegate<void ()>> dg)
+	{
+		mainWin->invoke(dg);
 	}
 
 	bool MainController::onInit(WindowEventArgs e)
@@ -393,6 +406,7 @@ namespace EACRipper
 
 	bool MainController::onRip(WindowEventArgs e)
 	{
+		//RipManager::instance().startRip(*list, delegateRipCallback(this, &ripCallback));
 		return true;
 	}
 
@@ -432,6 +446,11 @@ namespace EACRipper
 		c.set(L"AttachGapNextTrack", prefWin->getValue(L"AttachGapNextTrack"));
 		c.set(L"IgnorePregapPostgap", prefWin->getValue(L"IgnorePregapPostgap"));
 
+		return true;
+	}
+
+	bool MainController::ripCallback(size_t track, uint64_t, uint64_t, int32_t)
+	{
 		return true;
 	}
 }

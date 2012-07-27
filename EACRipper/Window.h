@@ -16,21 +16,24 @@ namespace EACRipper
 	};
 
 	template<typename Func>
-	std::shared_ptr<ERDelegate<bool (const WindowEventArgs &)>> delegateWindowEvent(Func fn)
+	std::shared_ptr<ERDelegate<bool (WindowEventArgs)>> delegateWindowEvent(Func fn)
 	{
-		return delegate<bool (const WindowEventArgs &)>(fn);
+		return delegate<bool (WindowEventArgs)>(fn);
 	}
 
 	template<typename Class, typename Func>
-	std::shared_ptr<WindowEventMemberFunctionDelegate<Class, Func>> delegateWindowEvent(Class *p, Func fn)
+	std::shared_ptr<ERDelegate<bool (WindowEventArgs)>> delegateWindowEvent(Class *p, Func fn)
 	{
-		return delegate<bool (const WindowEventArgs &)>(p, fn);
+		return delegate<bool (WindowEventArgs)>(p, fn);
 	}
 
 	class Window
 	{
 	private:
-		std::map<std::wstring, std::vector<std::shared_ptr<WindowEventDelegate>>> eventMap;
+		enum { WM_APP_INVOKE = WM_APP + 101 };
+
+	private:
+		std::map<std::wstring, std::vector<std::shared_ptr<ERDelegate<bool (WindowEventArgs)>>>> eventMap;
 
 	private:
 		HWND window;
@@ -85,10 +88,15 @@ namespace EACRipper
 			return show();
 		}
 
-		virtual bool addEventListener(const std::wstring &name, std::shared_ptr<WindowEventDelegate> listener)
+		virtual bool addEventListener(const std::wstring &name, std::shared_ptr<ERDelegate<bool (WindowEventArgs)>> listener)
 		{
 			eventMap[name].push_back(listener);
 			return true;
+		}
+
+		virtual void invoke(std::shared_ptr<ERDelegate<void ()>> dg)
+		{
+			SendMessageW(window, WM_APP_INVOKE, 0, reinterpret_cast<longptr_t>(dg.get()));
 		}
 
 	protected:
@@ -100,11 +108,26 @@ namespace EACRipper
 			auto &v = eventMap[name];
 			for(auto it = v.begin(); it != v.end(); ++ it)
 			{
-				if(!(*it)->run(e))
+				if(!(*it)->invoke(e))
 					return false;
 			}
 
 			return true;
+		}
+
+		bool procPredefinedMessage(HWND window, unsigned message, uintptr_t wParam, longptr_t lParam)
+		{
+			switch(message)
+			{
+			case WM_APP_INVOKE:
+				{
+					ERDelegate<void ()> *dg = reinterpret_cast<ERDelegate<void ()> *>(lParam);
+					(*dg)();
+				}
+				return true;
+			}
+
+			return false;
 		}
 	};
 }

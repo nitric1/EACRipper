@@ -80,9 +80,7 @@ namespace EACRipper
 				SendMessageW(combo, WM_SETFONT, reinterpret_cast<uintptr_t>(font), TRUE);
 				SendMessageW(label, WM_SETFONT, reinterpret_cast<uintptr_t>(font), TRUE);
 
-				std::vector<std::wstring> &charsetList = inst->charsetList;
-
-				doCharsetList([&combo, &charsetList](const std::wstring &charset) -> void
+				doCharsetList([&combo, this](const std::wstring &charset) -> void
 				{
 					int res = static_cast<int>(SendMessageW(combo, CB_ADDSTRING, 0, reinterpret_cast<longptr_t>(charset.c_str())));
 					if(res != CB_ERR && res != CB_ERRSPACE)

@@ -24,6 +24,7 @@ std::basic_ostream<T, Traits> &operator <<(std::basic_ostream<T, Traits> &, cons
 #pragma pack(push, 1)
 /// UUID data for ERUUID class.
 /// @author Wondong LEE
+/// @see ERUUID
 union ERUUIDData
 {
 	struct
@@ -60,7 +61,7 @@ union ERUUIDData
 };
 #pragma pack(pop)
 
-/// An UUID(Universally unique identifier) class.
+/// An UUID(universally unique identifier) class.
 /// @author Wondong LEE
 class ERUUID
 {
@@ -223,6 +224,42 @@ public:
 	bool operator !=(const ERUUID &uuid) const
 	{
 		return !(*this == uuid);
+	}
+
+	/// Less-than comparison operator.
+	/// @author Wondong LEE
+	/// @param uuid The UUID to compare.
+	/// @return <code>true</code> if this object is less than <code>uuid</code>.
+	bool operator <(const ERUUID &uuid) const
+	{
+		return data.packed.v1 < uuid.data.packed.v1 || (data.packed.v1 == uuid.data.packed.v1 && data.packed.v2 < uuid.data.packed.v2);
+	}
+
+	/// Greater-than comparison operator.
+	/// @author Wondong LEE
+	/// @param uuid The UUID to compare.
+	/// @return <code>true</code> if this object is greater than <code>uuid</code>.
+	bool operator >(const ERUUID &uuid) const
+	{
+		return data.packed.v1 > uuid.data.packed.v1 || (data.packed.v1 == uuid.data.packed.v1 && data.packed.v2 > uuid.data.packed.v2);
+	}
+
+	/// Less-than-or-equal comparison operator.
+	/// @author Wondong LEE
+	/// @param uuid The UUID to compare.
+	/// @return <code>true</code> if this object is less than or equal to <code>uuid</code>.
+	bool operator <=(const ERUUID &uuid) const
+	{
+		return !(*this > uuid);
+	}
+
+	/// Greater-than-or-equal comparison operator.
+	/// @author Wondong LEE
+	/// @param uuid The UUID to compare.
+	/// @return <code>true</code> if this object is greater than or equal to <code>uuid</code>.
+	bool operator >=(const ERUUID &uuid) const
+	{
+		return !(*this < uuid);
 	}
 
 	/// Casting operator that returns read-only unpacked data.

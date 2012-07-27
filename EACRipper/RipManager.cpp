@@ -24,7 +24,7 @@ namespace EACRipper
 		stopRip();
 	}
 
-	bool RipManager::startRip(const TrackList &ilist, shared_ptr<RipCallbackDelegate> progressCallback)
+	bool RipManager::startRip(const TrackList &ilist, shared_ptr<ERDelegate<bool (size_t, uint64_t, uint64_t, int32_t)>> progressCallback)
 	{
 		if(runningThreads > 0)
 			return false;

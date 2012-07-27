@@ -176,6 +176,13 @@ namespace EACRipper
 				DestroyIcon(iconBig);
 			}
 			return 1;
+
+		default:
+			{
+				if(procPredefinedMessage(window, message, wParam, lParam))
+					return 1;
+			}
+			break;
 		}
 
 		return 0;

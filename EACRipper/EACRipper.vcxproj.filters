@@ -281,6 +281,12 @@
     <ClInclude Include="Delegate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\Common\Component\Invoke.h">
+      <Filter>Common Files\Component Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\ERException.h">
+      <Filter>Common Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="EACRipper.rc">

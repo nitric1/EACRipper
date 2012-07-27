@@ -1,12 +1,12 @@
+#include <algorithm>
+#include <limits>
+
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 
-#include <algorithm>
-
-using namespace std;
-
 #include <windows.h>
 #include <mmsystem.h>
+#include <assert.h>
 
 #include "Component/ERComponent.h"
 
@@ -201,7 +201,7 @@ size_t InWave::read(uint32_t start, uint32_t end, void *buffer, size_t bufferSiz
 		bufferSize = dataSize;
 
 	if(!seek(start))
-		return numeric_limits<size_t>::max();
+		return std::numeric_limits<size_t>::max();
 
 	return reader->read(buffer, bufferSize);
 }
@@ -216,7 +216,7 @@ bool InWave::readSplit(uint32_t start, uint32_t end, void *buffer, size_t buffer
 		bufferSize = leftSize;
 
 	*readSize = reader->read(buffer, bufferSize);
-	if(*readSize == numeric_limits<size_t>::max() || *readSize >= leftSize)
+	if(*readSize == std::numeric_limits<size_t>::max() || *readSize >= leftSize)
 		return false;
 
 	*section += *readSize;

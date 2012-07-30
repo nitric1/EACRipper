@@ -9,6 +9,7 @@
 #include <assert.h>
 
 #include "Component/ERComponent.h"
+#include "Component/ExportBody.h"
 
 using namespace ERComponent;
 

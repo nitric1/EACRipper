@@ -212,7 +212,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Common\Component\Definition.h" />
-    <ClInclude Include="..\Common\Component\Invoke.h" />
+    <ClInclude Include="..\Common\Component\ExportBody.h" />
     <ClInclude Include="..\Common\ERDelegate.h" />
     <ClInclude Include="..\Common\ERDelegateStub.h" />
     <ClInclude Include="..\Common\EREndian.h" />

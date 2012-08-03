@@ -284,7 +284,7 @@
     <ClInclude Include="..\Common\ERException.h">
       <Filter>Common Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Common\Component\ExportBody.h">
+    <ClInclude Include="..\Common\Component\ExportBody.cpp">
       <Filter>Common Files\Component Files</Filter>
     </ClInclude>
   </ItemGroup>

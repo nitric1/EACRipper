@@ -1,7 +1,6 @@
 #pragma once
 
-#ifndef _INCLUDE_ERCOMPONENTEXPORTBODY_
-#define _INCLUDE_ERCOMPONENTEXPORTBODY_
+#include "ERComponent.h"
 
 #if defined(_WINDOWS) && defined(_USRDLL)
 extern "C" __declspec(dllexport) ERException *invokeCdecl(uintptr_t *retValEax, uintptr_t *retValEdx, void *fn, uint32_t argc, ...)
@@ -358,6 +357,4 @@ extern "C" __declspec(dllexport) void uninitComponent()
 		ERComponentGlobal::componentEntry->onUninit();
 	delete ERComponentGlobal::info;
 }
-#endif
-
 #endif
